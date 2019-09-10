@@ -29,7 +29,19 @@ export default class Key extends Component {
     super(props)
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
+    this.pageMouseUp = this.pageMouseUp.bind(this)
     this.state = { clicked: false }
+  }
+
+  componentDidMount () {
+    window.addEventListener('mouseup', this.pageMouseUp, false)
+  }
+
+  pageMouseUp (e) {
+    if (this.state.clicked === false) {
+      return
+    }
+    this.setState({ clicked: false })
   }
 
   handleMouseDown (e) {
@@ -48,7 +60,7 @@ export default class Key extends Component {
   render () {
     return (
       <div className={'keyboard-key ' + this.props.bw + (this.state.clicked ? ' clicked' : '')} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}>
-        {this.props.noteName}
+        <div className='keyboard-key-label'>{this.props.noteName}</div>
       </div>
     )
   }
