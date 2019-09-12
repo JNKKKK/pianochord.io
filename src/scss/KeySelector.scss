@@ -1,0 +1,35 @@
+$rainbow: #781c81, #4e1e81, #413992, #3f5cab, #447cbf, #4d95be, #5ba7a6, #6eb388, #83ba6d, #9cbe5a, #b4bd4c, #cab842,
+  #dbab3b, #e59435, #e7732f, #e24a28, #d92120;
+
+.keySelector-container {
+  width: 3rem * 20;
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .keySelector-button {
+    display: inline-block;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    font-size: 1.2rem;
+    padding: 0.3rem 0.5rem;
+    text-decoration: none;
+    border: solid;
+    border-radius: 5px;
+    border-color: white;
+  }
+}
+
+@for $i from 1 through 17 {
+  .color-#{$i} {
+    color: nth($rainbow, $i);
+  }
+  .color-#{$i}.active {
+    color: white;
+    border-color: nth($rainbow, $i);
+    background-color: nth($rainbow, $i);
+  }
+}

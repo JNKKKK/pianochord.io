@@ -9,7 +9,6 @@ function keyNameToOctave (name) {
 // 'F#4' -> 'F#'
 // 'Db4' -> 'C#'
 function keyNameToSynthNote (name) {
-  console.log(name)
   if (name.length === 2) {
     return name[0]
   } else if (name.length === 3) {

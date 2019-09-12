@@ -4,8 +4,9 @@ $key-black-width: 2.25rem;
 $key-white-height: 10rem;
 $key-black-height: 6rem;
 .keyboard-container {
-  width: 100%;
+  // width: 100%;
   text-align: center;
+  margin: 1rem auto;
   .keyboard-key {
     display: inline-block;
     position: relative;
@@ -19,7 +20,8 @@ $key-black-height: 6rem;
     -moz-user-select: none;
     -o-user-select: none;
     &.clicked {
-      margin-top: 5px;
+      // margin-top: 5px;
+      top: 5px;
       box-shadow: none;
     }
     &.white {
@@ -42,7 +44,7 @@ $key-black-height: 6rem;
       font-size: 90%;
       &:hover {
         background-color: rgb(158, 158, 158);
-        color:black;
+        color: black;
       }
     }
     &.black + .white {
