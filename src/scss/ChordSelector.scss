@@ -1,0 +1,25 @@
+.chordSelector-container {
+    width: 3rem * 20;
+    margin: 1rem auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: rgb(240, 240, 240);
+    box-sizing: border-box;
+    padding: 1rem;
+    border-radius: 5px;
+    .chordSelector-chord {
+        max-width: 20%;
+        flex-basis: calc(20% - 2px);
+        text-align: center;
+        padding: 2rem 0;
+        // border:solid 1px rgb(201, 201, 201);
+        box-sizing: border-box;
+        margin: 1px;
+        background-color: white;
+        .chordSelector-chord-name{
+            font-size: 1rem;
+            margin-top: 0.75rem;
+        }
+    }
+}

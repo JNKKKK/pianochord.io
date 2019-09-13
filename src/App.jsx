@@ -1,6 +1,7 @@
 import { Fragment, h, Component } from 'preact'
 import Keyboard from './components/Keyboard'
 import KeySelector, { keySelectorList } from './components/KeySelector'
+import ChordSelector from './components/ChordSelector'
 
 // import Router from 'preact-router'
 import Match from 'preact-router/match'
@@ -35,6 +36,7 @@ export default class App extends Component {
               <Fragment>
                 <Keyboard />
                 <KeySelector selected={key} />
+                <ChordSelector selectedKey={key} />
               </Fragment>
             )
           }}

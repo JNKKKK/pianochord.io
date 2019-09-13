@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/JNKKKK/pianochord.io#readme",
   "dependencies": {
+    "@tonaljs/chord": "^3.2.3",
     "@tonaljs/scale": "^3.2.2",
     "@tonaljs/tonal": "^3.2.2",
     "preact": "^8.5.2",
