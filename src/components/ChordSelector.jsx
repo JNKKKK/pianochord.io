@@ -1,8 +1,6 @@
 import { h, Component } from 'preact'
-
-import { chord } from '@tonaljs/chord'
-import { entries } from '@tonaljs/chord-dictionary'
 import ChordThumbnail from './ChordThumbnail'
+import { chordData } from '../libs/helper'
 
 // ChordData -> DisplayName
 function getDisplayName (chord) {
@@ -17,29 +15,32 @@ function getDisplayName (chord) {
 }
 
 export default class ChordSelector extends Component {
-  render ({ selectedKey }) {
-    var chordTypes = entries()
-    var chordDatas = chordTypes.map(ct => {
-      let displayName
-      if (ct.name) {
-        displayName = ct.name
-      } else {
-        displayName = ct.aliases[0]
-      }
-      return chord(selectedKey + ' ' + displayName)
-    })
+  constructor (props) {
+    super(props)
+    this.state = { search: '' }
+    this.handleChange = this.handleChange.bind(this)
+  }
 
-    console.log(chordDatas)
+  handleChange (event) {
+    this.setState({ search: event.target.value })
+  }
+
+  render ({ selectedKey }, { search }) {
+    var chordDataList = chordData[selectedKey]
+    console.log(chordDataList)
     return (
       <div className='chordSelector-container'>
-        {chordDatas.map(c => (
-          <div className='chordSelector-chord'>
-            <ChordThumbnail />
-            <div className='chordSelector-chord-name'>{getDisplayName(c)}</div>
-          </div>
-        ))}
-
+        <input type='text' placeholder='Search by keywords' value={this.state.search} onKeyUp={this.handleChange} />
+        <div className='chordSelector-chord-container'>
+          {chordDataList.filter(chord => chord.possibleNames.some(name => name.toLowerCase().indexOf(search.toLowerCase()) !== -1)).map(c => (
+            <div className='chordSelector-chord'>
+              <ChordThumbnail />
+              <div className='chordSelector-chord-name'>{getDisplayName(c)}</div>
+            </div>
+          ))}
+        </div>
       </div>
     )
   }
 }
+// Love You So Much ~~
