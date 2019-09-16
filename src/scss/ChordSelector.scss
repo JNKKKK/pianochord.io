@@ -44,14 +44,18 @@
     flex-direction: row;
     flex-wrap: wrap;
     .chordSelector-chord {
-      max-width: 20%;
-      flex-basis: calc(20% - 2px);
+      max-width: 25%;
+      flex-basis: calc(25% - 2px);
       text-align: center;
       padding: 2rem 0;
-      // border:solid 1px rgb(201, 201, 201);
       box-sizing: border-box;
       margin: 1px;
       background-color: white;
+      text-decoration: none;
+      color: black;
+      &:hover {
+        background-color: rgb(226, 226, 226);
+      }
       .chordSelector-chord-name {
         font-size: 1rem;
         margin-top: 0.75rem;

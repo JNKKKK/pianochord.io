@@ -35,4 +35,57 @@ keySelectorList.forEach(key => {
   chordData[key].sort((a, b) => ChordSortTable.indexOf(a.intervals.join(' ')) - ChordSortTable.indexOf(b.intervals.join(' ')))
 })
 
-export { chordData }
+// #################################
+
+var bbTable = {
+  Abb: 'G',
+  Bbb: 'A',
+  Cbb: 'A#',
+  Dbb: 'C',
+  Ebb: 'D',
+  Fbb: 'D#',
+  Gbb: 'F'
+}
+
+var sstable = {
+  'A##': 'B',
+  'B##': 'C#',
+  'C##': 'D',
+  'D##': 'E',
+  'E##': 'F#',
+  'F##': 'G',
+  'G##': 'A'
+}
+// #################################
+var chordNotesHacks = {
+  2850: [0, 1, 3, 2, 4],
+  2914: [0, 1, 3, 2, 4, 5]
+}
+// #################################
+
+// C-flat.. -> Cb
+function urlDecodeKey (key) {
+  key = key.replace('-flat', 'b')
+  key = key.replace('-sharp', '#')
+  return key
+}
+// C# -> C-sharp
+function urlEncodeKey (key) {
+  key = key.replace('#', '-sharp')
+  key = key.replace('b', '-flat')
+  return key
+}
+// #->s /->_ ' '->-
+function urlEncodeChord (chordName) {
+  chordName = chordName.replace(/#/g, 'sharp')
+  chordName = chordName.replace(/\//g, '_')
+  chordName = chordName.replace(/ /g, '-')
+  return chordName
+}
+function urlDecodeChord (chordName) {
+  chordName = chordName.replace(/sharp/g, '#')
+  chordName = chordName.replace(/_/g, '/')
+  chordName = chordName.replace(/-/g, ' ')
+  return chordName
+}
+export { chordData, bbTable, sstable, chordNotesHacks, urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord }

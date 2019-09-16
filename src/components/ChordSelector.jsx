@@ -1,6 +1,6 @@
 import { h, Component } from 'preact'
 import ChordThumbnail from './ChordThumbnail'
-import { chordData } from '../libs/helper'
+import { chordData, urlEncodeKey, urlEncodeChord } from '../libs/helper'
 
 // ChordData -> DisplayName
 function getDisplayName (chord) {
@@ -27,20 +27,19 @@ export default class ChordSelector extends Component {
 
   render ({ selectedKey }, { search }) {
     var chordDataList = chordData[selectedKey]
-    console.log(chordDataList)
+    // console.log(chordDataList)
     return (
       <div className='chordSelector-container'>
         <input type='text' placeholder='Search by keywords' value={this.state.search} onKeyUp={this.handleChange} />
         <div className='chordSelector-chord-container'>
           {chordDataList.filter(chord => chord.possibleNames.some(name => name.toLowerCase().indexOf(search.toLowerCase()) !== -1)).map(c => (
-            <div className='chordSelector-chord'>
-              <ChordThumbnail />
+            <a className='chordSelector-chord' href={'/chord/' + urlEncodeKey(selectedKey) + '/' + urlEncodeChord(getDisplayName(c))}>
+              <ChordThumbnail notes={c.notes} setNum={c.setNum} />
               <div className='chordSelector-chord-name'>{getDisplayName(c)}</div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
     )
   }
 }
-// Love You So Much ~~

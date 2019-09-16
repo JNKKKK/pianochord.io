@@ -1,47 +1,18 @@
-import { Fragment, h, Component } from 'preact'
-import Keyboard from './components/Keyboard'
-import KeySelector, { keySelectorList } from './components/KeySelector'
-import ChordSelector from './components/ChordSelector'
-
-// import Router from 'preact-router'
-import Match from 'preact-router/match'
-
+import { h, Component } from 'preact'
 import './scss/App.scss'
-
-// /C-flat/.. -> Cb
-function url2key (url) {
-  url = url.split('/')
-  if (url.length < 2) {
-    return ''
-  } else {
-    var key = url[1]
-    key = key.replace('-flat', 'b')
-    key = key.replace('-sharp', '#')
-    if (keySelectorList.includes(key)) {
-      return key
-    } else {
-      return ''
-    }
-  }
-}
+import Router from 'preact-router'
+import IndexPage from './pages/indexPage'
+import ChordPage from './pages/ChordPage'
+import Page404 from './pages/404Page'
 
 export default class App extends Component {
   render () {
     return (
-      <div>
-        <Match path='/'>
-          {({ matches, path, url }) => {
-            var key = url2key(url)
-            return (
-              <Fragment>
-                <Keyboard />
-                <KeySelector selected={key} />
-                <ChordSelector selectedKey={key} />
-              </Fragment>
-            )
-          }}
-        </Match>
-      </div>
+      <Router>
+        <IndexPage path='/' />
+        <ChordPage path='/chord/:selectedKey/:selectedChord?' />
+        <Page404 default />
+      </Router>
     )
   }
 }
