@@ -1,27 +1,6 @@
 import { h, Component } from 'preact'
 import piano from '../libs/audiosynth'
-
-// 'C4' -> '4'
-function keyNameToOctave (name) {
-  return name[name.length - 1]
-}
-// 'C4' -> 'C'
-// 'F#4' -> 'F#'
-// 'Db4' -> 'C#'
-function keyNameToSynthNote (name) {
-  if (name.length === 2) {
-    return name[0]
-  } else if (name.length === 3) {
-    if (name[1] === 'b') {
-      var noteLetter = name[0]
-      var previousNote = { D: 'C', E: 'D', G: 'F', A: 'G', B: 'A' }
-      noteLetter = previousNote[noteLetter]
-      return noteLetter + '#'
-    } else if (name[1] === '#') {
-      return name.slice(0, -1)
-    }
-  }
-}
+import { keyNameToSynthNote, keyNameToOctave } from '../libs/helper'
 
 export default class Key extends Component {
   constructor (props) {

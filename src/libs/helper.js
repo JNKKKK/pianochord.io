@@ -154,7 +154,34 @@ function chordAlignMid (highlightTable) {
   }
 }
 // #################################
-
+// 'C4' -> '4'
+function keyNameToOctave (name) {
+  return name[name.length - 1]
+}
+// 'C4' -> 'C'
+// 'F#4' -> 'F#'
+// 'Db4' -> 'C#'
+function keyNameToSynthNote (name) {
+  if (name.length === 2) {
+    return name[0]
+  } else if (name.length === 3) {
+    if (name[1] === 'b') {
+      var noteLetter = name[0]
+      var previousNote = { D: 'C', E: 'D', G: 'F', A: 'G', B: 'A' }
+      noteLetter = previousNote[noteLetter]
+      return noteLetter + '#'
+    } else if (name[1] === '#') {
+      return name.slice(0, -1)
+    }
+  }
+}
+// #################################
+var possibleOctaveList = [
+  'c2,c3,c4',
+  'c3,c4,c5',
+  'c4,c5,c6',
+  'c5,c6,c7'
+]
 export {
   chordData,
   urlDecodeKey,
@@ -163,5 +190,8 @@ export {
   urlDecodeChord,
   chord2octave3highlightTable,
   url2ChordData,
-  chordAlignMid
+  chordAlignMid,
+  keyNameToOctave,
+  keyNameToSynthNote,
+  possibleOctaveList
 }

@@ -1,3 +1,5 @@
+@import 'colors';
+
 .chordSelector-container {
   width: 3rem * 20;
   margin: 1rem auto;
@@ -25,6 +27,7 @@
     position: relative;
     vertical-align: top;
     -webkit-appearance: none;
+    -moz-appearance: none;
     align-items: center;
     box-sizing: border-box;
     margin: 0 0 1rem 0;

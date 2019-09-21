@@ -1,0 +1,68 @@
+@import "colors";
+
+.playbox-container {
+  width: 3rem * 20;
+  margin: 1rem auto;
+  padding: 0.75rem 1rem;
+  border-radius: 5px;
+  background-color: rgb(240, 240, 240);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  button {
+    margin-right: 0.5rem;
+    background-color: #fff;
+    color: #363636;
+    cursor: pointer;
+    justify-content: center;
+    padding-bottom: calc(0.375em - 1px);
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    padding-top: calc(0.375em - 1px);
+    text-align: center;
+    white-space: nowrap;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    align-items: center;
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    box-shadow: none;
+    display: inline-flex;
+    font-size: 1rem;
+    height: 2.25em;
+    line-height: 1.5;
+    position: relative;
+    vertical-align: top;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    &:hover {
+      border-color: #b5b5b5;
+    }
+    @for $i from 1 through 17 {
+      &.color-#{$i}:focus:not(:active) {
+        box-shadow: 0 0 0 0.125em adjust-color(nth($rainbow-17, $i), $alpha: -0.85);
+      }
+      &.color-#{$i}:focus {
+        border-color: nth($rainbow-17, $i);
+        outline: 0;
+      }
+    }
+
+    &:active {
+      border-color: #4a4a4a;
+      outline: 0;
+    }
+    &[disabled] {
+      background-color: #fff;
+      border-color: #dbdbdb;
+      box-shadow: none;
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
