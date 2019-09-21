@@ -1,3 +1,5 @@
+@import "colors";
+
 $key-border-px: 0.07rem;
 $key-white-width: 3rem;
 $key-black-width: 2.25rem;
@@ -20,7 +22,6 @@ $key-black-height: 6rem;
     -moz-user-select: none;
     -o-user-select: none;
     &.clicked {
-      // margin-top: 5px;
       top: 5px;
       box-shadow: none;
     }
@@ -30,6 +31,7 @@ $key-black-height: 6rem;
       height: $key-white-height;
       margin-left: -$key-border-px;
       background-color: white;
+      color: black;
       &:hover {
         background-color: rgb(158, 158, 158);
       }
@@ -49,6 +51,15 @@ $key-black-height: 6rem;
     }
     &.black + .white {
       margin-left: -$key-black-width/2 - $key-border-px;
+    }
+    @for $i from 1 through 17 {
+      &.active.color-#{$i} {
+        background-color: nth($rainbow-17, $i);
+        color: white;
+      }
+      &.active.color-#{$i}:hover {
+        background-color: adjust-color(nth($rainbow-17, $i), $lightness: +5%);
+      }
     }
     .keyboard-key-label {
       position: absolute;

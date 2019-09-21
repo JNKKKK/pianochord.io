@@ -88,4 +88,55 @@ function urlDecodeChord (chordName) {
   chordName = chordName.replace(/-/g, ' ')
   return chordName
 }
-export { chordData, bbTable, sstable, chordNotesHacks, urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord }
+// #################################
+var oct3keyList =
+  [['C', 'B#'], ['C#', 'Db'], ['D'], ['D#', 'Eb'], ['E', 'Fb'], ['F', 'E#'], ['F#', 'Gb'], ['G'], ['G#', 'Ab'], ['A'], ['A#', 'Bb'], ['B', 'Cb']]
+oct3keyList = oct3keyList.concat(oct3keyList).concat(oct3keyList)
+
+function chord2octave3highlightTable (chord) {
+  var notes = chord.notes.map(note => { // remove bb
+    if (note in bbTable) {
+      return bbTable[note]
+    } else {
+      return note
+    }
+  })
+  notes = notes.map(note => { // remove ##
+    if (note in sstable) {
+      return sstable[note]
+    } else {
+      return note
+    }
+  })
+  if (chord.setNum in chordNotesHacks) { // correct order
+    var oldNotes = [...notes]
+    notes = notes.sort((a, b) => chordNotesHacks[chord.setNum].indexOf(oldNotes.indexOf(a)) - chordNotesHacks[chord.setNum].indexOf(oldNotes.indexOf(b)))
+  }
+  // make highlight table
+  var highlightTable = Array(oct3keyList.length).fill(0)
+  var startIndex = 0
+  notes.forEach(note => {
+    highlightTable[oct3keyList.findIndex((key, i) => {
+      if (i < startIndex) {
+        return false
+      } else {
+        if (key.some(k => k === note)) {
+          startIndex = i
+          return true
+        } else {
+          return false
+        }
+      }
+    })] = 1
+  })
+  return highlightTable
+}
+// #################################
+function url2ChordData (key, chordName) {
+  return chordData[key].find(c => {
+    if ((c.tonic + c.aliases[0]) === chordName) return true
+    if (c.name === chordName) return true
+    return false
+  })
+}
+export { chordData, bbTable, sstable, chordNotesHacks, urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord, chord2octave3highlightTable, url2ChordData }

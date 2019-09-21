@@ -1,13 +1,4 @@
 import { h, Component } from 'preact'
-import { chordData } from '../libs/helper'
-
-function displayName2ChordData (key, chordName) {
-  return chordData[key].find(c => {
-    if ((c.tonic + c.aliases[0]) === chordName) return true
-    if (c.name === chordName) return true
-    return false
-  })
-}
 
 function getChordTitle (chord) {
   if (chord.name === chord.tonic + ' ') {
@@ -18,9 +9,9 @@ function getChordTitle (chord) {
 }
 
 export default class ChordDetail extends Component {
-  render ({ selectedKey, selectedChord }) {
+  render ({ selectedChord }) {
     // console.log(selectedKey, selectedChord)
-    var chord = displayName2ChordData(selectedKey, selectedChord)
+    var chord = selectedChord
     return (
       <div className='chordDetail-container'>
         <h1>{getChordTitle(chord)}</h1>

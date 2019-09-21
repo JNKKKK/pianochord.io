@@ -56,10 +56,11 @@ export default class Key extends Component {
     this.setState({ clicked: false })
   }
 
-  render () {
+  render ({ noteName, bw, highlighted, highlightColor }, { clicked }) {
     return (
-      <div className={'keyboard-key ' + this.props.bw + (this.state.clicked ? ' clicked' : '')} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}>
-        <div className='keyboard-key-label'>{this.props.noteName}</div>
+      <div className={'keyboard-key ' + bw + (clicked ? ' clicked' : '') + (highlighted ? ' active color-' + highlightColor : '')}
+        onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}>
+        <div className='keyboard-key-label'>{noteName}</div>
       </div>
     )
   }

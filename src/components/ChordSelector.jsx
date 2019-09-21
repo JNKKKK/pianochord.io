@@ -36,7 +36,7 @@ export default class ChordSelector extends Component {
         <div className='chordSelector-chord-container'>
           {chordDataList.filter(chord => chord.possibleNames.some(name => name.toLowerCase().indexOf(search.toLowerCase()) !== -1)).map(c => (
             <a className='chordSelector-chord' href={'/chord/' + urlEncodeKey(selectedKey) + '/' + urlEncodeChord(getDisplayName(c))}>
-              <ChordThumbnail notes={c.notes} setNum={c.setNum} color={keySelectorList.indexOf(selectedKey) + 1} />
+              <ChordThumbnail chord={c} highlightColor={keySelectorList.indexOf(selectedKey) + 1} />
               <div className='chordSelector-chord-name'>{getDisplayName(c)}</div>
             </a>
           ))}
