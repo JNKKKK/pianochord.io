@@ -28,7 +28,7 @@ export default class ChordSelector extends Component {
 
   render ({ selectedKey }, { search }) {
     var chordDataList = chordData[selectedKey]
-    console.log(chordDataList)
+    // console.log(chordDataList)
     return (
       <div className='chordSelector-container'>
         <input type='text' placeholder='Search by keywords' value={this.state.search} onKeyUp={this.handleChange}

@@ -139,4 +139,29 @@ function url2ChordData (key, chordName) {
     return false
   })
 }
-export { chordData, bbTable, sstable, chordNotesHacks, urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord, chord2octave3highlightTable, url2ChordData }
+// #################################
+function chordAlignMid (highlightTable) {
+  if (highlightTable.slice(24).every(h => h === 0)) {
+    return {
+      highlightTable: Array(12).fill(0).concat(highlightTable.slice(0, 24)),
+      octave: ['c3', 'c4', 'c5']
+    }
+  } else {
+    return {
+      highlightTable,
+      octave: ['c4', 'c5', 'c6']
+    }
+  }
+}
+// #################################
+
+export {
+  chordData,
+  urlDecodeKey,
+  urlEncodeKey,
+  urlEncodeChord,
+  urlDecodeChord,
+  chord2octave3highlightTable,
+  url2ChordData,
+  chordAlignMid
+}
