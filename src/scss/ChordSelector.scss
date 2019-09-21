@@ -37,6 +37,12 @@
       box-shadow: 0 0 0 0.125em rgba(50, 115, 220, 0.25);
       outline: 0;
     }
+    @for $i from 1 through 17 {
+      &.color-#{$i}:focus {
+        border-color: nth($rainbow-17, $i);
+        box-shadow: 0 0 0 0.125em adjust-color(nth($rainbow-17, $i), $alpha: -0.9);
+      }
+    }
   }
   .chordSelector-chord-container {
     width: 100%;

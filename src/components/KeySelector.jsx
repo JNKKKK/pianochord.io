@@ -16,3 +16,5 @@ export default class KeySelector extends Component {
     )
   }
 }
+
+export { keySelectorList }

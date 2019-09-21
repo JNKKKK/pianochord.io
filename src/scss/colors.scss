@@ -1,0 +1,8 @@
+$rainbow-17: #781c81, #4e1e81, #413992, #3f5cab, #447cbf, #4d95be, #5ba7a6, #6eb388, #83ba6d, #9cbe5a, #b4bd4c, #cab842,
+  #dbab3b, #e59435, #e7732f, #e24a28, #d92120;
+$rainbow-light-17: adjust-color(#781c81, $lightness: +10%), 
+adjust-color(#4e1e81, $lightness: +20%),
+adjust-color(#413992, $lightness: +15%),
+ #3f5cab, #447cbf, #4d95be, #5ba7a6,
+  #6eb388, #83ba6d, #9cbe5a, #b4bd4c, #cab842, #dbab3b, #e59435, #e7732f, #e24a28,
+  adjust-color(#d92120, $lightness: +8%);

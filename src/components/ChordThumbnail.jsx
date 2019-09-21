@@ -24,7 +24,7 @@ function blackIfActive (i, highlightTable) {
 }
 
 export default class ChordThumbnail extends Component {
-  render ({ notes, setNum }) {
+  render ({ notes, setNum, color }) {
     notes = notes.map(note => { // remove bb
       if (note in bbTable) {
         return bbTable[note]
@@ -64,11 +64,11 @@ export default class ChordThumbnail extends Component {
     return (
       <svg className='ChordThumbnail-svg' width={whiteWidth * 7 * 3} height={whiteHeight}>
         {[...Array(7 * 3).keys()].map(i => (
-          <rect className={'white' + (whiteIfActive(i, highlightTable) ? ' active' : '')}
+          <rect className={'white' + (whiteIfActive(i, highlightTable) ? ' active color-' + color : '')}
             width={whiteWidth} height={whiteHeight} x={whiteWidth * i} />
         ))}
         {[...Array(5 * 3).keys()].map(i => (
-          <rect className={'black' + (blackIfActive(i, highlightTable) ? ' active' : '')}
+          <rect className={'black' + (blackIfActive(i, highlightTable) ? ' active color-' + color : '')}
             width={blackWidth} height={blackHeight}
             x={whiteWidth * (bwMap.slice(0, blackOccurIndex[i]).filter(bw => bw === 'white').length) - blackWidth / 2} />
         ))}

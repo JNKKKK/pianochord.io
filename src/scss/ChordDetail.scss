@@ -1,0 +1,28 @@
+.chordDetail-container {
+  margin: 1rem auto;
+  padding: 1.5rem 1rem;
+  border-radius: 5px;
+  width: 3rem * 20;
+  background-color: rgb(240, 240, 240);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  h1 {
+    flex-basis: 63%;
+    font-size: 3rem;
+    font-weight: 100;
+    text-align: center;
+    margin-right: 1rem;
+  }
+  .chordDetail-detail {
+    font-size: 1.2rem;
+    div {
+      margin-bottom: 0.4rem;
+      line-height: 1.6rem;
+    }
+    b {
+      font-weight: bold;
+    }
+  }
+}

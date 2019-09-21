@@ -1,3 +1,6 @@
+@import 'colors';
+
+
 .ChordThumbnail-svg {
   rect.white {
     fill: rgb(255, 255, 255);
@@ -7,8 +10,14 @@
   rect.black {
     fill: #3f3f3f;
   }
-  rect.active {
-    fill: #3273dc;
-    stroke: #3273dc;
+  // rect.active {
+  //   fill: #3273dc;
+  //   stroke: #3273dc;
+  // }
+  @for $i from 1 through 17 {
+    rect.active.color-#{$i} {
+      fill: nth($rainbow-light-17, $i);
+      stroke: nth($rainbow-light-17, $i);
+    }
   }
 }
