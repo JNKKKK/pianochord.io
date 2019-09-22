@@ -1,14 +1,18 @@
-import { Fragment, h, Component } from 'preact'
-import Keyboard from '../components/Keyboard'
+import { h, Component } from 'preact'
 import KeySelector from '../components/KeySelector'
+import Logo from '../components/Logo'
 
 export default class IndexPage extends Component {
   render () {
     return (
-      <Fragment>
-        <Keyboard />
-        <KeySelector />
-      </Fragment>
+      <div className='indexPage-container'>
+        <Logo />
+        <h2>A place to explore piano chords freely</h2>
+        <div className='tip1 animated flipInX'>Select a root key to continue</div>
+        <div className='tip2 animated flipInX'>
+          <KeySelector />
+        </div>
+      </div>
     )
   }
 }

@@ -1,0 +1,26 @@
+$footer-height: 70px;
+
+.indexPage-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - #{$footer-height});
+  flex-direction: column;
+  h2 {
+    font-size: 1.3rem;
+    color: rgb(126, 126, 126);
+    margin: 2.5rem 0 5rem 0;
+    font-weight: 200;
+  }
+  .tip1 {
+    padding: 0.75rem;
+    color: rgb(126, 126, 126);
+    border: 1.5px solid transparent;
+    border-image: linear-gradient(to right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
+    border-image-slice: 1;
+    animation-delay: 1s;
+  }
+  .tip2{
+    animation-delay: 1.5s;
+  }
+}

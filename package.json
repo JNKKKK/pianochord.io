@@ -22,6 +22,8 @@
     "@tonaljs/chord": "^3.2.3",
     "@tonaljs/scale": "^3.2.2",
     "@tonaljs/tonal": "^3.2.2",
+    "animate.css": "^3.7.2",
+    "animejs": "^3.1.0",
     "preact": "^8.5.2",
     "preact-compat": "^3.19.0",
     "preact-render-to-string": "^4.1.0",

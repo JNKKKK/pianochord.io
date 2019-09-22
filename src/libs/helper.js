@@ -31,6 +31,8 @@ keySelectorList.forEach(key => {
     }
     return chord(key + ' ' + displayName)
   })
+  // remove the extra half-diminished
+  chordData[key].splice(17, 1)
   setPossibleNames(chordData[key])
   chordData[key].sort((a, b) => ChordSortTable.indexOf(a.intervals.join(' ')) - ChordSortTable.indexOf(b.intervals.join(' ')))
 })
