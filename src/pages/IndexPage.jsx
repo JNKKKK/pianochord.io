@@ -1,6 +1,6 @@
 import { h, Component } from 'preact'
-import KeySelector from '../components/KeySelector'
-import Logo from '../components/Logo'
+import KeySelector from '../components/KeySelector.jsx'
+import Logo from '../components/Logo.jsx'
 
 export default class IndexPage extends Component {
   render () {

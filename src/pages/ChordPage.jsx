@@ -1,10 +1,10 @@
 import { Fragment, h, Component } from 'preact'
-import Keyboard from '../components/Keyboard'
-import KeySelector, { keySelectorList } from '../components/KeySelector'
-import ChordSelector from '../components/ChordSelector'
+import Keyboard from '../components/Keyboard.jsx'
+import KeySelector, { keySelectorList } from '../components/KeySelector.jsx'
+import ChordSelector from '../components/ChordSelector.jsx'
 import { urlDecodeKey, urlDecodeChord, url2ChordData, chord2octave3highlightTable, chordAlignMid, possibleOctaveList } from '../libs/helper'
-import ChordDetail from '../components/ChordDetail'
-import Playbox from '../components/Playbox'
+import ChordDetail from '../components/ChordDetail.jsx'
+import Playbox from '../components/Playbox.jsx'
 
 const MAXoctaveAdj = 1
 const MINoctaveAdj = -1
