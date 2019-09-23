@@ -1,7 +1,7 @@
 import { Fragment, h, Component } from 'preact'
 import './scss/App.scss'
 import Router from 'preact-router'
-import IndexPage from './pages/indexPage.jsx'
+import IndexPage from './pages/IndexPage.jsx'
 import ChordPage from './pages/ChordPage.jsx'
 import Page404 from './pages/404Page.jsx'
 

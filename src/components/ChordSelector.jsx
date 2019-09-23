@@ -1,7 +1,7 @@
 import { h, Component } from 'preact'
-import ChordThumbnail from './ChordThumbnail.jsx'
+import ChordThumbnail from './ChordThumbnail'
 import { chordData, urlEncodeKey, urlEncodeChord } from '../libs/helper'
-import { keySelectorList } from './KeySelector.jsx'
+import { keySelectorList } from './KeySelector'
 
 // ChordData -> DisplayName
 function getDisplayName (chord) {
