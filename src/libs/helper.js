@@ -1,5 +1,5 @@
-import { chord } from '@tonaljs/chord'
-import { entries } from '@tonaljs/chord-dictionary'
+import { chord } from '../libs/@tonaljs/chord/index.esnext'
+import { entries } from '../libs/@tonaljs/chord-dictionary/index.esnext'
 
 function setPossibleNames (chordDataList) {
   chordDataList.forEach(chord => {

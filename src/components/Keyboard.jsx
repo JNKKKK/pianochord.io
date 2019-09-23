@@ -1,6 +1,6 @@
 import { h, Component } from 'preact'
-import { scale } from '@tonaljs/scale'
-import { note } from '@tonaljs/tonal'
+import { scale } from '../libs/@tonaljs/scale/index.esnext'
+import { note } from '../libs/@tonaljs/tonal/index.esnext'
 import Key from './Key'
 
 var bwMap = ['white', 'black', 'white', 'black', 'white', 'white', 'black', 'white', 'black', 'white', 'black', 'white']

@@ -1,5 +1,5 @@
 import { h, Component } from 'preact'
-import { scale } from '@tonaljs/scale/dist/index.es5'
+import { scale } from '../libs/@tonaljs/scale/index.esnext'
 import piano from '../libs/audiosynth'
 import { keyNameToSynthNote, keyNameToOctave } from '../libs/helper'
 

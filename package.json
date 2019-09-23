@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "source": true,
   "scripts": {
     "start": "parcel src/index.html --open",
     "build": "parcel build src/index.html"
@@ -19,18 +20,20 @@
   },
   "homepage": "https://github.com/JNKKKK/pianochord.io#readme",
   "dependencies": {
-    "@tonaljs/chord": "^3.2.3",
-    "@tonaljs/scale": "^3.2.2",
-    "@tonaljs/tonal": "^3.2.2",
     "animate.css": "^3.7.2",
     "animejs": "^3.1.0",
+    "core-js": "^3.2.1",
     "preact": "^8.5.2",
     "preact-compat": "^3.19.0",
     "preact-render-to-string": "^4.1.0",
     "preact-router": "^2.6.1",
+    "regenerator-runtime": "^0.13.3",
     "sass": "^1.23.0-module.beta.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "babel-preset-preact": "^2.0.0",
     "cssnano": "^4.1.10",
     "eslint": "^6.3.0",
     "eslint-config-standard": "^14.1.0",
