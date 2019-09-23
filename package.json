@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "source": true,
   "scripts": {
     "start": "parcel src/index.html --open",
-    "build": "parcel build src/index.html"
+    "build": "parcel build src/index.html --no-source-maps --log-level 4"
   },
   "repository": {
     "type": "git",
@@ -27,8 +26,7 @@
     "preact-compat": "^3.19.0",
     "preact-render-to-string": "^4.1.0",
     "preact-router": "^2.6.1",
-    "regenerator-runtime": "^0.13.3",
-    "sass": "^1.23.0-module.beta.1"
+    "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
@@ -43,6 +41,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-standard": "^4.0.1",
-    "parcel-bundler": "^1.12.3"
+    "parcel-bundler": "^1.12.3",
+    "sass": "^1.23.0-module.beta.1"
   }
 }
