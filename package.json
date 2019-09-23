@@ -31,6 +31,7 @@
     "sass": "^1.23.0-module.beta.1"
   },
   "devDependencies": {
+    "cssnano": "^4.1.10",
     "eslint": "^6.3.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-config-standard-preact": "^1.1.6",
