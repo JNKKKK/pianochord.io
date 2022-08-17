@@ -32,8 +32,8 @@ export default class Playbox extends Component {
       <div class='playbox-container'>
         <button type='button' className={'color-' + color} onClick={(e) => this.playChord(playNotes, e)}>&nbsp;▶ Play&nbsp;</button>
         <button type='button' className={'color-' + color} onClick={(e) => this.playEachNote(playNotes, e)}>▶ Play each note</button>
-        <button type='button' className={'color-' + color} disabled={lowerDisabled} onClick={lowerOctave}>🡫&nbsp;Lower octave</button>
-        <button type='button' className={'color-' + color} disabled={risingDisabled} onClick={risingOctave}>🡩&nbsp;Rising octave</button>
+        <button type='button' className={'color-' + color} disabled={lowerDisabled} onClick={lowerOctave}>↓&nbsp;Lower octave</button>
+        <button type='button' className={'color-' + color} disabled={risingDisabled} onClick={risingOctave}>↑&nbsp;Rising octave</button>
       </div>
     )
   }

@@ -18,30 +18,29 @@
     "url": "https://github.com/JNKKKK/pianochord.io/issues"
   },
   "homepage": "https://github.com/JNKKKK/pianochord.io#readme",
+  "alias": {
+    "react": "preact/compat",
+    "react-dom/test-utils": "preact/test-utils",
+    "react-dom": "preact/compat",
+    "preact/jsx-dev-runtime": "preact/jsx-runtime"
+  },
   "dependencies": {
-    "animate.css": "^3.7.2",
-    "animejs": "^3.1.0",
-    "core-js": "^3.2.1",
-    "preact": "^8.5.2",
-    "preact-compat": "^3.19.0",
-    "preact-render-to-string": "^4.1.0",
-    "preact-router": "^2.6.1",
-    "regenerator-runtime": "^0.13.3"
+    "preact": "^10.7.2",
+    "preact-render-to-string": "^5.2.2",
+    "preact-router": "^4.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/preset-env": "^7.6.0",
-    "babel-preset-preact": "^2.0.0",
-    "cssnano": "^4.1.10",
-    "eslint": "^6.3.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-config-standard-preact": "^1.1.6",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-standard": "^4.0.1",
-    "parcel-bundler": "^1.12.3",
-    "sass": "^1.23.0-module.beta.1"
+    "@babel/core": "^7.18.2",
+    "@parcel/reporter-bundle-analyzer": "^2.6.0",
+    "@parcel/transformer-sass": "^2.7.0",
+    "@parcel/transformer-typescript-tsc": "^2.6.0",
+    "@parcel/validator-typescript": "^2.6.0",
+    "@types/node": "^17.0.36",
+    "cssnano": "^5.1.10",
+    "parcel": "latest",
+    "postcss": "^8.4.14",
+    "posthtml-doctype": "^1.1.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.7.2"
   }
 }

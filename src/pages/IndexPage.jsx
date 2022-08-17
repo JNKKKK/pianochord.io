@@ -7,7 +7,7 @@ export default class IndexPage extends Component {
     return (
       <div className='indexPage-container'>
         <Logo />
-        <h2>A place to explore piano chords freely</h2>
+        <h2>A Reference to a Comprehensive Collection of Piano Chords</h2>
         <div className='tip1 animated flipInX'>Select a root key to continue</div>
         <div className='tip2 animated flipInX'>
           <KeySelector />
