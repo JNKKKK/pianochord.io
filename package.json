@@ -4,16 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel src/index.html --open",
-    "build": "parcel build src/index.html --no-source-maps --log-level 4"
+    "start": "npx parcel src/index.html",
+    "build": "npx parcel build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JNKKKK/pianochord.io.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Enkai Ji",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/JNKKKK/pianochord.io/issues"
   },

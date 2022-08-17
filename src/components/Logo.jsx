@@ -8,8 +8,6 @@ const height = 90
 export default class Logo extends Component {
   constructor (props) {
     super(props)
-    this.canvasRef = createRef()
-    this.animate = this.animate.bind(this)
   }
 
 

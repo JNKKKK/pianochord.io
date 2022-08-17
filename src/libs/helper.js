@@ -1,5 +1,8 @@
 import { chord } from '../libs/@tonaljs/chord/index.esnext'
 import { entries } from '../libs/@tonaljs/chord-dictionary/index.esnext'
+// import { Note } from './note'
+// window.nn = new Note(1, 1)
+import { Chord } from './chord'
 
 function setPossibleNames (chordDataList) {
   chordDataList.forEach(chord => {
@@ -18,8 +21,14 @@ function setPossibleNames (chordDataList) {
 
 var keySelectorList = ['C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B']
 var ChordSortTable = ['1P 3M 5P', '1P 3M 5P 7M', '1P 3M 5P 7M 9M', '1P 3M 5P 7M 9M 13M', '1P 3M 5P 6M', '1P 3M 5P 6M 9M', '1P 3M 5P 7M 11A', '1P 3M 6m 7M', '1P 3m 5P', '1P 3m 5P 7m', '1P 3m 5P 7M', '1P 3m 5P 6M', '1P 3m 5P 7m 9M', '1P 3m 5P 7m 9M 11P', '1P 3m 5P 7m 9M 13M', '1P 3m 5d', '1P 3m 5d 7d', '1P 3m 5d 7m', '1P 3M 5P 7m', '1P 3M 5P 7m 9M', '1P 3M 5P 7m 9M 13M', '1P 3M 5P 7m 11A', '1P 3M 5P 7m 9m', '1P 3M 5P 7m 9A', '1P 3M 7m 9m', '1P 4P 5P', '1P 2M 5P', '1P 4P 5P 7m', '1P 5P 7m 9M 11P', '1P 4P 5P 7m 9m', '1P 5P', '1P 3M 5A', '1P 3M 5A 7M', '1P 3M 5P 7M 9M 11A', '1P 3M 5P 7m 9A', '1P 2M 4P 5P', '1P 3M 13m', '1P 3M 5A 7M 9M', '1P 3M 5A 7m', '1P 3M 5A 7m 9A', '1P 3M 5A 7m 9M', '1P 3M 5A 7m 9M 11A', '1P 3M 5A 7m 9m', '1P 3M 5A 7m 9m 11A', '1P 3M 5A 9A', '1P 3M 5A 9M', '1P 3M 5P 6M 11A', '1P 3M 5P 6M 7M 9M', '1P 3M 5P 6M 9M 11A', '1P 3M 5P 6m 7m', '1P 3M 5P 7M 9A 11A', '1P 3M 5P 7M 9M 11A 13M', '1P 3M 5P 7M 9m', '1P 3M 5P 7m 11A 13m', '1P 3M 5P 7m 13M', '1P 3M 5P 7m 9A 11A', '1P 3M 5P 7m 9A 11A 13M', '1P 3M 5P 7m 9A 11A 13m', '1P 3M 5P 7m 9A 13M', '1P 3M 5P 7m 9A 13m', '1P 3M 5P 7m 9M 11A', '1P 3M 5P 7m 9M 11A 13M', '1P 3M 5P 7m 9M 11A 13m', '1P 3M 5P 7m 9m 11A', '1P 3M 5P 7m 9m 11A 13M', '1P 3M 5P 7m 9m 11A 13m', '1P 3M 5P 7m 9m 13M', '1P 3M 5P 7m 9m 13m', '1P 3M 5P 7m 9m 9A', '1P 3M 5P 9M', '1P 3M 5P 9m', '1P 3M 5d', '1P 3M 5d 6M 7m 9M', '1P 3M 5d 7M', '1P 3M 5d 7M 9M', '1P 3M 5d 7m', '1P 3M 5d 7m 9M', '1P 3M 7m', '1P 3M 7m 13m', '1P 3M 7m 9M', '1P 3M 7m 9M 13M', '1P 3M 7m 9M 13m', '1P 3m 4P 5P', '1P 3m 5A', '1P 3m 5P 6M 9M', '1P 3m 5P 6m 7M', '1P 3m 5P 6m 7M 9M', '1P 3m 5P 7M 9M', '1P 3m 5P 7m 11P', '1P 3m 5P 9M', '1P 3m 5d 6M 7M', '1P 3m 5d 7M', '1P 3m 5d 7m', '1P 3m 6m 7M', '1P 3m 6m 7m', '1P 3m 6m 7m 9M', '1P 3m 6m 7m 9M 11P', '1P 3m 6m 9m', '1P 3m 7m 12d 2M', '1P 3m 7m 12d 2M 4P', '1P 4P 5A 7M', '1P 4P 5A 7M 9M', '1P 4P 5A 7m', '1P 4P 5P 7M', '1P 4P 5P 7M 9M', '1P 4P 5P 7m 9M', '1P 4P 5P 7m 9M 13M', '1P 4P 5P 7m 9m 13m', '1P 4P 7m 10m', '1P 5P 7m 9m 11P']
+
 var chordData = {}
 var chordTypes = entries()
+
+var chordNotesHacks = {
+  2850: [0, 1, 3, 2, 4],
+  2914: [0, 1, 3, 2, 4, 5]
+}
 
 keySelectorList.forEach(key => {
   chordData[key] = chordTypes.map(ct => {
@@ -29,13 +38,22 @@ keySelectorList.forEach(key => {
     } else {
       displayName = ct.aliases[0]
     }
-    return chord(key + ' ' + displayName)
+    let c = chord(key + ' ' + displayName)
+    if (c.setNum && c.setNum in chordNotesHacks) { // correct order
+      let oldNotes = [...c.notes]
+      c.notes.sort((a, b) => chordNotesHacks[c.setNum].indexOf(oldNotes.indexOf(a)) - chordNotesHacks[c.setNum].indexOf(oldNotes.indexOf(b)))
+    }
+    return c
+
   })
   // remove the extra half-diminished
   chordData[key].splice(17, 1)
   setPossibleNames(chordData[key])
   chordData[key].sort((a, b) => ChordSortTable.indexOf(a.intervals.join(' ')) - ChordSortTable.indexOf(b.intervals.join(' ')))
 })
+
+window.cd = chordData
+console.log(chordData)
 
 // #################################
 
@@ -59,10 +77,7 @@ var sstable = {
   'G##': 'A'
 }
 // #################################
-var chordNotesHacks = {
-  2850: [0, 1, 3, 2, 4],
-  2914: [0, 1, 3, 2, 4, 5]
-}
+
 // #################################
 
 // C-flat.. -> Cb
@@ -110,10 +125,10 @@ function chord2octave3highlightTable (chord) {
       return note
     }
   })
-  if (chord.setNum in chordNotesHacks) { // correct order
-    var oldNotes = [...notes]
-    notes = notes.sort((a, b) => chordNotesHacks[chord.setNum].indexOf(oldNotes.indexOf(a)) - chordNotesHacks[chord.setNum].indexOf(oldNotes.indexOf(b)))
-  }
+  // if (chord.setNum in chordNotesHacks) { // correct order
+  //   var oldNotes = [...notes]
+  //   notes = notes.sort((a, b) => chordNotesHacks[chord.setNum].indexOf(oldNotes.indexOf(a)) - chordNotesHacks[chord.setNum].indexOf(oldNotes.indexOf(b)))
+  // }
   // make highlight table
   var highlightTable = Array(oct3keyList.length).fill(0)
   var startIndex = 0
@@ -131,6 +146,7 @@ function chord2octave3highlightTable (chord) {
       }
     })] = 1
   })
+  // console.log(highlightTable)
   return highlightTable
 }
 // #################################
