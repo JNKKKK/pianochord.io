@@ -1,23 +1,20 @@
 import { h, Component } from 'preact'
-import { scale } from '../libs/@tonaljs/scale/index.esnext'
-import { note } from '../libs/@tonaljs/tonal/index.esnext'
 import Key from './Key'
-
-var bwMap = ['white', 'black', 'white', 'black', 'white', 'white', 'black', 'white', 'black', 'white', 'black', 'white']
+import { bwMap, chromaticScale } from '../libs/myhelper'
+import { OctaveKeyCount } from '../libs/key'
 
 export default class Keyboard extends Component {
   render ({ octave, highlightTable, highlightColor }) {
-    if (!octave) octave = ['c3', 'c4', 'c5']
-    // build noteNames list
-    var noteNames = []
-    var bws = []
-    octave.forEach((tonic) => {
-      noteNames = noteNames.concat(scale(tonic + ' chromatic').notes)
+    if (!octave) octave = [3, 4, 5]
+    let noteNames = []
+    let bws = []
+    octave.forEach((oct) => {
+      noteNames = noteNames.concat(chromaticScale.map(str => (str + oct)))
     })
-    noteNames.forEach(noteName => {
-      bws.push(bwMap[note(noteName).chroma])
+    noteNames.forEach((_, i) => {
+      bws.push(bwMap[i % OctaveKeyCount])
     })
-    //
+    
     if (!highlightTable) highlightTable = Array(noteNames.length).fill(0)
     if (!highlightColor) highlightColor = 1
     return (

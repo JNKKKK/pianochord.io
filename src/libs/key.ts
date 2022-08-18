@@ -34,6 +34,6 @@ enum Key {
 
 let keySimpleList: string[] = ['C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B']
 
-const keyMax = 11
+const OctaveKeyCount = 12
 
-export { Key, keySimpleList, keyMax }
+export { Key, keySimpleList, OctaveKeyCount }

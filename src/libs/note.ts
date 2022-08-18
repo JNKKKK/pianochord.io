@@ -1,4 +1,4 @@
-import { Key, keyMax } from './key'
+import { Key, OctaveKeyCount } from './key'
 
 class Note {
     key: Key
@@ -17,7 +17,7 @@ class Note {
         return Key
     }
     valueOf() {
-        return this.octave * (keyMax + 1) + this.key
+        return this.octave * OctaveKeyCount + this.key
     }
 }
 
