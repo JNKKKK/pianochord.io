@@ -33,6 +33,7 @@ keySimpleList.forEach((k: string) => {
     chords[k] = []
     chordTable.forEach(row => {
         let chord = new Chord(Key[k], row.intervals)
+        chord.tonic = k
         let name = row.name ? `${k} ${row.name}` : null
         let alias = row.aliases.map(str => `${k}${str}`)
         chord.names = name ? [name, ...alias] : [...alias]
@@ -85,15 +86,11 @@ function url2ChordData(key: string, chordName: string) {
 
 // C-flat.. -> Cb
 function urlDecodeKey(key: string) {
-    key = key.replace('-flat', 'b')
-    key = key.replace('-sharp', '#')
-    return key
+    return key.replace('-flat', 'b').replace('-sharp', '#')
 }
 // C# -> C-sharp
 function urlEncodeKey(key: string) {
-    key = key.replace('#', '-sharp')
-    key = key.replace('b', '-flat')
-    return key
+    return key.replace('#', '-sharp').replace('b', '-flat')
 }
 // #->s /->_ ' '->-
 function urlEncodeChord(chordName: string) {

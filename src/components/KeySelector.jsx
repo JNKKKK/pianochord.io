@@ -1,5 +1,5 @@
 import { h, Component } from 'preact'
-import { urlEncodeKey } from '../libs/myhelper'
+import { urlEncodeKey } from '../libs/helper'
 import { keySimpleList } from '../libs/key'
 
 

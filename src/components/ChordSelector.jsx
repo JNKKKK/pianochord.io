@@ -1,7 +1,7 @@
 import { h, Component } from 'preact'
 import ChordThumbnail from './ChordThumbnail'
 import { keySimpleList } from '../libs/key'
-import { getDisplayName, chords, urlEncodeKey, urlEncodeChord } from '../libs/myhelper'
+import { getDisplayName, chords, urlEncodeKey, urlEncodeChord } from '../libs/helper'
 
 export default class ChordSelector extends Component {
   constructor (props) {

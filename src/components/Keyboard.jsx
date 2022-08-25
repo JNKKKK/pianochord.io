@@ -1,6 +1,6 @@
 import { h, Component } from 'preact'
 import Key from './Key'
-import { bwMap, chromaticScale } from '../libs/myhelper'
+import { bwMap, chromaticScale } from '../libs/helper'
 import { OctaveKeyCount } from '../libs/key'
 
 export default class Keyboard extends Component {

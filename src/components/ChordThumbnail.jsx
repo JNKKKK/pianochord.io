@@ -1,5 +1,5 @@
 import { h, Component } from 'preact'
-import { getHighlightTable, bwMap } from '../libs/myhelper'
+import { getHighlightTable, bwMap } from '../libs/helper'
 
 const whiteWidth = 9
 const whiteHeight = 40

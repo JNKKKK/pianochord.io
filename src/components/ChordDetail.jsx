@@ -1,16 +1,15 @@
 import { h, Component } from 'preact'
-import { getDisplayName } from '../libs/myhelper'
+import { intervalTable } from '../libs/db'
+import { getDisplayName } from '../libs/helper'
 
 export default class ChordDetail extends Component {
-  render ({ selectedChord }) {
-
-    var chord = selectedChord
+  render ({ chord }) {
     return (
       <div className='chordDetail-container'>
         <h1>{getDisplayName(chord)}</h1>
         <div class='chordDetail-detail'>
           <div><b>Tonic</b>&emsp;{chord.tonic}</div>
-          <div><b>Interval</b>&emsp;{chord.intervals.join(', ')}</div>
+          <div><b>Interval</b>&emsp;{chord.intervals.map(i => intervalTable[i].abbrev).join(', ')}</div>
           {
             chord.quality && chord.quality !== 'Unknown' &&
             <div><b>Quality</b>&emsp;{chord.quality}</div>

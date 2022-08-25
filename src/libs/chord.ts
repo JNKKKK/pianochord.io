@@ -5,6 +5,7 @@ class Chord {
     intervals: number[]
     names: string[]
     quality: string
+    tonic?: string
 
     constructor(key: Key, intervals: number[]) {
         this.key = key

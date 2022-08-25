@@ -1,6 +1,6 @@
 import { h, Component } from 'preact'
 import piano from '../libs/audiosynth'
-import { chromaticScale, keyNameToSynthNote, keyNameToOctave } from '../libs/myhelper'
+import { chromaticScale, keyNameToSynthNote, keyNameToOctave } from '../libs/helper'
 
 export default class Playbox extends Component {
   constructor (props) {

@@ -108,4 +108,20 @@ let chordTable = [
     { "aliases": ["11b9"], "name": null, "quality": "Unknown", "intervals": [0, 7, 3, 3, 4] }
 ]
 
-export { chordTable }
+let intervalTable = {
+    0: { abbrev: 'P1', name: 'root' },
+    1: { abbrev: 'm2', name: 'minor second' },
+    2: { abbrev: 'M2', name: 'major second' },
+    3: { abbrev: 'm3', name: 'minor third' },
+    4: { abbrev: 'M3', name: 'major third' },
+    5: { abbrev: 'P4', name: 'perfect fourth' },
+    6: { abbrev: 'TT', name: 'tritone' },
+    7: { abbrev: 'P5', name: 'perfect fifth' },
+    8: { abbrev: 'm6', name: 'minor sixth' },
+    9: { abbrev: 'M6', name: 'major sixth' },
+    10: { abbrev: 'm7', name: 'minor seventh' },
+    11: { abbrev: 'M7', name: 'major seventh' },
+    12: { abbrev: 'P8', name: 'perfect octave' },
+}
+
+export { chordTable, intervalTable }

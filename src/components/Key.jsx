@@ -1,6 +1,6 @@
 import { h, Component } from 'preact'
 import piano from '../libs/audiosynth'
-import { keyNameToSynthNote, keyNameToOctave } from '../libs/myhelper'
+import { keyNameToSynthNote, keyNameToOctave } from '../libs/helper'
 
 export default class Key extends Component {
   constructor (props) {

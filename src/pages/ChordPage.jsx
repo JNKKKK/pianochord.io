@@ -5,7 +5,7 @@ import { keySimpleList } from '../libs/key'
 import ChordSelector from '../components/ChordSelector'
 import ChordDetail from '../components/ChordDetail'
 import Playbox from '../components/Playbox'
-import { getHighlightTable, chordAlignMid, url2ChordData, possibleOctaveList, urlDecodeKey, urlDecodeChord } from '../libs/myhelper'
+import { getHighlightTable, chordAlignMid, url2ChordData, possibleOctaveList, urlDecodeKey, urlDecodeChord } from '../libs/helper'
 
 const MAXoctaveAdj = 1
 const MINoctaveAdj = -1
@@ -47,7 +47,7 @@ export default class ChordPage extends Component {
             raiseOctave={this.raiseOctave} lowerOctave={this.lowerOctave}
             risingDisabled={this.state.octaveAdj === MAXoctaveAdj} lowerDisabled={this.state.octaveAdj === MINoctaveAdj}
             color={keySimpleList.indexOf(selectedKey) + 1} />
-          <ChordDetail selectedChord={chord} />
+          <ChordDetail chord={chord} />
           <ChordSelector selectedKey={selectedKey} />
         </Fragment>
       )
