@@ -2,7 +2,6 @@
   "name": "pianochord.io",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "start": "npx parcel src/index.html",
     "build": "npx parcel build src/index.html"

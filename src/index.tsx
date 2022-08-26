@@ -3,6 +3,7 @@ import Router from 'preact-router'
 import IndexPage from './pages/IndexPage'
 import ChordPage from './pages/ChordPage'
 import Page404 from './pages/404Page'
+import Footer from './components/Footer'
 
 import './scss/App.scss'
 
@@ -17,9 +18,7 @@ class App extends Component {
                         <Page404 default />
                     </Router>
                 </div>
-                <footer><pre>
-                    <b><a href='https://pianochord.io/' className="no-decoration">PianoChord.io</a></b> made with ❤ by <a href='https://nk.dev'>Enkai Ji</a>. Open sourced at <a href="https://github.com/JNKKKK/pianochord.io">Github</a>
-                </pre></footer>
+                <Footer />
             </Fragment>
         )
     }
