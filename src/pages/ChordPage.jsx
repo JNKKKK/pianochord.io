@@ -5,7 +5,7 @@ import { keySimpleList } from '../libs/key'
 import ChordSelector from '../components/ChordSelector'
 import ChordDetail from '../components/ChordDetail'
 import Playbox from '../components/Playbox'
-import { getHighlightTable, chordAlignMid, url2ChordData, possibleOctaveList, urlDecodeKey, urlDecodeChord } from '../libs/helper'
+import { getHighlightTable, chordAlignMid, possibleOctaveList, urlDecodeKey, urlDecodeChord, findChordByName } from '../libs/helper'
 
 const MAXoctaveAdj = 1
 const MINoctaveAdj = -1
@@ -19,14 +19,14 @@ export default class ChordPage extends Component {
   }
 
   raiseOctave () {
-    var octaveAdj = this.state.octaveAdj
+    let octaveAdj = this.state.octaveAdj
     octaveAdj += 1
     if (octaveAdj > MAXoctaveAdj) octaveAdj = MAXoctaveAdj
     this.setState({ octaveAdj })
   }
 
   lowerOctave () {
-    var octaveAdj = this.state.octaveAdj
+    let octaveAdj = this.state.octaveAdj
     octaveAdj -= 1
     if (octaveAdj < MINoctaveAdj) octaveAdj = MINoctaveAdj
     this.setState({ octaveAdj })
@@ -34,14 +34,14 @@ export default class ChordPage extends Component {
 
   render ({ selectedKey, selectedChord }) {
     selectedKey = urlDecodeKey(selectedKey)
-    selectedChord = urlDecodeChord(selectedChord)
     if (selectedChord) {
-      var chord = url2ChordData(selectedKey, selectedChord)
-      var { highlightTable, octave } = chordAlignMid(getHighlightTable(chord))
+      selectedChord = urlDecodeChord(selectedChord)
+      let chord = findChordByName(selectedKey, selectedChord)
+      let { highlightTable, octave } = chordAlignMid(getHighlightTable(chord))
       octave = possibleOctaveList[possibleOctaveList.indexOf(octave.join(',')) + this.state.octaveAdj].split(',')
       return (
         <Fragment>
-          <Keyboard octave={octave} highlightTable={highlightTable} highlightColor={keySimpleList.indexOf(selectedKey) + 1} />
+          <Keyboard offset={this.state.octaveAdj} highlightTable={highlightTable} highlightColor={keySimpleList.indexOf(selectedKey) + 1} />
           <KeySelector selectedKey={selectedKey} />
           <Playbox octave={octave} highlightTable={highlightTable}
             raiseOctave={this.raiseOctave} lowerOctave={this.lowerOctave}

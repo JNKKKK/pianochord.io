@@ -3,6 +3,7 @@ import { chordTable } from "./db"
 import { Key, OctaveKeyCount, keySimpleList } from "./key"
 import { Note } from "./note"
 
+
 const bwMap = ['white', 'black', 'white', 'black', 'white', 'white', 'black', 'white', 'black', 'white', 'black', 'white']
 
 const chromaticScale = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B']
@@ -44,6 +45,7 @@ keySimpleList.forEach((k: string) => {
 })
 
 function getDisplayName(chord: Chord) {
+    // choose from names[0] or names[1]
     if (chord.names[0].length > 17 && chord.names.length > 1) {
         return chord.names[1]
     } else {
@@ -63,13 +65,16 @@ function getHighlightTable(chord: Chord) {
     return highlightTable
 }
 
-function chordAlignMid(highlightTable: boolean[]) {
-    if (highlightTable.slice(24).every(h => !h)) {
+function chordAlignMid(highlightTable: boolean[]): { highlightTable: boolean[], octave: number[] } {
+    // if all the notes are in first 2/3 of the keyboard (3 octaves)
+    if (highlightTable.slice(24).every(h => h === false)) {
+        // move notes to the middle octave
         return {
             highlightTable: Array(12).fill(false).concat(highlightTable.slice(0, 24)),
             octave: [3, 4, 5]
         }
     } else {
+        // otherwise, do not move notes. Notes will use octave 4 as base
         return {
             highlightTable,
             octave: [4, 5, 6]
@@ -77,7 +82,7 @@ function chordAlignMid(highlightTable: boolean[]) {
     }
 }
 
-function url2ChordData(key: string, chordName: string) {
+function findChordByName(key: string, chordName: string) {
     return chords[key].find(c => {
         if (c.names[0] === chordName || c.names[1] === chordName) return true
         return false
@@ -92,23 +97,19 @@ function urlDecodeKey(key: string) {
 function urlEncodeKey(key: string) {
     return key.replace('#', '-sharp').replace('b', '-flat')
 }
-// #->s /->_ ' '->-
+// #->s  /->_  ' '->-
 function urlEncodeChord(chordName: string) {
-    chordName = chordName.replace(/#/g, 'sharp')
-    chordName = chordName.replace(/\//g, '_')
-    chordName = chordName.replace(/ /g, '-')
-    return chordName
+    return chordName.replace(/#/g, 'sharp').replace(/\//g, '_').replace(/ /g, '-')
 }
 function urlDecodeChord(chordName: string) {
-    chordName = chordName.replace(/sharp/g, '#')
-    chordName = chordName.replace(/_/g, '/')
-    chordName = chordName.replace(/-/g, ' ')
-    return chordName
+    return chordName.replace(/sharp/g, '#').replace(/_/g, '/').replace(/-/g, ' ')
 }
+
 // 'C4' -> '4'
 function keyNameToOctave(name: string) {
     return name[name.length - 1]
 }
+
 // 'C4' -> 'C'
 // 'F#4' -> 'F#'
 // 'Db4' -> 'C#'
@@ -128,6 +129,6 @@ function keyNameToSynthNote(name: string) {
 }
 
 export {
-    notes, chords, getDisplayName, getHighlightTable, bwMap, chordAlignMid, url2ChordData, chromaticScale, possibleOctaveList,
+    notes, chords, getDisplayName, getHighlightTable, bwMap, chordAlignMid, findChordByName, chromaticScale, possibleOctaveList,
     urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord, keyNameToOctave, keyNameToSynthNote
 }

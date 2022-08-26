@@ -32,8 +32,17 @@ enum Key {
     'G##' = 9
 }
 
-let keySimpleList: string[] = ['C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B']
+enum bw {
+    'white' = 0,
+    'black' = 1
+}
+
+const bwMap = [bw.white, bw.black, bw.white, bw.black, bw.white, bw.white, bw.black, bw.white, bw.black, bw.white, bw.black, bw.white,]
+
+let keySimpleList: string[] = ['C', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B']
+
+let chromaticName: string[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B']
 
 const OctaveKeyCount = 12
 
-export { Key, keySimpleList, OctaveKeyCount }
+export { Key, keySimpleList, OctaveKeyCount, bw, bwMap, chromaticName }
