@@ -1,15 +1,15 @@
 import { h, Component } from 'preact'
 import KeySelector from '../components/KeySelector'
-import Logo from '../components/Logo'
 
 export default class IndexPage extends Component {
   render () {
     return (
       <div className='indexPage-container'>
-        <Logo />
+        <h1>PianoChord.io</h1>
         <h2>A Reference to a Comprehensive Collection of Piano Chords</h2>
-        <div className='tip1 animated flipInX'>Select a root key to continue</div>
-        <div className='tip2 animated flipInX'>
+        <h3>Open Sourced at <a href="https://github.com/JNKKKK/pianochord.io">Github</a></h3>
+        <div className='tip1'>Select a root key to continue</div>
+        <div className='tip2'>
           <KeySelector />
         </div>
       </div>

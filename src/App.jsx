@@ -16,7 +16,9 @@ export default class App extends Component {
             <Page404 default />
           </Router>
         </div>
-        <footer><a href='/'>PianoChord.io</a>&nbsp;made with ❤ by Enkai Ji</footer>
+        <footer><pre>
+          <b><a href='https://pianochord.io/' className="no-decoration">PianoChord.io</a></b> made with ❤ by <a href='https://nk.dev'>Enkai Ji</a>. Open sourced at <a href="https://github.com/JNKKKK/pianochord.io">Github</a>
+        </pre></footer>
       </Fragment>
     )
   }

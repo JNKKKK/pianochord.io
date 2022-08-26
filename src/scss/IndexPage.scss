@@ -1,3 +1,5 @@
+@import "colors";
+
 $footer-height: 70px;
 
 .indexPage-container {
@@ -6,21 +8,43 @@ $footer-height: 70px;
   justify-content: center;
   height: calc(100vh - #{$footer-height});
   flex-direction: column;
+  a,
+  a:link,
+  a:active,
+  a:visited,
+  a:hover {
+    font-weight: normal;
+    color: black;
+  }
+  h1 {
+    font-size: 72px;
+    background: -webkit-linear-gradient(45deg, #b827fc, #2c90fc, #b8fd33, #fec837, #fd1892);
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+  }
   h2 {
     font-size: 1.3rem;
-    color: rgb(126, 126, 126);
-    margin: 2.5rem 0 5rem 0;
-    font-weight: 200;
+    color: rgb(67, 67, 67);
+    margin: 2rem 0;
+    font-weight: 300;
+  }
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 300;
   }
   .tip1 {
+    margin-top: 4rem;
+    font-size: 1.2rem;
     padding: 0.75rem;
-    color: rgb(126, 126, 126);
-    border: 1.5px solid transparent;
+    color: rgb(67, 67, 67);
+    border-bottom: 3px solid transparent;
     border-image: linear-gradient(to right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
     border-image-slice: 1;
-    animation-delay: 1s;
   }
-  .tip2{
-    animation-delay: 1.5s;
+  .logo-container {
+    width: 610px;
+    height: 90px;
   }
 }
