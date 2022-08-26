@@ -1,48 +1,5 @@
 import { Chord } from "./chord"
-import { chordTable } from "./db"
-import { Key, OctaveKeyCount, keySimpleList } from "./key"
-import { Note } from "./note"
-
-
-const bwMap = ['white', 'black', 'white', 'black', 'white', 'white', 'black', 'white', 'black', 'white', 'black', 'white']
-
-const chromaticScale = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B']
-
-const possibleOctaveList = [
-    '2,3,4',
-    '3,4,5',
-    '4,5,6',
-    '5,6,7'
-]
-
-
-let notes: Note[] = []
-
-for (let oct = 2; oct <= 6; oct++) {
-    for (let k = 0; k < OctaveKeyCount; k++) {
-        notes.push(new Note(k, oct))
-    }
-}
-
-type chordsDB = {
-    [key: string]: Chord[]
-}
-let chords: chordsDB = {}
-
-
-keySimpleList.forEach((k: string) => {
-    chords[k] = []
-    chordTable.forEach(row => {
-        let chord = new Chord(Key[k], row.intervals)
-        chord.tonic = k
-        let name = row.name ? `${k} ${row.name}` : null
-        let alias = row.aliases.map(str => `${k}${str}`)
-        chord.names = name ? [name, ...alias] : [...alias]
-        chord.quality = row.quality
-        chords[k].push(chord)
-    })
-
-})
+import { chords } from "./db"
 
 function getDisplayName(chord: Chord) {
     // choose from names[0] or names[1]
@@ -65,20 +22,14 @@ function getHighlightTable(chord: Chord) {
     return highlightTable
 }
 
-function chordAlignMid(highlightTable: boolean[]): { highlightTable: boolean[], octave: number[] } {
+function chordAlignMid(highlightTable: boolean[]): boolean[] {
     // if all the notes are in first 2/3 of the keyboard (3 octaves)
     if (highlightTable.slice(24).every(h => h === false)) {
         // move notes to the middle octave
-        return {
-            highlightTable: Array(12).fill(false).concat(highlightTable.slice(0, 24)),
-            octave: [3, 4, 5]
-        }
+        return Array(12).fill(false).concat(highlightTable.slice(0, 24))
     } else {
         // otherwise, do not move notes. Notes will use octave 4 as base
-        return {
-            highlightTable,
-            octave: [4, 5, 6]
-        }
+        return highlightTable
     }
 }
 
@@ -110,25 +61,24 @@ function keyNameToOctave(name: string) {
     return name[name.length - 1]
 }
 
-// 'C4' -> 'C'
-// 'F#4' -> 'F#'
-// 'Db4' -> 'C#'
+// 'C' -> 'C'
+// 'F#' -> 'F#'
+// 'Db' -> 'C#'
 function keyNameToSynthNote(name: string) {
-    if (name.length === 2) {
-        return name[0]
-    } else if (name.length === 3) {
+    if (name.length === 1) {
+        return name
+    } else {
         if (name[1] === 'b') {
-            var noteLetter = name[0]
-            var previousNote = { D: 'C', E: 'D', G: 'F', A: 'G', B: 'A' }
+            let noteLetter = name[0]
+            let previousNote = { D: 'C', E: 'D', G: 'F', A: 'G', B: 'A' }
             noteLetter = previousNote[noteLetter]
             return noteLetter + '#'
-        } else if (name[1] === '#') {
-            return name.slice(0, -1)
         }
+        return name
     }
 }
 
 export {
-    notes, chords, getDisplayName, getHighlightTable, bwMap, chordAlignMid, findChordByName, chromaticScale, possibleOctaveList,
+    getDisplayName, getHighlightTable, chordAlignMid, findChordByName, 
     urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord, keyNameToOctave, keyNameToSynthNote
 }

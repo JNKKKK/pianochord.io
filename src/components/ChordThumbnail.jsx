@@ -1,15 +1,16 @@
 import { h, Component } from 'preact'
-import { getHighlightTable, bwMap } from '../libs/helper'
-
+import { getHighlightTable } from '../libs/helper'
+import { bw, bwMap } from '../libs/key'
 const whiteWidth = 9
 const whiteHeight = 40
 const blackWidth = 4.5
 const blackHeight = 25
+
 let blackOccurIndex = [1, 3, 6, 8, 10]
 blackOccurIndex = blackOccurIndex.concat(blackOccurIndex.map(i => i + bwMap.length)).concat(blackOccurIndex.map(i => i + bwMap.length * 2))
 let whiteOccurIndex = [0, 2, 4, 5, 7, 9, 11]
 whiteOccurIndex = whiteOccurIndex.concat(whiteOccurIndex.map(i => i + bwMap.length)).concat(whiteOccurIndex.map(i => i + bwMap.length * 2))
-let bw = bwMap.concat(bwMap).concat(bwMap)
+let bwMap3x = [...bwMap, ...bwMap, ...bwMap]
 
 function whiteIfActive (i, highlightTable) {
   return highlightTable[whiteOccurIndex[i]]
@@ -32,7 +33,7 @@ export default class ChordThumbnail extends Component {
         {[...Array(5 * 3).keys()].map(i => (
           <rect className={'black' + (blackIfActive(i, highlightTable) ? ' active color-' + highlightColor : '')}
             width={blackWidth} height={blackHeight}
-            x={whiteWidth * (bw.slice(0, blackOccurIndex[i]).filter(bw => bw === 'white').length) - blackWidth / 2} />
+            x={whiteWidth * (bwMap3x.slice(0, blackOccurIndex[i]).filter(x => x === bw.white).length) - blackWidth / 2} />
         ))}
       </svg>
     )

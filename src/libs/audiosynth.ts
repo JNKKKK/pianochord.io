@@ -1,18 +1,13 @@
 type SoundProfile = {
 	name: string,
-	attack: () => number,
+	attack: (sampleRate: number, frequency: number, volume: number) => number,
 	dampen: (sampleRate: number, frequency: number, volume: number) => number,
-	wave: (i: number, sampleRate: number, frequency: number, volume: number) => number,
+	wave: (sync: AudioSynth, i: number, sampleRate: number, frequency: number, volume: number) => number,
 }
 
-let URL = window.URL || window.webkitURL;
-let Blob = window.Blob;
+type modulationFunction = (i: number, sampleRate: number, frequency: number, x: number) => number
 
-if (!URL || !Blob) {
-	throw new Error('This browser does not support AudioSynth');
-}
-
-let pack = function (c, arg) {
+let pack = function (c: number, arg: number) {
 	return [new Uint8Array([arg, arg >> 8]), new Uint8Array([arg, arg >> 8, arg >> 16, arg >> 24])][c];
 };
 
@@ -37,17 +32,22 @@ class AudioSynth {
 		'B': 493.88
 	}
 	_fileCache: any[] = []
-	_temp = {}
+	_temp: { valueTable?: number[], playVal?: number, periodCount?: number } = {}
 	_sounds: SoundProfile[] = []
-	_mod = [(i, s, f, x) => {
+	_mod: modulationFunction[] = [(i, s, f, x) => {
 		return Math.sin((2 * Math.PI) * (i / s) * f + x);
 	}]
 
 	constructor() {
+		let URL = window.URL || window.webkitURL;
+		let Blob = window.Blob;
+		if (!URL || !Blob) {
+			throw new Error('This browser does not support AudioSynth');
+		}
 		this._resizeCache();
 	}
 
-	setSampleRate(v) {
+	setSampleRate(v: number) {
 		this._sampleRate = Math.max(Math.min(v | 0, 44100), 4000);
 		this._clearCache();
 		return this._sampleRate;
@@ -56,11 +56,7 @@ class AudioSynth {
 		return this._sampleRate;
 	}
 
-	setVolume(v) {
-		v = parseFloat(v);
-		if (isNaN(v)) {
-			v = 0;
-		}
+	setVolume(v: number) {
 		v = Math.round(v * 32768);
 		this._volume = Math.max(Math.min(v | 0, 32768), 0);
 		this._clearCache();
@@ -88,17 +84,8 @@ class AudioSynth {
 		this._fileCache = [];
 		this._resizeCache();
 	}
-	generate(sound, note, octave, duration) {
+	generate(sound: number, note: string, octave: number, duration: number) {
 		let thisSound = this._sounds[sound];
-		if (!thisSound) {
-			for (let i = 0; i < this._sounds.length; i++) {
-				if (this._sounds[i].name === sound) {
-					thisSound = this._sounds[i];
-					sound = i;
-					break;
-				}
-			}
-		}
 		if (!thisSound) {
 			throw new Error('Invalid sound or sound ID: ' + sound);
 		}
@@ -106,7 +93,7 @@ class AudioSynth {
 		this._temp = {};
 		octave |= 0;
 		octave = Math.min(8, Math.max(1, octave));
-		let time = !duration ? 2 : parseFloat(duration);
+		let time = !duration ? 2 : duration;
 		if (typeof (this._notes[note]) === 'undefined') {
 			throw new Error(note + ' is not a valid note.');
 		}
@@ -124,12 +111,7 @@ class AudioSynth {
 			let attack = thisSound.attack(sampleRate, frequency, volume);
 			let dampen = thisSound.dampen(sampleRate, frequency, volume);
 			let waveFunc = thisSound.wave;
-			let waveBind = {
-				modulate: this._mod,
-				vars: this._temp
-			};
 			let val = 0;
-			// var curVol = 0;
 
 			let data = new Uint8Array(new ArrayBuffer(Math.ceil(sampleRate * time * 2)));
 			let attackLen = (sampleRate * attack) | 0;
@@ -137,7 +119,7 @@ class AudioSynth {
 
 			for (let i = 0 | 0; i !== attackLen; i++) {
 
-				val = volume * (i / (sampleRate * attack)) * waveFunc.call(waveBind, i, sampleRate, frequency, volume);
+				val = volume * (i / (sampleRate * attack)) * waveFunc(this, i, sampleRate, frequency, volume);
 
 				data[i << 1] = val;
 				data[(i << 1) + 1] = val >> 8;
@@ -146,7 +128,7 @@ class AudioSynth {
 
 			for (let i = attackLen; i !== decayLen; i++) {
 
-				val = volume * Math.pow((1 - ((i - (sampleRate * attack)) / (sampleRate * (time - attack)))), dampen) * waveFunc.call(waveBind, i, sampleRate, frequency, volume);
+				val = volume * Math.pow((1 - ((i - (sampleRate * attack)) / (sampleRate * (time - attack)))), dampen) * waveFunc(this, i, sampleRate, frequency, volume);
 
 				data[i << 1] = val;
 				data[(i << 1) + 1] = val >> 8;
@@ -182,7 +164,7 @@ class AudioSynth {
 			return dataURI;
 		}
 	}
-	play(sound, note, octave, duration) {
+	play(sound: number, note: string, octave: number, duration: number) {
 		let src = this.generate(sound, note, octave, duration);
 		let audio = new Audio(src);
 		audio.play();
@@ -191,23 +173,12 @@ class AudioSynth {
 	debug() {
 		this._debug = true;
 	}
-	createInstrument(sound: string) {
-		var n = 0;
-		var found = false;
-		if (typeof (sound) === 'string') {
-			for (var i = 0; i < this._sounds.length; i++) {
-				if (this._sounds[i].name === sound) {
-					found = true;
-					n = i;
-					break;
-				}
-			}
+	createInstrument(soundName: string) {
+		let soundId = this._sounds.findIndex((s => s.name === soundName))
+		if (soundId == -1) {
+			throw new Error('Invalid sound name: ' + soundName);
 		}
-		if (!found) {
-			throw new Error('Invalid sound or sound ID: ' + sound);
-		}
-		var ins = new AudioSynthInstrument(this, sound, n);
-		return ins;
+		return new AudioSynthInstrument(this, soundId);
 	}
 
 	listSounds() {
@@ -219,7 +190,7 @@ class AudioSynth {
 		this._resizeCache();
 	}
 
-	loadModulationFunction(...funcs: ((i: number, sampleRate: number, frequency: number, x: number) => number)[]) {
+	loadModulationFunction(...funcs: modulationFunction[]) {
 		funcs.forEach(f => this._mod.push(f))
 	}
 
@@ -228,17 +199,15 @@ class AudioSynth {
 
 class AudioSynthInstrument {
 	_parent
-	name
 	_soundID
-	constructor(parent, name, soundID) {
+	constructor(parent: AudioSynth, soundID: number) {
 		this._parent = parent
-		this.name = name
 		this._soundID = soundID
 	}
-	play(note, octave, duration) {
+	play(note: string, octave: number, duration: number) {
 		return this._parent.play(this._soundID, note, octave, duration);
 	}
-	generate(note, octave, duration) {
+	generate(note: string, octave: number, duration: number) {
 		return this._parent.generate(this._soundID, note, octave, duration);
 	}
 }
@@ -288,9 +257,9 @@ Synth.loadSoundProfile({
 	dampen: function (sampleRate, frequency, volume) {
 		return Math.pow(0.5 * Math.log((frequency * volume) / sampleRate), 2);
 	},
-	wave: function (i, sampleRate, frequency, volume) {
-		var base = this.modulate[0];
-		return this.modulate[1](
+	wave: function (synth, i, sampleRate, frequency, volume) {
+		let base = synth._mod[0];
+		return synth._mod[1](
 			i,
 			sampleRate,
 			frequency,
@@ -307,9 +276,9 @@ Synth.loadSoundProfile({
 	dampen: function (sampleRate, frequency) {
 		return 1 + (frequency * 0.01);
 	},
-	wave: function (i, sampleRate, frequency) {
-		var base = this.modulate[0];
-		return this.modulate[1](
+	wave: function (synth, i, sampleRate, frequency) {
+		let base = synth._mod[0];
+		return synth._mod[1](
 			i,
 			sampleRate,
 			frequency,
@@ -326,9 +295,9 @@ Synth.loadSoundProfile({
 	dampen: function () {
 		return 1;
 	},
-	wave: function (i, sampleRate, frequency) {
+	wave: function (synth, i, sampleRate, frequency) {
 
-		var vars = this.vars;
+		let vars = synth._temp;
 		vars.valueTable = !vars.valueTable ? [] : vars.valueTable;
 		if (typeof (vars.playVal) === 'undefined') {
 			vars.playVal = 0;
@@ -337,14 +306,14 @@ Synth.loadSoundProfile({
 			vars.periodCount = 0;
 		}
 
-		var valueTable = vars.valueTable;
-		var playVal = vars.playVal;
-		var periodCount = vars.periodCount;
+		let valueTable = vars.valueTable;
+		let playVal = vars.playVal;
+		let periodCount = vars.periodCount;
 
-		var period = sampleRate / frequency;
-		var p_hundredth = Math.floor((period - Math.floor(period)) * 100);
+		let period = sampleRate / frequency;
+		let p_hundredth = Math.floor((period - Math.floor(period)) * 100);
 
-		var resetPlay = false;
+		let resetPlay = false;
 
 		if (valueTable.length <= Math.ceil(period)) {
 
@@ -369,7 +338,7 @@ Synth.loadSoundProfile({
 				}
 			}
 
-			var _return = valueTable[playVal];
+			let _return = valueTable[playVal];
 			if (resetPlay) {
 				vars.playVal = 0;
 			} else {
@@ -388,9 +357,9 @@ Synth.loadSoundProfile({
 	dampen: function () {
 		return 1;
 	},
-	wave: function (i, sampleRate, frequency) {
-		var base = this.modulate[0];
-		var mod = this.modulate.slice(1);
+	wave: function (synth, i, sampleRate, frequency) {
+		let base = synth._mod[0];
+		let mod = synth._mod.slice(1);
 		return mod[0](
 			i,
 			sampleRate,
@@ -419,5 +388,4 @@ Synth.loadSoundProfile({
 });
 
 Synth.setVolume(0.4);
-var piano = Synth.createInstrument('piano');
-export default piano;
+export default Synth.createInstrument('piano');;

@@ -1,5 +1,4 @@
 import { h, Component } from 'preact'
-import { keyNameToSynthNote, keyNameToOctave, bwMap } from '../libs/helper'
 import { bw } from '../libs/key'
 
 export default class Key extends Component {

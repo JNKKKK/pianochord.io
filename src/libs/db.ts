@@ -1,3 +1,7 @@
+import { Chord } from "./chord"
+import { Key, keySimpleList, OctaveKeyCount } from "./key"
+import { Note } from "./note"
+
 let chordTable = [
     { "aliases": ["M"], "name": "major", "quality": "Major", "intervals": [0, 4, 3] },
     { "aliases": ["maj7", "Δ", "ma7", "M7", "Maj7"], "name": "major seventh", "quality": "Major", "intervals": [0, 4, 3, 4] },
@@ -124,4 +128,33 @@ let intervalTable = {
     12: { abbrev: 'P8', name: 'perfect octave' },
 }
 
-export { chordTable, intervalTable }
+let notes: Note[] = []
+
+for (let oct = 2; oct <= 6; oct++) {
+    for (let k = 0; k < OctaveKeyCount; k++) {
+        notes.push(new Note(k, oct))
+    }
+}
+
+type chordsDB = {
+    [key: string]: Chord[]
+}
+let chords: chordsDB = {}
+
+
+keySimpleList.forEach((k: string) => {
+    chords[k] = []
+    chordTable.forEach(row => {
+        let chord = new Chord(Key[k], row.intervals)
+        chord.tonic = k
+        let name = row.name ? `${k} ${row.name}` : null
+        let alias = row.aliases.map(str => `${k}${str}`)
+        chord.names = name ? [name, ...alias] : [...alias]
+        chord.quality = row.quality
+        chords[k].push(chord)
+    })
+
+})
+
+
+export { chordTable, intervalTable, notes, chords }

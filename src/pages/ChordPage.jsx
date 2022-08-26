@@ -5,7 +5,7 @@ import { keySimpleList } from '../libs/key'
 import ChordSelector from '../components/ChordSelector'
 import ChordDetail from '../components/ChordDetail'
 import Playbox from '../components/Playbox'
-import { getHighlightTable, chordAlignMid, possibleOctaveList, urlDecodeKey, urlDecodeChord, findChordByName } from '../libs/helper'
+import { getHighlightTable, chordAlignMid, urlDecodeKey, urlDecodeChord, findChordByName } from '../libs/helper'
 
 const MAXoctaveAdj = 1
 const MINoctaveAdj = -1
@@ -37,13 +37,12 @@ export default class ChordPage extends Component {
     if (selectedChord) {
       selectedChord = urlDecodeChord(selectedChord)
       let chord = findChordByName(selectedKey, selectedChord)
-      let { highlightTable, octave } = chordAlignMid(getHighlightTable(chord))
-      octave = possibleOctaveList[possibleOctaveList.indexOf(octave.join(',')) + this.state.octaveAdj].split(',')
+      let highlightTable  = chordAlignMid(getHighlightTable(chord))
       return (
         <Fragment>
           <Keyboard offset={this.state.octaveAdj} highlightTable={highlightTable} highlightColor={keySimpleList.indexOf(selectedKey) + 1} />
           <KeySelector selectedKey={selectedKey} />
-          <Playbox octave={octave} highlightTable={highlightTable}
+          <Playbox offset={this.state.octaveAdj} highlightTable={highlightTable}
             raiseOctave={this.raiseOctave} lowerOctave={this.lowerOctave}
             risingDisabled={this.state.octaveAdj === MAXoctaveAdj} lowerDisabled={this.state.octaveAdj === MINoctaveAdj}
             color={keySimpleList.indexOf(selectedKey) + 1} />
@@ -54,7 +53,7 @@ export default class ChordPage extends Component {
     } else {
       return (
         <Fragment>
-          <Keyboard />
+          <Keyboard offset={0} />
           <KeySelector selectedKey={selectedKey} />
           <ChordSelector selectedKey={selectedKey} />
         </Fragment>
