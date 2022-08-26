@@ -10,34 +10,51 @@ import { getHighlightTable, chordAlignMid, urlDecodeKey, urlDecodeChord, findCho
 const MAXoctaveAdj = 1
 const MINoctaveAdj = -1
 
-export default class ChordPage extends Component {
-  constructor (props) {
+type ChordPageProps = {
+  selectedKey: string,
+  selectedChord: string
+}
+
+type ChordPageState = {
+  octaveAdj: number
+}
+
+export default class ChordPage extends Component<ChordPageProps, ChordPageState> {
+  constructor(props: ChordPageProps) {
     super(props)
     this.raiseOctave = this.raiseOctave.bind(this)
     this.lowerOctave = this.lowerOctave.bind(this)
     this.state = { octaveAdj: 0 }
   }
 
-  raiseOctave () {
+  raiseOctave() {
     let octaveAdj = this.state.octaveAdj
     octaveAdj += 1
     if (octaveAdj > MAXoctaveAdj) octaveAdj = MAXoctaveAdj
     this.setState({ octaveAdj })
   }
 
-  lowerOctave () {
+  lowerOctave() {
     let octaveAdj = this.state.octaveAdj
     octaveAdj -= 1
     if (octaveAdj < MINoctaveAdj) octaveAdj = MINoctaveAdj
     this.setState({ octaveAdj })
   }
 
-  render ({ selectedKey, selectedChord }) {
-    selectedKey = urlDecodeKey(selectedKey)
-    if (selectedChord) {
-      selectedChord = urlDecodeChord(selectedChord)
+  render() {
+    let selectedKey = urlDecodeKey(this.props.selectedKey)
+    if (!keySimpleList.includes(selectedKey)) {
+      window.location.href = "/404";
+      return
+    }
+    if (this.props.selectedChord) {
+      let selectedChord = urlDecodeChord(this.props.selectedChord)
       let chord = findChordByName(selectedKey, selectedChord)
-      let highlightTable  = chordAlignMid(getHighlightTable(chord))
+      if (chord === undefined) {
+        window.location.href = "/404";
+        return
+      }
+      let highlightTable = chordAlignMid(getHighlightTable(chord))
       return (
         <Fragment>
           <Keyboard offset={this.state.octaveAdj} highlightTable={highlightTable} highlightColor={keySimpleList.indexOf(selectedKey) + 1} />

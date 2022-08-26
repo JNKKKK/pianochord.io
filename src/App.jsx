@@ -1,9 +1,9 @@
 import { Fragment, h, Component } from 'preact'
 import './scss/App.scss'
 import Router from 'preact-router'
-import IndexPage from './pages/IndexPage.jsx'
-import ChordPage from './pages/ChordPage.jsx'
-import Page404 from './pages/404Page.jsx'
+import IndexPage from './pages/IndexPage'
+import ChordPage from './pages/ChordPage'
+import Page404 from './pages/404Page'
 
 export default class App extends Component {
   render () {

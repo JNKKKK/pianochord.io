@@ -2,7 +2,7 @@ import { h, Component } from 'preact'
 import KeySelector from '../components/KeySelector'
 
 export default class IndexPage extends Component {
-  render () {
+  render() {
     return (
       <div className='indexPage-container'>
         <h1>PianoChord.io</h1>

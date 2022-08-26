@@ -79,6 +79,6 @@ function keyNameToSynthNote(name: string) {
 }
 
 export {
-    getDisplayName, getHighlightTable, chordAlignMid, findChordByName, 
+    getDisplayName, getHighlightTable, chordAlignMid, findChordByName,
     urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord, keyNameToOctave, keyNameToSynthNote
 }

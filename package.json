@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npx parcel src/index.html",
-    "build": "npx parcel build"
+    "build": "npx parcel build src/index.html"
   },
   "repository": {
     "type": "git",

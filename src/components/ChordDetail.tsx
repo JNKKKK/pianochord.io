@@ -1,9 +1,15 @@
+import { Chord } from 'libs/chord'
 import { h, Component } from 'preact'
 import { intervalTable } from '../libs/db'
 import { getDisplayName } from '../libs/helper'
 
-export default class ChordDetail extends Component {
-  render ({ chord }) {
+type ChordDetailProps = {
+  chord: Chord
+}
+
+export default class ChordDetail extends Component<ChordDetailProps> {
+  render() {
+    let chord = this.props.chord
     return (
       <div className='chordDetail-container'>
         <h1>{getDisplayName(chord)}</h1>
