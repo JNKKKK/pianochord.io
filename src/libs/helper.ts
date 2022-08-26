@@ -41,19 +41,27 @@ function findChordByName(key: string, chordName: string) {
 }
 
 // C-flat.. -> Cb
-function urlDecodeKey(key: string) {
-    return key.replace('-flat', 'b').replace('-sharp', '#')
+function urlDecodeKey(key: string | undefined): string | undefined {
+    if (key) {
+        return key.replace('-flat', 'b').replace('-sharp', '#')
+    } else {
+        return undefined
+    }
 }
 // C# -> C-sharp
-function urlEncodeKey(key: string) {
+function urlEncodeKey(key: string): string {
     return key.replace('#', '-sharp').replace('b', '-flat')
 }
-// #->s  /->_  ' '->-
-function urlEncodeChord(chordName: string) {
+// #->sharp  /->_  ' '->-
+function urlEncodeChord(chordName: string): string {
     return chordName.replace(/#/g, 'sharp').replace(/\//g, '_').replace(/ /g, '-')
 }
-function urlDecodeChord(chordName: string) {
-    return chordName.replace(/sharp/g, '#').replace(/_/g, '/').replace(/-/g, ' ')
+function urlDecodeChord(chordName: string | undefined): string | undefined {
+    if (chordName) {
+        return chordName.replace(/sharp/g, '#').replace(/_/g, '/').replace(/-/g, ' ')
+    } else {
+        return undefined
+    }
 }
 
 // 'C4' -> '4'

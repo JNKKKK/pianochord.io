@@ -11,8 +11,9 @@ const MAXoctaveAdj = 1
 const MINoctaveAdj = -1
 
 type ChordPageProps = {
-  selectedKey: string,
-  selectedChord: string
+  selectedKey?: string,
+  selectedChord?: string
+  path?: string
 }
 
 type ChordPageState = {
@@ -43,12 +44,16 @@ export default class ChordPage extends Component<ChordPageProps, ChordPageState>
 
   render() {
     let selectedKey = urlDecodeKey(this.props.selectedKey)
+    let selectedChord = urlDecodeChord(this.props.selectedChord)
+    if (!selectedKey) {
+      window.location.href = "/404";
+      return
+    }
     if (!keySimpleList.includes(selectedKey)) {
       window.location.href = "/404";
       return
     }
-    if (this.props.selectedChord) {
-      let selectedChord = urlDecodeChord(this.props.selectedChord)
+    if (selectedChord) {
       let chord = findChordByName(selectedKey, selectedChord)
       if (chord === undefined) {
         window.location.href = "/404";
