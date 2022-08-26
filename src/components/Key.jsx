@@ -1,6 +1,6 @@
 import { h, Component } from 'preact'
-import piano from '../libs/audiosynth'
-import { keyNameToSynthNote, keyNameToOctave } from '../libs/helper'
+import { keyNameToSynthNote, keyNameToOctave, bwMap } from '../libs/helper'
+import { bw } from '../libs/key'
 
 export default class Key extends Component {
   constructor (props) {
@@ -24,22 +24,18 @@ export default class Key extends Component {
 
   handleMouseDown (e) {
     this.setState({ clicked: true })
-    piano.play(
-      keyNameToSynthNote(this.props.noteName),
-      keyNameToOctave(this.props.noteName),
-      2
-    )
+    this.props.note.play()
   }
 
   handleMouseUp (e) {
     this.setState({ clicked: false })
   }
 
-  render ({ noteName, bw, highlighted, highlightColor }, { clicked }) {
+  render ({ note, highlighted, highlightColor }, { clicked }) {
     return (
-      <div className={'keyboard-key ' + bw + (clicked ? ' clicked' : '') + (highlighted ? ' active color-' + highlightColor : '')}
+      <div className={'keyboard-key ' + (note.bw === bw.white ? 'white' : 'black') + (clicked ? ' clicked' : '') + (highlighted ? ' active color-' + highlightColor : '')}
         onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}>
-        <div className='keyboard-key-label'>{noteName}</div>
+        <div className='keyboard-key-label'>{note.toString()}</div>
       </div>
     )
   }
