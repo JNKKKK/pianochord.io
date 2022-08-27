@@ -1,4 +1,4 @@
-# [PianoChord.io](pianochord.io)
+# [PianoChord.io](https://pianochord.io)
 A pure frontend Web Application for people to browse a large collection of piano chords
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/ba61edbb-ab5e-40c1-a2f8-c51cb512a854/deploy-status)](https://app.netlify.com/sites/pianochordio/deploys)
