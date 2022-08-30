@@ -1,4 +1,5 @@
-import { Note } from 'libs/note'
+import { Note } from '../libs/note'
+import { delay } from '../libs/helper'
 import { h, Component } from 'preact'
 import { notes as allNotes } from '../libs/db'
 
@@ -19,14 +20,17 @@ export default class Playbox extends Component<PlayboxProps> {
     this.playEachNote = this.playEachNote.bind(this)
   }
 
-  playChord(notes: Note[]) {
-    notes.forEach(note => note.play())
+  async playChord(notes: Note[]) {
+    for (const note of notes) {
+      await note.play()
+    }
   }
 
-  playEachNote(notes: Note[]) {
-    notes.forEach((note, i) =>
-      setTimeout(() => note.play(), 300 * i)
-    )
+  async playEachNote(notes: Note[]) {
+    for (const note of notes) {
+      await note.play()
+      await delay(300)
+    }
   }
 
   render() {

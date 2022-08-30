@@ -86,7 +86,10 @@ function keyNameToSynthNote(name: string) {
     }
 }
 
+const delay = (t: number) => new Promise(resolve => setTimeout(resolve, t));
+
+
 export {
     getDisplayName, getHighlightTable, chordAlignMid, findChordByName,
-    urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord, keyNameToOctave, keyNameToSynthNote
+    urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord, keyNameToOctave, keyNameToSynthNote, delay
 }

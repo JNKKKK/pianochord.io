@@ -1,3 +1,9 @@
+/*
+
+Deprecated. Will be removed in the future version
+
+*/
+
 type SoundProfile = {
 	name: string,
 	attack: (sampleRate: number, frequency: number, volume: number) => number,

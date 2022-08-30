@@ -1,6 +1,5 @@
 import { bwMap, chromaticName, Key, OctaveKeyCount } from './key'
-import piano from '../libs/audiosynth'
-import { keyNameToSynthNote } from './helper'
+import piano from '../libs/audio'
 
 class Note {
     key: Key
@@ -13,11 +12,7 @@ class Note {
     }
 
     play() {
-        piano.play(
-            keyNameToSynthNote(chromaticName[this.key]),
-            this.octave,
-            2
-        )
+        return piano.play(this.key, this.octave)
     }
 
     toString() {
