@@ -1,7 +1,7 @@
 import { h, Component } from 'preact'
 import ChordThumbnail from './ChordThumbnail'
 import { keySimpleList } from '../libs/key'
-import { getDisplayName, urlEncodeKey, urlEncodeChord } from '../libs/helper'
+import { urlEncodeKey, urlEncodeChord } from '../libs/helper'
 import { chords } from '../libs/db'
 
 type ChordSelectorProps = {
@@ -36,9 +36,9 @@ export default class ChordSelector extends Component<ChordSelectorProps, ChordSe
         <div className='chordSelector-chord-container'>
           {chordDataList.filter(chord => chord.names.some(name => name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1)).map(c => (
             <a className='chordSelector-chord' onClick={() => window.scrollTo(0, 0)}
-              href={'/chord/' + urlEncodeKey(selectedKey) + '/' + urlEncodeChord(getDisplayName(c))}>
+              href={'/chord/' + urlEncodeKey(selectedKey) + '/' + urlEncodeChord(c.name)}>
               <ChordThumbnail chord={c} highlightColor={keySimpleList.indexOf(selectedKey) + 1} />
-              <div className='chordSelector-chord-name'>{getDisplayName(c)}</div>
+              <div className='chordSelector-chord-name'>{c.name}</div>
             </a>
           ))}
         </div>

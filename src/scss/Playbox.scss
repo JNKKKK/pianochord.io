@@ -1,7 +1,7 @@
 @import "colors";
 
 .playbox-container {
-  width: 3rem * 20;
+  max-width: 63rem;
   margin: 1rem auto;
   padding: 0.75rem 1rem;
   border-radius: 5px;
@@ -11,6 +11,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
   button {
     margin-right: 0.5rem;
     background-color: #fff;
@@ -31,6 +33,7 @@
     box-shadow: none;
     display: inline-flex;
     font-size: 1rem;
+    width: 10rem;
     height: 2.25em;
     line-height: 1.5;
     position: relative;

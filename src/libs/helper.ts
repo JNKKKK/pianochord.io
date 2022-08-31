@@ -1,14 +1,6 @@
 import { Chord } from "./chord"
 import { chords } from "./db"
 
-function getDisplayName(chord: Chord) {
-    // choose from names[0] or names[1]
-    if (chord.names[0].length > 17 && chord.names.length > 1) {
-        return chord.names[1]
-    } else {
-        return chord.names[0]
-    }
-}
 
 function getHighlightTable(chord: Chord) {
     let highlightTable: boolean[] = Array(12 * 3).fill(false)
@@ -65,31 +57,31 @@ function urlDecodeChord(chordName: string | undefined): string | undefined {
 }
 
 // 'C4' -> '4'
-function keyNameToOctave(name: string) {
-    return name[name.length - 1]
-}
+// function keyNameToOctave(name: string) {
+//     return name[name.length - 1]
+// }
 
 // 'C' -> 'C'
 // 'F#' -> 'F#'
 // 'Db' -> 'C#'
-function keyNameToSynthNote(name: string) {
-    if (name.length === 1) {
-        return name
-    } else {
-        if (name[1] === 'b') {
-            let noteLetter = name[0]
-            let previousNote = { D: 'C', E: 'D', G: 'F', A: 'G', B: 'A' }
-            noteLetter = previousNote[noteLetter]
-            return noteLetter + '#'
-        }
-        return name
-    }
-}
+// function keyNameToSynthNote(name: string) {
+//     if (name.length === 1) {
+//         return name
+//     } else {
+//         if (name[1] === 'b') {
+//             let noteLetter = name[0]
+//             let previousNote = { D: 'C', E: 'D', G: 'F', A: 'G', B: 'A' }
+//             noteLetter = previousNote[noteLetter]
+//             return noteLetter + '#'
+//         }
+//         return name
+//     }
+// }
 
 const delay = (t: number) => new Promise(resolve => setTimeout(resolve, t));
 
 
 export {
-    getDisplayName, getHighlightTable, chordAlignMid, findChordByName,
-    urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord, keyNameToOctave, keyNameToSynthNote, delay
+    getHighlightTable, chordAlignMid, findChordByName,
+    urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord, delay
 }

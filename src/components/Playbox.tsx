@@ -42,8 +42,8 @@ export default class Playbox extends Component<PlayboxProps> {
       <div class='playbox-container'>
         <button type='button' className={'color-' + this.props.color} onClick={() => this.playChord(highlightedNotes)}>&nbsp;▶ Play&nbsp;</button>
         <button type='button' className={'color-' + this.props.color} onClick={() => this.playEachNote(highlightedNotes)}>▶ Play each note</button>
-        <button type='button' className={'color-' + this.props.color} disabled={this.props.lowerDisabled} onClick={this.props.lowerOctave}>↓&nbsp;Lower octave</button>
-        <button type='button' className={'color-' + this.props.color} disabled={this.props.risingDisabled} onClick={this.props.raiseOctave}>↑&nbsp;Rising octave</button>
+        <button type='button' className={'color-' + this.props.color} disabled={this.props.lowerDisabled} onClick={this.props.lowerOctave}>↓&nbsp;Octave Down</button>
+        <button type='button' className={'color-' + this.props.color} disabled={this.props.risingDisabled} onClick={this.props.raiseOctave}>↑&nbsp;Octave Up</button>
       </div>
     )
   }

@@ -5,7 +5,10 @@ export default class Footer extends Component {
         return (
             <footer>
                 <pre>
-                    <b><a href='https://pianochord.io/' className="no-decoration">PianoChord.io</a></b> made with ❤ by <a href='https://nk.dev'>Enkai Ji</a>. Open sourced at <a href="https://github.com/JNKKKK/pianochord.io">Github</a>
+                    <b><a href='https://pianochord.io/' className="no-decoration">PianoChord.io</a></b> made with ❤ by <a href='https://nk.dev'>Enkai Ji</a>. 
+                </pre>
+                <pre>
+                    Open sourced at <a href="https://github.com/JNKKKK/pianochord.io">Github</a>
                 </pre>
             </footer>
         )

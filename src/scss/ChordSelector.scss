@@ -1,9 +1,8 @@
-@import 'colors';
+@import "colors";
 
 .chordSelector-container {
-  width: 3rem * 20;
+  max-width: 63rem;
   margin: 1rem auto;
-  // margin-bottom: 0;
   background-color: rgb(240, 240, 240);
   box-sizing: border-box;
   padding: 1rem;
@@ -54,15 +53,14 @@
     flex-direction: row;
     flex-wrap: wrap;
     .chordSelector-chord {
-      max-width: 25%;
-      flex-basis: calc(25% - 2px);
-      text-align: center;
-      padding: 2rem 0;
+      flex-grow: 1;
+      padding: 2rem 0.5rem;
       box-sizing: border-box;
       margin: 1px;
       background-color: white;
       text-decoration: none;
       color: black;
+      text-align: center;
       &:hover {
         background-color: rgb(226, 226, 226);
       }

@@ -1,7 +1,6 @@
 import { Chord } from 'libs/chord'
 import { h, Component } from 'preact'
 import { intervalTable } from '../libs/db'
-import { getDisplayName } from '../libs/helper'
 
 type ChordDetailProps = {
   chord: Chord
@@ -12,7 +11,7 @@ export default class ChordDetail extends Component<ChordDetailProps> {
     let chord = this.props.chord
     return (
       <div className='chordDetail-container'>
-        <h1>{getDisplayName(chord)}</h1>
+        <h1>{chord.name}</h1>
         <div class='chordDetail-detail'>
           <div><b>Tonic</b>&emsp;{chord.tonic}</div>
           <div><b>Interval</b>&emsp;{chord.intervals.map(i => intervalTable[i].abbrev).join(', ')}</div>

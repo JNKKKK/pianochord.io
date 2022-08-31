@@ -6,9 +6,12 @@ $key-black-width: 2.25rem;
 $key-white-height: 10rem;
 $key-black-height: 6rem;
 .keyboard-container {
-  // width: 100%;
+  max-width: 63rem;
   text-align: center;
   margin: 0 auto;
+  white-space: nowrap;
+  overflow-x: auto;
+  padding-bottom: 0.3rem;
   .keyboard-key {
     display: inline-block;
     position: relative;
@@ -29,7 +32,7 @@ $key-black-height: 6rem;
       z-index: 0;
       width: $key-white-width;
       height: $key-white-height;
-      margin-left: -$key-border-px;
+      // margin-left: -$key-border-px;
       background-color: white;
       color: black;
       &:hover {
@@ -38,7 +41,7 @@ $key-black-height: 6rem;
     }
     &.black {
       z-index: 1;
-      margin-left: -$key-black-width/2 - $key-border-px;
+      margin-left: -$key-black-width/2;
       width: $key-black-width;
       height: $key-black-height;
       background-color: rgb(51, 51, 51);
@@ -50,7 +53,7 @@ $key-black-height: 6rem;
       }
     }
     &.black + .white {
-      margin-left: -$key-black-width/2 - $key-border-px;
+      margin-left: -$key-black-width/2;
     }
     @for $i from 1 through 17 {
       &.active.color-#{$i} {

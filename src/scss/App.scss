@@ -47,8 +47,13 @@ body {
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-wrap: wrap;
       color: rgb(95, 95, 95);
       font-size: 0.9rem;
+      margin: 0 1rem;
+      pre:first-child {
+        margin-right: 0.3rem;
+      }
       a,
       a:link,
       a:active,

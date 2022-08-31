@@ -13,6 +13,10 @@ class Chord {
         this.names = []
         this.quality = 'Unknown'
     }
+
+    get name(): string {
+        return this.names[0]
+    }
 }
 
 

@@ -63,7 +63,7 @@ function playSample(sample: AudioBuffer, key: Key) {
     source.buffer = sample;
     source.playbackRate.value = 2 ** ((key - Key['F']) / 12);
     source.connect(context.destination);
-    source.start(0);
+    source.start(0, 0, 2);
 }
 
 let piano = {
