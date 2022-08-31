@@ -5,25 +5,50 @@
   max-width: 63rem;
   background-color: rgb(240, 240, 240);
   box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  h1 {
-    flex-basis: 63%;
-    font-size: 3rem;
-    font-weight: 100;
-    text-align: center;
-    margin-right: 1rem;
-  }
-  .chordDetail-detail {
-    font-size: 1.2rem;
-    div {
-      margin-bottom: 0.4rem;
-      line-height: 1.6rem;
+
+  .information-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: 1rem;
+    h1 {
+      flex-grow: 3;
+      font-size: 3rem;
+      font-weight: 100;
+      text-align: center;
+      margin-right: 0.5rem;
     }
-    b {
-      font-weight: bold;
-      margin-right: 0.7rem;
+    .information {
+      font-size: 1.2rem;
+      flex-grow: 1;
+      div {
+        margin-bottom: 0.4rem;
+        line-height: 1.6rem;
+      }
+      b {
+        font-weight: bold;
+        margin-right: 0.7rem;
+      }
+    }
+  }
+
+  .inversion-container {
+    margin-top: 1rem;
+    .inversion-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.1rem;
+      height: 3rem;
+      padding: 0 1rem;
+      border-radius: 0.4rem;
+      background-color: rgb(218, 218, 218);
+      cursor: pointer;
+    }
+    .inversion {
     }
   }
 }

@@ -128,6 +128,14 @@ let intervalTable = {
     12: { abbrev: 'P8', name: 'perfect octave' },
 }
 
+let inversionNames = [
+    'Root Position',
+    '1st Inversion',
+    '2nd Inversion',
+    '3rd Inversion',
+]
+
+
 let notes: Note[] = []
 
 // generate notes from oct 2 to oct 6 (inclusive)
@@ -161,4 +169,4 @@ keySimpleList.forEach((k: string) => {
 
 // (window as any).chords = chords
 
-export { chordTable, intervalTable, notes, chords }
+export { chordTable, intervalTable, notes, chords, inversionNames }

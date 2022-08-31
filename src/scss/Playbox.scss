@@ -13,6 +13,7 @@
   justify-content: center;
   flex-wrap: wrap;
   row-gap: 0.5rem;
+
   button {
     margin-right: 0.5rem;
     background-color: #fff;
@@ -67,5 +68,9 @@
       opacity: 0.5;
       cursor: not-allowed;
     }
+  }
+
+  svg {
+    margin-right: 0.5rem;
   }
 }
