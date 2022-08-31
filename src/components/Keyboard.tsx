@@ -12,7 +12,7 @@ export default class Keyboard extends Component<KeyboardProps> {
   ref = createRef();
 
   componentDidMount() {
-    console.log(this.ref);
+    // scroll the keyboard to the middle if needed
     let div = this.ref.current as HTMLElement
     if (div.scrollWidth > div.clientWidth)
       div.scrollLeft = (div.scrollWidth - window.innerWidth) / 2

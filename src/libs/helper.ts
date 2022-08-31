@@ -27,7 +27,7 @@ function chordAlignMid(highlightTable: boolean[]): boolean[] {
 
 function findChordByName(key: string, chordName: string) {
     return chords[key].find(c => {
-        if (c.names[0] === chordName || c.names[1] === chordName) return true
+        if (c.name === chordName) return true
         return false
     })
 }
@@ -56,32 +56,20 @@ function urlDecodeChord(chordName: string | undefined): string | undefined {
     }
 }
 
-// 'C4' -> '4'
-// function keyNameToOctave(name: string) {
-//     return name[name.length - 1]
-// }
-
-// 'C' -> 'C'
-// 'F#' -> 'F#'
-// 'Db' -> 'C#'
-// function keyNameToSynthNote(name: string) {
-//     if (name.length === 1) {
-//         return name
-//     } else {
-//         if (name[1] === 'b') {
-//             let noteLetter = name[0]
-//             let previousNote = { D: 'C', E: 'D', G: 'F', A: 'G', B: 'A' }
-//             noteLetter = previousNote[noteLetter]
-//             return noteLetter + '#'
-//         }
-//         return name
-//     }
-// }
+function chordFilterByKeyword(kw: string) {
+    return (chord: Chord) => {
+        kw = kw.toLowerCase().replace(' ', '')
+        let fullName = chord.fullName.toLowerCase().replace(' ', '')
+        let alias = chord.alias.map((str: string) => str.toLowerCase().replace(' ', ''))
+        let allNames = [fullName, ...alias]
+        return allNames.some(name => name.indexOf(kw) !== -1)
+    }
+}
 
 const delay = (t: number) => new Promise(resolve => setTimeout(resolve, t));
 
 
 export {
     getHighlightTable, chordAlignMid, findChordByName,
-    urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord, delay
+    urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord, delay, chordFilterByKeyword
 }

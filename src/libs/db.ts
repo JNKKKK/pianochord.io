@@ -3,7 +3,7 @@ import { Key, keySimpleList, OctaveKeyCount } from "./key"
 import { Note } from "./note"
 
 let chordTable = [
-    { "aliases": ["M"], "name": "major", "quality": "Major", "intervals": [0, 4, 3] },
+    { "aliases": ["", "M"], "name": "major", "quality": "Major", "intervals": [0, 4, 3] },
     { "aliases": ["maj7", "Δ", "ma7", "M7", "Maj7"], "name": "major seventh", "quality": "Major", "intervals": [0, 4, 3, 4] },
     { "aliases": ["maj9", "Δ9"], "name": "major ninth", "quality": "Major", "intervals": [0, 4, 3, 4, 3] },
     { "aliases": ["maj13", "Maj13"], "name": "major thirteenth", "quality": "Major", "intervals": [0, 4, 3, 4, 3, 7] },
@@ -130,6 +130,7 @@ let intervalTable = {
 
 let notes: Note[] = []
 
+// generate notes from oct 2 to oct 6 (inclusive)
 for (let oct = 2; oct <= 6; oct++) {
     for (let k = 0; k < OctaveKeyCount; k++) {
         notes.push(new Note(k, oct))
@@ -147,14 +148,17 @@ keySimpleList.forEach((k: string) => {
     chordTable.forEach(row => {
         let chord = new Chord(Key[k], row.intervals)
         chord.tonic = k
-        let name = row.name ? `${k} ${row.name}` : null
+        let name = row.name ? `${k} ${row.name}` : ''
         let alias = row.aliases.map(str => `${k}${str}`)
-        chord.names = name ? [name, ...alias] : [...alias]
+        chord.alias = alias
+        chord.fullName = name
         chord.quality = row.quality
+        chord.calcInversions()
         chords[k].push(chord)
     })
 
-})
+});
 
+// (window as any).chords = chords
 
 export { chordTable, intervalTable, notes, chords }
