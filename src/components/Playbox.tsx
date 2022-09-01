@@ -3,7 +3,7 @@ import { delay } from '../libs/helper'
 import { h, Component } from 'preact'
 import { notes as allNotes } from '../libs/db'
 import { Play } from './icon/Play'
-import { ArrowDown } from './icon/arrowDown'
+import { ArrowDown } from './icon/ArrowDown'
 import { ArrowUp } from './icon/ArrowUp'
 
 type PlayboxProps = {
