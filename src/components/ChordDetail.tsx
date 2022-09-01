@@ -1,13 +1,40 @@
 import { Chord } from 'libs/chord'
+import { chromaticName, Key, keySimpleList } from '../libs/key'
 import { h, Component } from 'preact'
-import { intervalTable } from '../libs/db'
+import { intervalTable, inversionNames } from '../libs/db'
+import ChordThumbnail from './ChordThumbnail'
 import { ChevronRight } from './icon/ChevronRight'
+import { route } from 'preact-router'
 
 type ChordDetailProps = {
-  chord: Chord
+  chord: Chord,
+  inversion: number,
 }
 
-export default class ChordDetail extends Component<ChordDetailProps> {
+type ChordDetailState = {
+}
+
+export default class ChordDetail extends Component<ChordDetailProps, ChordDetailState> {
+  constructor(props: ChordDetailProps) {
+    super(props)
+    this.state = {}
+    this.handleInversionClick = this.handleInversionClick.bind(this)
+  }
+
+  handleInversionClick(i: number) {
+    return () => {
+      let path = window.location.pathname.split('/')
+      if (path.length == 4) {
+        path.push(i.toString())
+      } else if (path.length == 5) {
+        path[4] = i.toString()
+      }
+      if (i == 0) path = path.slice(0, 4)
+      route(path.join('/'), false);
+      window.scrollTo(0, 0)
+    }
+  }
+
   render() {
     let chord = this.props.chord
     return (
@@ -18,7 +45,7 @@ export default class ChordDetail extends Component<ChordDetailProps> {
             <div><b>Tonic</b> {chord.tonic}</div>
             <div><b>Interval</b> {chord.intervals.map(i => intervalTable[i].abbrev).join(', ')}</div>
             {
-              chord.quality && chord.quality !== 'Unknown' &&
+              chord.quality &&
               <div><b>Quality</b> {chord.quality}</div>
             }
             {
@@ -33,15 +60,32 @@ export default class ChordDetail extends Component<ChordDetailProps> {
             }
           </div>
         </div>
-        <div className='inversion-container'>
-          <div className='inversion-header'>
-            <span>Inversions</span>
-            <ChevronRight size={21} />
+        {chord.inversions.length > 0 &&
+          <div className='inversion-container'>
+            <div className='inversion-header'>
+              <span>Inversions</span>
+              <ChevronRight size={21} />
+            </div>
+            <div className='inversion-content'>
+              {[chord, ...chord.inversions].map((c, i) => {
+                let colorIndex = keySimpleList.map(str => Key[str]).indexOf(c.key) + 1
+                let inversion = this.props.inversion
+                return (
+                  <div className={'chord color-' + colorIndex + (inversion == i ? ' active' : '')} onClick={this.handleInversionClick(i)}>
+                    <div className='chord-title'>{inversionNames[i]}</div>
+                    <ChordThumbnail chord={c} highlightColor={colorIndex} />
+                    {
+                      (i == 0) ?
+                        <div className='chord-name'>{`${chord.alias[0]}`}</div>
+                        :
+                        <div className='chord-name'>{`${chord.alias[0]}/${chromaticName[c.key]}`}</div>
+                    }
+                  </div>
+                )
+              })}
+            </div>
           </div>
-          <div className='inversion'>
-
-          </div>
-        </div>
+        }
       </div>
     )
   }

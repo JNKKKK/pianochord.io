@@ -17,12 +17,17 @@ export default class ChordSelector extends Component<ChordSelectorProps, ChordSe
     super(props)
     this.state = { search: '' }
     this.handleChange = this.handleChange.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
 
   handleChange(event: KeyboardEvent) {
     if (event.target instanceof HTMLInputElement) {
       this.setState({ search: event.target.value })
     }
+  }
+
+  handleClick() {
+    window.scrollTo(0, 0)
   }
 
   render() {
@@ -35,7 +40,7 @@ export default class ChordSelector extends Component<ChordSelectorProps, ChordSe
           className={'color-' + (keySimpleList.indexOf(selectedKey) + 1)} />
         <div className='chordSelector-chord-container'>
           {chordDataList.filter(chordFilterByKeyword(this.state.search)).map(c => (
-            <a className='chordSelector-chord' onClick={() => window.scrollTo(0, 0)}
+            <a className='chordSelector-chord' onClick={this.handleClick}
               href={'/chord/' + urlEncodeKey(selectedKey) + '/' + urlEncodeChord(c.name)}>
               <ChordThumbnail chord={c} highlightColor={keySimpleList.indexOf(selectedKey) + 1} />
               <div className='chordSelector-chord-name'>{c.name}</div>

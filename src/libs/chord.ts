@@ -8,7 +8,7 @@ class Chord {
     alias: string[]
     fullName: string
     quality: string
-    tonic?: string
+    tonic: string
     inversions: Chord[]
 
     constructor(key: Key, intervals: number[]) {
@@ -16,8 +16,9 @@ class Chord {
         this.intervals = intervals
         this.alias = []
         this.fullName = ''
-        this.quality = 'Unknown'
+        this.quality = ''
         this.inversions = []
+        this.tonic = ''
     }
 
     get name(): string {
@@ -36,8 +37,28 @@ class Chord {
                 intervalAboveRoot[0] = 0
                 let intervalBelowRoot = this.intervals.slice(0, i + 1)
                 intervalBelowRoot[0] = 12 - sum(this.intervals)
-
-                this.inversions.push(new Chord(key, [...intervalAboveRoot, ...intervalBelowRoot]))
+                let interval = [...intervalAboveRoot, ...intervalBelowRoot]
+                // re-position if it has negative interval
+                if (interval.some(x => x < 0)) {
+                    // convert from accumulative to absolute interval
+                    for (let i = 1; i < interval.length; i++) {
+                        interval[i] += interval[i - 1]
+                    }
+                    // if still has negative
+                    if (interval.some(x => x < 0)) {
+                        interval = interval.map(x => {
+                            if (x >= 0) return x
+                            return x + 12
+                        })
+                    } 
+                    // re-position
+                    interval.sort((a, b) => a - b)
+                    // convert back to accumulative interval
+                    for (let i = interval.length - 1; i > 0; i--) {
+                        interval[i] -= interval[i - 1]
+                    }
+                }
+                this.inversions.push(new Chord(key, interval))
             }
         }
     }

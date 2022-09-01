@@ -14,7 +14,7 @@ class App extends Component {
                 <div className='wrapper'>
                     <Router>
                         <IndexPage path='/' />
-                        <ChordPage path='/chord/:selectedKey/:selectedChord?' />
+                        <ChordPage path='/chord/:selectedKey/:selectedChord?/:inversion?' />
                         <Page404 default />
                     </Router>
                 </div>

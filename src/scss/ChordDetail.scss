@@ -1,3 +1,5 @@
+@import "colors";
+
 .chordDetail-container {
   margin: 1rem auto;
   padding: 1.5rem 1rem;
@@ -48,7 +50,34 @@
       background-color: rgb(218, 218, 218);
       cursor: pointer;
     }
-    .inversion {
+    .inversion-content {
+      background-color: rgb(233, 233, 233);
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 1rem;
+      .chord {
+        cursor: pointer;
+        text-align: center;
+        background-color: #fff;
+        flex-grow: 1;
+        margin: 1px;
+        padding: 2rem 0.5rem;
+        @for $i from 1 through 17 {
+          &.active.color-#{$i} {
+            background-color: adjust-color(nth($rainbow-17, $i), $alpha: -0.9);
+          }
+        }
+        .chord-title {
+          margin-bottom: 0.75rem;
+          font-weight: lighter;
+          font-size: 1.3rem;
+        }
+        .chord-name {
+          margin-top: 0.75rem;
+          font-size: 1rem;
+        }
+      }
     }
   }
 }

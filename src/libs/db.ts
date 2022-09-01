@@ -28,16 +28,16 @@ let chordTable = [
     { "aliases": ["7b9"], "name": "dominant b9", "quality": "Major", "intervals": [0, 4, 3, 3, 3] },
     { "aliases": ["7#9"], "name": "dominant #9", "quality": "Major", "intervals": [0, 4, 3, 3, 5] },
     { "aliases": ["alt7"], "name": "altered", "quality": "Major", "intervals": [0, 4, 6, 3] },
-    { "aliases": ["sus4"], "name": "suspended 4th", "quality": "Unknown", "intervals": [0, 5, 2] },
-    { "aliases": ["sus2"], "name": "suspended 2nd", "quality": "Unknown", "intervals": [0, 2, 5] },
-    { "aliases": ["7sus4"], "name": "suspended 4th seventh", "quality": "Unknown", "intervals": [0, 5, 2, 3] },
-    { "aliases": ["11", "sus", "Bb/C", "for", "C11"], "name": "eleventh", "quality": "Unknown", "intervals": [0, 7, 3, 4, 3] },
-    { "aliases": ["b9sus", "phryg"], "name": "suspended 4th b9", "quality": "Unknown", "intervals": [0, 5, 2, 3, 3] },
-    { "aliases": ["5"], "name": "fifth", "quality": "Unknown", "intervals": [0, 7] },
+    { "aliases": ["sus4"], "name": "suspended 4th", "quality": "", "intervals": [0, 5, 2] },
+    { "aliases": ["sus2"], "name": "suspended 2nd", "quality": "", "intervals": [0, 2, 5] },
+    { "aliases": ["7sus4"], "name": "suspended 4th seventh", "quality": "", "intervals": [0, 5, 2, 3] },
+    { "aliases": ["11", "sus", "Bb/C", "for", "C11"], "name": "eleventh", "quality": "", "intervals": [0, 7, 3, 4, 3] },
+    { "aliases": ["b9sus", "phryg"], "name": "suspended 4th b9", "quality": "", "intervals": [0, 5, 2, 3, 3] },
+    { "aliases": ["5"], "name": "fifth", "quality": "", "intervals": [0, 7] },
     { "aliases": ["aug", "+", "+5"], "name": "augmented", "quality": "Augmented", "intervals": [0, 4, 4] },
     { "aliases": ["maj7#5", "maj7+5"], "name": "augmented seventh", "quality": "Augmented", "intervals": [0, 4, 4, 3] },
     { "aliases": ["maj9#11", "Δ9#11"], "name": "major #11 (lydian)", "quality": "Major", "intervals": [0, 4, 3, 4, 3, 4] },
-    { "aliases": ["sus24", "sus4add9"], "name": null, "quality": "Unknown", "intervals": [0, 2, 3, 2] },
+    { "aliases": ["sus24", "sus4add9"], "name": null, "quality": "", "intervals": [0, 2, 3, 2] },
     { "aliases": ["Mb6"], "name": null, "quality": "Major", "intervals": [0, 4, 4] },
     { "aliases": ["maj9#5", "Maj9#5"], "name": null, "quality": "Augmented", "intervals": [0, 4, 4, 3, 3] },
     { "aliases": ["7#5", "+7", "7aug", "aug7"], "name": null, "quality": "Augmented", "intervals": [0, 4, 4, 2] },
@@ -103,13 +103,13 @@ let chordTable = [
     { "aliases": ["M7#5sus4"], "name": null, "quality": "Augmented", "intervals": [0, 5, 3, 3] },
     { "aliases": ["M9#5sus4"], "name": null, "quality": "Augmented", "intervals": [0, 5, 3, 3, 3] },
     { "aliases": ["7#5sus4"], "name": null, "quality": "Augmented", "intervals": [0, 5, 3, 2] },
-    { "aliases": ["M7sus4"], "name": null, "quality": "Unknown", "intervals": [0, 5, 2, 4] },
-    { "aliases": ["M9sus4"], "name": null, "quality": "Unknown", "intervals": [0, 5, 2, 4, 3] },
-    { "aliases": ["9sus4", "9sus"], "name": null, "quality": "Unknown", "intervals": [0, 5, 2, 3, 4] },
-    { "aliases": ["13sus4", "13sus"], "name": null, "quality": "Unknown", "intervals": [0, 5, 2, 3, 4, 7] },
-    { "aliases": ["7sus4b9b13", "7b9b13sus4"], "name": null, "quality": "Unknown", "intervals": [0, 5, 2, 3, 3, 7] },
-    { "aliases": ["4", "quartal"], "name": null, "quality": "Unknown", "intervals": [0, 5, 5, 5] },
-    { "aliases": ["11b9"], "name": null, "quality": "Unknown", "intervals": [0, 7, 3, 3, 4] }
+    { "aliases": ["M7sus4"], "name": null, "quality": "", "intervals": [0, 5, 2, 4] },
+    { "aliases": ["M9sus4"], "name": null, "quality": "", "intervals": [0, 5, 2, 4, 3] },
+    { "aliases": ["9sus4", "9sus"], "name": null, "quality": "", "intervals": [0, 5, 2, 3, 4] },
+    { "aliases": ["13sus4", "13sus"], "name": null, "quality": "", "intervals": [0, 5, 2, 3, 4, 7] },
+    { "aliases": ["7sus4b9b13", "7b9b13sus4"], "name": null, "quality": "", "intervals": [0, 5, 2, 3, 3, 7] },
+    { "aliases": ["4", "quartal"], "name": null, "quality": "", "intervals": [0, 5, 5, 5] },
+    { "aliases": ["11b9"], "name": null, "quality": "", "intervals": [0, 7, 3, 3, 4] }
 ]
 
 let intervalTable = {
@@ -167,6 +167,6 @@ keySimpleList.forEach((k: string) => {
 
 });
 
-// (window as any).chords = chords
+(window as any).chords = chords
 
 export { chordTable, intervalTable, notes, chords, inversionNames }
