@@ -1,7 +1,7 @@
 import { FunctionalComponent } from "preact";
 import { FeatherProps } from "./types";
 
-export const ChevronsDown: FunctionalComponent<FeatherProps> = (
+export const ChevronDown: FunctionalComponent<FeatherProps> = (
 	props: FeatherProps
 ) => {
 	const color = props.color || 'currentColor';
@@ -22,8 +22,7 @@ export const ChevronsDown: FunctionalComponent<FeatherProps> = (
 			stroke-linejoin="round"
 			{...props}
 		>
-			<polyline points="7 13 12 18 17 13"></polyline>
-			<polyline points="7 6 12 11 17 6"></polyline>
+			<polyline points="6 9 12 15 18 9"></polyline>
 		</svg>
 	);
 };

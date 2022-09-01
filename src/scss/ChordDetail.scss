@@ -2,7 +2,7 @@
 
 .chordDetail-container {
   margin: 1rem auto;
-  padding: 1.5rem 1rem;
+  padding: 1rem 1rem;
   border-radius: 5px;
   max-width: 63rem;
   background-color: rgb(240, 240, 240);
@@ -44,11 +44,19 @@
       justify-content: space-between;
       align-items: center;
       font-size: 1.1rem;
-      height: 3rem;
+      height: 2.5rem;
       padding: 0 1rem;
       border-radius: 0.4rem;
       background-color: rgb(218, 218, 218);
       cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -o-user-select: none;
+      &.open {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
     }
     .inversion-content {
       background-color: rgb(233, 233, 233);
@@ -56,6 +64,8 @@
       flex-direction: row;
       flex-wrap: wrap;
       padding: 1rem;
+      border-bottom-left-radius: 0.4rem;
+      border-bottom-right-radius: 0.4rem;
       .chord {
         cursor: pointer;
         text-align: center;

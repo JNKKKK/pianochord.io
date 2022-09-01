@@ -79,6 +79,10 @@ export default class ChordPage extends Component<ChordPageProps, ChordPageState>
         highlightTable = chordAlignMid(getHighlightTable(chord))
         colorIndex = keySimpleList.indexOf(selectedKey) + 1
       } else {
+        if (chord.inversions.length < inversion) {
+          window.location.href = "/404"
+          return
+        }
         highlightTable = chordAlignMid(getHighlightTable(chord.inversions[inversion - 1]))
         colorIndex = keySimpleList.map(str => Key[str]).indexOf(chord.inversions[inversion - 1].key) + 1
       }

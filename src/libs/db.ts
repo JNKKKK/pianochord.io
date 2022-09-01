@@ -13,7 +13,7 @@ let chordTable = [
     { "aliases": ["M7b6"], "name": "major seventh b6", "quality": "Major", "intervals": [0, 4, 4, 3] },
     { "aliases": ["m", "min", "-"], "name": "minor", "quality": "Minor", "intervals": [0, 3, 4] },
     { "aliases": ["m7", "min7", "mi7", "-7"], "name": "minor seventh", "quality": "Minor", "intervals": [0, 3, 4, 3] },
-    { "aliases": ["m/ma7", "m/maj7", "mM7", "m/M7", "-Δ7", "mΔ"], "name": "minor/major seventh", "quality": "Minor", "intervals": [0, 3, 4, 4] },
+    { "aliases": ["mM7", "m/ma7", "m/maj7", "m/M7", "-Δ7", "mΔ"], "name": "minor/major seventh", "quality": "Minor", "intervals": [0, 3, 4, 4] },
     { "aliases": ["m6"], "name": "minor sixth", "quality": "Minor", "intervals": [0, 3, 4, 2] },
     { "aliases": ["m9"], "name": "minor ninth", "quality": "Minor", "intervals": [0, 3, 4, 3, 4] },
     { "aliases": ["m11"], "name": "minor eleventh", "quality": "Minor", "intervals": [0, 3, 4, 3, 4, 3] },
