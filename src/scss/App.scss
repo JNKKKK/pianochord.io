@@ -6,6 +6,10 @@
 @import "ChordDetail.scss";
 @import "Playbox.scss";
 @import "IndexPage.scss";
+@import "Nav.scss";
+@import "Whiteboard.scss";
+@import "BoardSelector.scss";
+
 
 $footer-height: 70px;
 
@@ -38,6 +42,13 @@ body {
           margin: 1rem 0;
           font-size: 3rem;
           color: rgb(78, 78, 78);
+        }
+        a,
+        a:link,
+        a:active,
+        a:visited,
+        a:hover {
+          color: rgb(95, 95, 95);
         }
       }
     }

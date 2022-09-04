@@ -50,7 +50,7 @@ class Chord {
                             if (x >= 0) return x
                             return x + 12
                         })
-                    } 
+                    }
                     // re-position
                     interval.sort((a, b) => a - b)
                     // convert back to accumulative interval
@@ -61,6 +61,19 @@ class Chord {
                 this.inversions.push(new Chord(key, interval))
             }
         }
+    }
+
+    serialize() {
+        return JSON.stringify({ key: this.key, intervals: this.intervals })
+    }
+
+    static deserialize(str: string) {
+        let data = JSON.parse(str)
+        return new Chord(data.key, data.interval)
+    }
+
+    toString() {
+        return this.serialize()
     }
 }
 

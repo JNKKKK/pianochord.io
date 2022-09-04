@@ -1,0 +1,28 @@
+.nav-container {
+    max-width: 63rem;
+    margin: 0 auto;
+    display: flex;
+    height: 2rem;
+    padding: 0.5rem 0.5rem;
+    a,
+    a:link,
+    a:active,
+    a:visited,
+    a:hover {
+        color: rgb(95, 95, 95);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        svg {
+            margin-right: 0.5rem;
+        }
+        margin-right: 1rem;
+        box-sizing: border-box;
+    }
+
+    a.active {
+        border-bottom: 0.2rem solid rgb(95, 95, 95);
+    }
+}
