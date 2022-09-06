@@ -1,0 +1,41 @@
+.notification-container {
+    position: fixed;
+    bottom: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    pointer-events: none;
+    .notification {
+        position: relative;
+        width: fit-content;
+        pointer-events: initial;
+        background-color: rgb(251, 251, 251);
+        color: #363636;
+        padding: 1.5rem 3rem;
+        margin: 0.5rem 1rem;
+        border-radius: 1rem;
+        box-shadow: 0px 5px 5px 2px rgba(32, 32, 32, 0.2);
+        animation-duration: 0.3s;
+        animation-name: animate-pop;
+        animation-timing-function: cubic-bezier(0.26, 0.53, 0.74, 1.48);
+        svg {
+            position: absolute;
+            right: 0.5rem;
+            top: 0.5rem;
+            cursor: pointer;
+        }
+        @keyframes animate-pop {
+            0% {
+                opacity: 0;
+                transform: scale(0.5, 0.5);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1, 1);
+            }
+        }
+    }
+}

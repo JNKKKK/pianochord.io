@@ -37,9 +37,10 @@ function saveBoard(data: BoardSavingUnserialized) {
 }
 
 function loadBoard(): BoardSavingUnserialized {
+    const newSaving = { boards: [{ cards: [], name: 'Untitled 1' }], selectedBoard: 0 }
     let dataStr = ls.getItem(savingKey)
     if (!dataStr) {
-        return { boards: [{ cards: [], name: 'Untitled 1' }], selectedBoard: 0 }
+        return newSaving
     } else {
         let data: BoardSavingSerialized = JSON.parse(dataStr)
         return {

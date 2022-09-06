@@ -26,6 +26,11 @@ class Chord {
         return this.alias[0]
     }
 
+    get possibleNames(): string[] {
+        if (this.fullName) return [this.fullName, ...this.alias]
+        return this.alias
+    }
+
     calcInversions() {
         if (this.intervals.length === 3 || this.intervals.length === 4) {
             this.inversions = []
