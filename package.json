@@ -24,6 +24,7 @@
     "preact/jsx-dev-runtime": "preact/jsx-runtime"
   },
   "dependencies": {
+    "mobile-drag-drop": "2.3.0-rc.2",
     "preact": "^10.7.2",
     "preact-render-to-string": "^5.2.2",
     "preact-router": "^4.1.0"

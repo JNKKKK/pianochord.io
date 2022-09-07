@@ -1,6 +1,8 @@
-import { Key } from './key'
+import { chromaticName, Key } from './key'
 
 const sum = (arr: number[]) => arr.reduce((a, b) => a + b, 0)
+
+type SerializeFeature = { key: number, intervals: number[] }
 
 class Chord {
     key: Key
@@ -63,18 +65,21 @@ class Chord {
                         interval[i] -= interval[i - 1]
                     }
                 }
-                this.inversions.push(new Chord(key, interval))
+                let invChord = new Chord(key, interval)
+                invChord.alias = this.alias.map(str => `${str}/${chromaticName[invChord.key]}`)
+                this.inversions.push(invChord)
             }
         }
     }
 
     serialize() {
-        return JSON.stringify({ key: this.key, intervals: this.intervals })
+        let data: SerializeFeature = { key: this.key, intervals: this.intervals }
+        return JSON.stringify(data)
     }
 
     static deserialize(str: string) {
-        let data = JSON.parse(str)
-        return new Chord(data.key, data.interval)
+        let data: SerializeFeature = JSON.parse(str)
+        return new Chord(data.key, data.intervals)
     }
 
     toString() {

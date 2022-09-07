@@ -7,6 +7,7 @@ import Page404 from './pages/404Page'
 import Footer from './components/Footer'
 import WhiteBoardPage from './pages/WhiteBoardPage'
 import Nav from './components/Nav';
+import { polyfill } from 'mobile-drag-drop';
 
 import './scss/App.scss'
 

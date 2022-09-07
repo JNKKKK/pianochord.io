@@ -7,6 +7,8 @@ import { ChevronRight } from './icon/ChevronRight'
 import { route } from 'preact-router'
 import { ChevronDown } from './icon/ChevronDown'
 import { Plus } from './icon/Plus'
+import { loadBoard, saveBoard } from '../libs/localStorage'
+import { Card } from 'pages/WhiteBoardPage'
 
 type ChordDetailProps = {
   chord: Chord,
@@ -41,7 +43,16 @@ export default class ChordDetail extends Component<ChordDetailProps, ChordDetail
   }
 
   addToWhiteboard() {
-    this.props.addNotification(`Added ${this.props.chord.alias[0]} to xxx`, 2000)
+    let boardSaving = loadBoard()
+    let card: Card
+    if (this.props.inversion === 0) {
+      card = { chord: this.props.chord, name: this.props.chord.alias[0] }
+    } else {
+      card = { chord: this.props.chord.inversions[this.props.inversion - 1], name: this.props.chord.inversions[this.props.inversion - 1].alias[0] }
+    }
+    boardSaving.boards[boardSaving.selectedBoard].cards.push(card)
+    saveBoard(boardSaving)
+    this.props.addNotification(`Added ${this.props.chord.alias[0]} to ${boardSaving.boards[boardSaving.selectedBoard].name}`, 2000)
   }
 
   render() {
@@ -54,10 +65,7 @@ export default class ChordDetail extends Component<ChordDetailProps, ChordDetail
           </div>
           <div className='information-container'>
             <h1>
-              {this.props.inversion === 0 ?
-                chord.name
-                :
-                `${chord.alias[0]}/${chromaticName[chord.inversions[this.props.inversion - 1].key]}`}
+              {this.props.inversion === 0 ? chord.name : chord.inversions[this.props.inversion - 1].alias[0]}
             </h1>
             {
               this.props.inversion === 0 && (
@@ -91,7 +99,7 @@ export default class ChordDetail extends Component<ChordDetailProps, ChordDetail
                   {chord.alias.length > 1 &&
                     <div>
                       <b>Alias</b>
-                      {chord.alias.slice(1).map(str => `${str}/${chromaticName[chord.inversions[this.props.inversion - 1].key]}`).join(', ')}
+                      {chord.inversions[this.props.inversion - 1].alias.slice(1).join(', ')}
                     </div>
                   }
                 </div>
@@ -113,12 +121,7 @@ export default class ChordDetail extends Component<ChordDetailProps, ChordDetail
                       <div className={'chord color-' + colorIndex + (inversion == i ? ' active' : '')} onClick={this.handleInversionClick(i)}>
                         <div className='chord-title'>{inversionNames[i]}</div>
                         <ChordThumbnail chord={c} highlightColor={colorIndex} />
-                        {
-                          (i == 0) ?
-                            <div className='chord-name'>{`${chord.alias[0]}`}</div>
-                            :
-                            <div className='chord-name'>{`${chord.alias[0]}/${chromaticName[c.key]}`}</div>
-                        }
+                        <div className='chord-name'>{`${c.alias[0]}`}</div>
                       </div>
                     )
                   })}

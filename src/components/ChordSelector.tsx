@@ -38,12 +38,12 @@ export default class ChordSelector extends Component<ChordSelectorProps, ChordSe
       <div className='chordSelector-container'>
         <input type='text' placeholder='Search by keywords' value={this.state.search} onKeyUp={this.handleChange}
           className={'color-' + (keySimpleList.indexOf(selectedKey) + 1)} />
-        <div className='chordSelector-chord-container'>
+        <div className='chord-container'>
           {chordDataList.filter(chordFilterByKeyword(this.state.search)).map(c => (
-            <a className='chordSelector-chord' onClick={this.handleClick}
+            <a className='chord' onClick={this.handleClick}
               href={'/chord/' + urlEncodeKey(selectedKey) + '/' + urlEncodeChord(c.name)}>
               <ChordThumbnail chord={c} highlightColor={keySimpleList.indexOf(selectedKey) + 1} />
-              <div className='chordSelector-chord-name'>{c.name}</div>
+              <div className='name'>{c.name}</div>
             </a>
           ))}
         </div>

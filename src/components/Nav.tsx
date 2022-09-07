@@ -6,7 +6,13 @@ type NavProps = {
     chordUrl?: string
 }
 
-export default class Nav extends Component<NavProps> {
+type NavState = {}
+
+export default class Nav extends Component<NavProps, NavState> {
+    constructor(props: NavProps) {
+        super(props)
+    }
+
     render() {
         return (
             <div className='nav-container'>
