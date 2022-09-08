@@ -108,7 +108,7 @@ export default class ChordPage extends Component<ChordPageProps, ChordPageState>
       return (
         <Fragment>
           <Keyboard offset={this.state.octaveAdj} highlightTable={highlightTable} highlightColor={colorIndex} />
-          <KeySelector selectedKey={selectedKey} />
+          <KeySelector selectedKey={selectedKey} link={true} />
           <Playbox offset={this.state.octaveAdj} highlightTable={highlightTable}
             raiseOctave={this.raiseOctave} lowerOctave={this.lowerOctave}
             risingDisabled={this.state.octaveAdj === MAXoctaveAdj} lowerDisabled={this.state.octaveAdj === MINoctaveAdj}
@@ -122,7 +122,7 @@ export default class ChordPage extends Component<ChordPageProps, ChordPageState>
       return (
         <Fragment>
           <Keyboard offset={0} />
-          <KeySelector selectedKey={selectedKey} />
+          <KeySelector selectedKey={selectedKey} link={true} />
           <ChordSelector selectedKey={selectedKey} />
         </Fragment>
       )

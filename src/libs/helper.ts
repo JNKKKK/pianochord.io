@@ -68,8 +68,11 @@ function chordFilterByKeyword(kw: string) {
 
 const delay = (t: number) => new Promise(resolve => setTimeout(resolve, t));
 
+function sum(arr: number[]) {
+    return arr.reduce((a, b) => a + b, 0)
+}
 
 export {
-    getHighlightTable, chordAlignMid, findChordByName,
+    getHighlightTable, chordAlignMid, findChordByName, sum,
     urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord, delay, chordFilterByKeyword
 }

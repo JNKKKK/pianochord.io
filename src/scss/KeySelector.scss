@@ -9,6 +9,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   .keySelector-button {
+    cursor: pointer;
     display: inline-block;
     position: relative;
     user-select: none;
@@ -18,16 +19,13 @@
     font-size: 1.2rem;
     padding: 0.3rem 0.5rem;
     text-decoration: none;
-    border: solid;
     border-radius: 5px;
-    border-color: white;
     @for $i from 1 through 17 {
       &.color-#{$i} {
         color: nth($rainbow-17, $i);
       }
       &.color-#{$i}.active {
         color: white;
-        border-color: nth($rainbow-17, $i);
         background-color: nth($rainbow-17, $i);
       }
     }

@@ -11,7 +11,7 @@ export default class IndexPage extends Component {
         <h3>Open Sourced at <Github size={14} /><a href="https://github.com/JNKKKK/pianochord.io">Github</a></h3>
         <div className='tip1'>Select a root key to continue</div>
         <div className='tip2'>
-          <KeySelector />
+          <KeySelector link={true} />
         </div>
       </div>
     )

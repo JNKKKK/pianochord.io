@@ -1,6 +1,5 @@
+import { sum } from './helper'
 import { chromaticName, Key } from './key'
-
-const sum = (arr: number[]) => arr.reduce((a, b) => a + b, 0)
 
 type SerializeFeature = { key: number, intervals: number[] }
 
@@ -31,6 +30,22 @@ class Chord {
     get possibleNames(): string[] {
         if (this.fullName) return [this.fullName, ...this.alias]
         return this.alias
+    }
+
+    cutoff(n: number): void {
+        while (this.key + sum(this.intervals) >= n) {
+            this.intervals.splice(this.intervals.length - 1, 1)
+        }
+    }
+
+    clone(): Chord {
+        let chord = new Chord(this.key, [...this.intervals])
+        chord.alias = [...this.alias]
+        chord.fullName = this.fullName
+        chord.quality = this.quality
+        chord.tonic = this.tonic
+        chord.inversions = this.inversions.map(inv => inv.clone())
+        return chord
     }
 
     calcInversions() {
