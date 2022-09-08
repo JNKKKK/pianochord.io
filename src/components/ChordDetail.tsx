@@ -52,7 +52,7 @@ export default class ChordDetail extends Component<ChordDetailProps, ChordDetail
     }
     boardSaving.boards[boardSaving.selectedBoard].cards.push(card)
     saveBoard(boardSaving)
-    this.props.addNotification(`Added ${this.props.chord.alias[0]} to ${boardSaving.boards[boardSaving.selectedBoard].name}`, 2000)
+    this.props.addNotification(`Added ${card.name} to ${boardSaving.boards[boardSaving.selectedBoard].name}`, 2000)
   }
 
   render() {

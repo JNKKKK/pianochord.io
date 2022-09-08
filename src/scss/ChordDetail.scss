@@ -1,4 +1,5 @@
 @import "colors";
+@import "UI";
 
 .chordDetail-container {
   margin: 1rem auto;
@@ -13,41 +14,8 @@
     justify-content: flex-start;
     margin-bottom: 0.5rem;
     button {
+      @include button;
       margin-right: 0.5rem;
-      background-color: #fff;
-      color: #363636;
-      cursor: pointer;
-      justify-content: center;
-      padding: 0.375em 0.75em;
-      white-space: nowrap;
-      align-items: center;
-      border: 1px solid #e6e6e6;
-      border-radius: 4px;
-      box-shadow: none;
-      display: flex;
-      font-size: 0.9rem;
-      height: 2.25em;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      &:hover {
-        border-color: #b5b5b5;
-      }
-      &:active {
-        border-color: #4a4a4a;
-        outline: 0;
-      }
-      &[disabled] {
-        background-color: #fff;
-        border-color: #dbdbdb;
-        box-shadow: none;
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
       svg {
         margin-right: 0.3rem;
       }

@@ -1,3 +1,6 @@
+@import "colors";
+@import "UI";
+
 .whiteboard-container {
     max-width: 63rem;
     margin: 0 auto;
@@ -16,41 +19,8 @@
             flex-wrap: wrap;
             row-gap: 0.5rem;
             button {
+                @include button;
                 margin-right: 0.5rem;
-                background-color: #fff;
-                color: #363636;
-                cursor: pointer;
-                justify-content: center;
-                padding: 0.375em 0.75em;
-                white-space: nowrap;
-                align-items: center;
-                border: 1px solid #e6e6e6;
-                border-radius: 4px;
-                box-shadow: none;
-                display: flex;
-                font-size: 0.9rem;
-                height: 2.25em;
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                -webkit-touch-callout: none;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-                &:hover {
-                    border-color: #b5b5b5;
-                }
-                &:active {
-                    border-color: #4a4a4a;
-                    outline: 0;
-                }
-                &[disabled] {
-                    background-color: #fff;
-                    border-color: #dbdbdb;
-                    box-shadow: none;
-                    opacity: 0.5;
-                    cursor: not-allowed;
-                }
                 svg {
                     margin-right: 0.3rem;
                 }
@@ -95,6 +65,107 @@
                 overflow-wrap: anywhere;
                 text-align: center;
             }
+            &.add-card {
+                width: 189px;
+                background-color: #f5f5f5;
+                box-shadow: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 1rem 0.5rem;
+                svg {
+                    color: #a9a9a9;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+.rename-modal {
+    h1 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+    input {
+        @include text-input;
+        width: 100%;
+        margin-bottom: 1rem;
+        &:focus {
+            border-color: nth($rainbow-17, 5);
+            box-shadow: 0 0 0 0.125em adjust-color(nth($rainbow-17, 5), $alpha: -0.9);
+        }
+    }
+    .actions-container {
+        display: flex;
+        justify-content: flex-end;
+        button {
+            @include button;
+            margin-right: 0.5rem;
+            &.highlighted {
+                color: white;
+                background-color: nth($rainbow-17, 5);
+            }
+        }
+    }
+}
+
+.newBoard-modal {
+    h1 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+    input {
+        @include text-input;
+        width: 100%;
+        margin-bottom: 1rem;
+        &:focus {
+            border-color: nth($rainbow-17, 5);
+            box-shadow: 0 0 0 0.125em adjust-color(nth($rainbow-17, 5), $alpha: -0.9);
+        }
+    }
+    .actions-container {
+        display: flex;
+        justify-content: flex-end;
+        button {
+            @include button;
+            margin-right: 0.5rem;
+            &.highlighted {
+                color: white;
+                background-color: nth($rainbow-17, 5);
+            }
+        }
+    }
+} 
+
+.switchBoard-modal {
+    h1 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+    .item-container {
+        padding: 0.8rem 0.5rem;
+        background-color: #f3f3f3;
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        svg.icon {
+            color: #484848;
+            margin-right: 0.5rem;
+        }
+        span {
+            flex-grow: 1;
+        }
+        svg.delete {
+            color: #7d7d7d;
+            &:hover {
+                color: #484848;
+            }
+        }
+        &:hover {
+            background-color: #d4d4d4;
         }
     }
 }
