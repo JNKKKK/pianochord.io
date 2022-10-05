@@ -14,7 +14,7 @@ import { Plus } from "../components/icon/Plus";
 import Modal from "../components/Modal";
 import { Clipboard } from "../components/icon/Clipboard";
 import KeySelector from "../components/KeySelector";
-import { sum } from "../libs/helper";
+import { searchForChord, sum } from "../libs/helper";
 import { intervalTable } from "../libs/db";
 import { ArrowRightLong } from "../components/icon/ArrowRightLong";
 import { MinusCircle } from "../components/icon/MinusCircle";
@@ -53,10 +53,15 @@ type WhiteBoardPageState = {
         keyStr: string,
         name: string,
     }
+    addExistingChordModal: {
+        show: boolean,
+        query: string,
+    }
 }
 
 
 export default class WhiteBoardPage extends Component<WhiteBoardPageProps, WhiteBoardPageState> {
+    chordSearchItemList = createRef()
 
     constructor(props: WhiteBoardPageProps) {
         super(props)
@@ -66,12 +71,13 @@ export default class WhiteBoardPage extends Component<WhiteBoardPageProps, White
             renameModal: { show: false, text: "" },
             newBoardModal: { show: false, text: "" },
             switchBoardModal: { show: false },
-            addCustomizedChordModal: { show: false, chord: new Chord(0, [0, 4, 3, 4, 3]), keyStr: 'C', name: "" },
+            addCustomizedChordModal: { show: false, chord: new Chord(0, [0, 4, 3]), keyStr: 'C', name: "" },
+            addExistingChordModal: { show: false, query: "" },
         }
     }
 
     componentDidMount() {
-        polyfill()
+        polyfill({ forceApply: true })
         window.addEventListener('touchmove', function () { }, { passive: false });
     }
 
@@ -139,8 +145,8 @@ export default class WhiteBoardPage extends Component<WhiteBoardPageProps, White
                                 </div>
                             ))
                         }
-                        <div className='card add-card' >
-                            <div className="option">
+                        <div className='card add-card'>
+                            <div className="option" onClick={() => { this.setState({ addExistingChordModal: { ...this.state.addExistingChordModal, show: true } }) }}>
                                 <Plus size={30} />
                                 Existing Chord
                             </div>
@@ -299,8 +305,31 @@ export default class WhiteBoardPage extends Component<WhiteBoardPageProps, White
                                 this.state.boards[this.state.selectedBoard].cards.push({ chord: this.state.addCustomizedChordModal.chord.clone(), name: this.state.addCustomizedChordModal.name })
                                 saveBoard({ boards: this.state.boards, selectedBoard: this.state.selectedBoard })
                                 this.setState({ addCustomizedChordModal: { ...this.state.addCustomizedChordModal, show: false } })
-                            }}>Save</button>
+                            }}>Create</button>
                             <button onClick={() => { this.setState({ addCustomizedChordModal: { ...this.state.addCustomizedChordModal, show: false } }) }}>Cancel</button>
+                        </div>
+                    </div>
+                </Modal>
+                <Modal show={this.state.addExistingChordModal.show} setShow={(show) => this.setState({ addExistingChordModal: { ...this.state.addExistingChordModal, show } })}>
+                    <div className="existingChord-modal">
+                        <h1>Search Chord</h1>
+                        <input placeholder="Search by keywords" maxLength={20} onInput={(e) => {
+                            this.setState({ addExistingChordModal: { ...this.state.addExistingChordModal, query: e.currentTarget.value } })
+                            this.chordSearchItemList.current.scrollTo(0, 0)
+                        }} />
+                        <div className="item-container" ref={this.chordSearchItemList}>
+                            {
+                                searchForChord(this.state.addExistingChordModal.query).map(chord => (
+                                    <div className="item" onClick={() => {
+                                        this.state.boards[this.state.selectedBoard].cards.push({ chord: chord.clone(), name: chord.alias[0] })
+                                        saveBoard({ boards: this.state.boards, selectedBoard: this.state.selectedBoard })
+                                        this.setState({ addExistingChordModal: { ...this.state.addExistingChordModal, show: false } })
+                                    }}>
+                                        <ChordThumbnail chord={chord} highlightColor={keySimpleList.map(str => Key[str]).indexOf(chord.key) + 1} />
+                                        {chord.alias[0]}
+                                    </div>
+                                ))
+                            }
                         </div>
                     </div>
                 </Modal>

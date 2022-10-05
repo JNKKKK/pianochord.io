@@ -1,5 +1,5 @@
 import { Chord } from "./chord"
-import { chords } from "./db"
+import { allChords, chords } from "./db"
 
 
 function getHighlightTable(chord: Chord) {
@@ -59,11 +59,33 @@ function urlDecodeChord(chordName: string | undefined): string | undefined {
 function chordFilterByKeyword(kw: string) {
     return (chord: Chord) => {
         kw = kw.toLowerCase().replace(' ', '')
-        let fullName = chord.fullName.toLowerCase().replace(' ', '')
-        let alias = chord.alias.map((str: string) => str.toLowerCase().replace(' ', ''))
-        let allNames = [fullName, ...alias]
+        let allNames = chord.possibleNames.map((str: string) => str.toLowerCase().replace(' ', ''))
         return allNames.some(name => name.indexOf(kw) !== -1)
     }
+}
+
+function searchForChord(kw: string): Chord[] {
+    type ChordScore = {
+        chord: Chord,
+        score: number,
+    };
+    kw = kw.toLowerCase().replace(' ', '');
+    if (!kw) return []
+    let chordsWithScores: ChordScore[] = allChords.map(chord => {
+        let score = 0
+        let allNames = chord.possibleNames.map((str: string) => str.toLowerCase().replace(' ', ''))
+        allNames.forEach(name => {
+            if (name === kw) {
+                score += 1
+            } else if (name.indexOf(kw) !== -1) {
+                score += 0.1
+            }
+        })
+        score /= allNames.length
+        return { chord, score }
+    })
+    let result = chordsWithScores.sort((a, b) => (b.score - a.score)).filter(cs => cs.score > 0).map(cs => cs.chord).slice(0, 20)
+    return result
 }
 
 const delay = (t: number) => new Promise(resolve => setTimeout(resolve, t));
@@ -73,6 +95,6 @@ function sum(arr: number[]) {
 }
 
 export {
-    getHighlightTable, chordAlignMid, findChordByName, sum,
+    getHighlightTable, chordAlignMid, findChordByName, sum, searchForChord,
     urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord, delay, chordFilterByKeyword
 }

@@ -164,9 +164,15 @@ keySimpleList.forEach((k: string) => {
         chord.calcInversions()
         chords[k].push(chord)
     })
-
 });
 
-(window as any).chords = chords
+// all chords flat list, including inversions
+let allChords: Chord[] = []
+let allInversions: Chord[] = []
+for (let key in chords) {
+    chords[key].forEach(c => allChords.push(c))
+}
+allChords.forEach(c => allInversions.push(...c.inversions))
+allChords = [...allChords, ...allInversions]
 
-export { chordTable, intervalTable, notes, chords, inversionNames }
+export { chordTable, intervalTable, notes, chords, inversionNames, allChords }

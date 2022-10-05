@@ -294,3 +294,39 @@
         }
     }
 }
+
+.existingChord-modal {
+    h1 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+    input {
+        @include text-input;
+        width: 100%;
+        margin-bottom: 1rem;
+        &:focus {
+            border-color: nth($rainbow-17, 5);
+            box-shadow: 0 0 0 0.125em adjust-color(nth($rainbow-17, 5), $alpha: -0.9);
+        }
+    }
+    .item-container {
+        max-height: 50vh;
+        overflow-y: auto;
+        .item{
+            cursor: pointer;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 0.6rem;
+            margin-bottom: 0.3rem;
+            border-radius: 0.2rem;
+            &:hover {
+                background-color: #e3e3e3;
+            }
+            svg {
+                margin-right: 0.7rem;
+            }
+        }
+    }
+}
