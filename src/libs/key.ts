@@ -39,7 +39,7 @@ enum bw {
 
 const bwMap = [bw.white, bw.black, bw.white, bw.black, bw.white, bw.white, bw.black, bw.white, bw.black, bw.white, bw.black, bw.white,]
 
-let keySimpleList: string[] = ['C', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B']
+let keySimpleList: string[] = ['C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B']
 
 let chromaticName: string[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B']
 

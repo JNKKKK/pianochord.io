@@ -47,11 +47,12 @@ type WhiteBoardPageState = {
     switchBoardModal: {
         show: boolean,
     }
-    addCustomizedChordModal: {
+    customizeChordModal: {
         show: boolean,
         chord: Chord,
         keyStr: string,
         name: string,
+        isEdit: boolean,
     }
     addExistingChordModal: {
         show: boolean,
@@ -71,7 +72,7 @@ export default class WhiteBoardPage extends Component<WhiteBoardPageProps, White
             renameModal: { show: false, text: "" },
             newBoardModal: { show: false, text: "" },
             switchBoardModal: { show: false },
-            addCustomizedChordModal: { show: false, chord: new Chord(0, [0, 4, 3]), keyStr: 'C', name: "" },
+            customizeChordModal: { show: false, chord: new Chord(0, [0, 4, 3]), keyStr: 'C', name: "", isEdit: false },
             addExistingChordModal: { show: false, query: "" },
         }
     }
@@ -150,7 +151,7 @@ export default class WhiteBoardPage extends Component<WhiteBoardPageProps, White
                                 <Plus size={30} />
                                 Existing Chord
                             </div>
-                            <div className="option" onClick={() => { this.setState({ addCustomizedChordModal: { ...this.state.addCustomizedChordModal, show: true } }) }}>
+                            <div className="option" onClick={() => { this.setState({ customizeChordModal: { ...this.state.customizeChordModal, show: true } }) }}>
                                 <Plus size={30} />
                                 Customized Chord
                             </div>
@@ -217,25 +218,25 @@ export default class WhiteBoardPage extends Component<WhiteBoardPageProps, White
                         }
                     </div>
                 </Modal>
-                <Modal show={this.state.addCustomizedChordModal.show} setShow={(show) => this.setState({ addCustomizedChordModal: { ...this.state.addCustomizedChordModal, show } })}>
+                <Modal show={this.state.customizeChordModal.show} setShow={(show) => this.setState({ customizeChordModal: { ...this.state.customizeChordModal, show } })}>
                     <div className="customizedChord-modal">
                         <h1>Create New Chord</h1>
                         <div className="thumbnail">
-                            <ChordThumbnail chord={this.state.addCustomizedChordModal.chord} highlightColor={keySimpleList.map(str => Key[str]).indexOf(this.state.addCustomizedChordModal.chord.key) + 1} />
+                            <ChordThumbnail chord={this.state.customizeChordModal.chord} highlightColor={keySimpleList.map(str => Key[str]).indexOf(this.state.customizeChordModal.chord.key) + 1} />
                         </div>
                         <h2>Root Key</h2>
-                        <KeySelector link={false} selectedKey={this.state.addCustomizedChordModal.keyStr}
+                        <KeySelector link={false} selectedKey={this.state.customizeChordModal.keyStr}
                             setKey={(keyStr) => {
-                                this.state.addCustomizedChordModal.chord.key = Key[keyStr]
-                                this.state.addCustomizedChordModal.chord.cutoff(36)
-                                this.setState({ addCustomizedChordModal: { ...this.state.addCustomizedChordModal, keyStr } })
+                                this.state.customizeChordModal.chord.key = Key[keyStr]
+                                this.state.customizeChordModal.chord.cutoff(36)
+                                this.setState({ customizeChordModal: { ...this.state.customizeChordModal, keyStr } })
                             }}
                         />
                         <h2>Intervals</h2>
                         <div className="intervals-container">
                             {
-                                this.state.addCustomizedChordModal.chord.intervals.slice(1).map((interval, i) => {
-                                    let chord = this.state.addCustomizedChordModal.chord
+                                this.state.customizeChordModal.chord.intervals.slice(1).map((interval, i) => {
+                                    let chord = this.state.customizeChordModal.chord
                                     let startKey = chord.key + sum(chord.intervals.slice(0, i + 1))
                                     startKey %= 12
                                     let startKeyColor = keySimpleList.map(str => Key[str]).indexOf(startKey) + 1
@@ -251,7 +252,7 @@ export default class WhiteBoardPage extends Component<WhiteBoardPageProps, White
                                                     <MinusCircle className={"action color-" + startKeyColor} size={18}
                                                         onClick={(e) => {
                                                             if (chord.intervals[i + 1] > 1) chord.intervals[i + 1] -= 1
-                                                            this.setState({ addCustomizedChordModal: this.state.addCustomizedChordModal })
+                                                            this.setState({ customizeChordModal: this.state.customizeChordModal })
                                                         }}
                                                     />
                                                     <ArrowRightLong className="arrow" size={20} />
@@ -262,7 +263,7 @@ export default class WhiteBoardPage extends Component<WhiteBoardPageProps, White
                                                         onClick={(e) => {
                                                             if (chord.key + sum(chord.intervals) >= 35) return
                                                             if (chord.intervals[i + 1] < 12) chord.intervals[i + 1] += 1
-                                                            this.setState({ addCustomizedChordModal: this.state.addCustomizedChordModal })
+                                                            this.setState({ customizeChordModal: this.state.customizeChordModal })
                                                         }}
                                                     />
                                                 </div>
@@ -273,7 +274,7 @@ export default class WhiteBoardPage extends Component<WhiteBoardPageProps, White
                                                 onClick={() => {
                                                     if (chord.intervals.length <= 2) return
                                                     chord.intervals.splice(i + 1, 1)
-                                                    this.setState({ addCustomizedChordModal: this.state.addCustomizedChordModal })
+                                                    this.setState({ customizeChordModal: this.state.customizeChordModal })
                                                 }}
                                             />
                                         </div>
@@ -281,32 +282,32 @@ export default class WhiteBoardPage extends Component<WhiteBoardPageProps, White
                                 })
                             }
                             <button
-                                disabled={this.state.addCustomizedChordModal.chord.key + sum(this.state.addCustomizedChordModal.chord.intervals) >= 35}
+                                disabled={this.state.customizeChordModal.chord.key + sum(this.state.customizeChordModal.chord.intervals) >= 35}
                                 onClick={() => {
-                                    if (this.state.addCustomizedChordModal.chord.key + sum(this.state.addCustomizedChordModal.chord.intervals) >= 35) return
-                                    this.state.addCustomizedChordModal.chord.intervals.push(1)
-                                    this.setState({ addCustomizedChordModal: this.state.addCustomizedChordModal })
+                                    if (this.state.customizeChordModal.chord.key + sum(this.state.customizeChordModal.chord.intervals) >= 35) return
+                                    this.state.customizeChordModal.chord.intervals.push(1)
+                                    this.setState({ customizeChordModal: this.state.customizeChordModal })
                                 }}>
                                 <Plus size={15} />Add a interval
                             </button>
                         </div>
                         <h2>Name</h2>
-                        <input maxLength={20} placeholder="Chord Name" onInput={(e) => { this.setState({ addCustomizedChordModal: { ...this.state.addCustomizedChordModal, name: e.currentTarget.value } }) }}></input>
+                        <input maxLength={20} placeholder="Chord Name" onInput={(e) => { this.setState({ customizeChordModal: { ...this.state.customizeChordModal, name: e.currentTarget.value } }) }}></input>
                         <div className="actions-container">
                             <button className="highlighted" onClick={() => {
-                                if (!this.state.addCustomizedChordModal.name) {
+                                if (!this.state.customizeChordModal.name) {
                                     alert("Name cannot be empty!")
                                     return
                                 }
-                                if (this.state.addCustomizedChordModal.chord.intervals.length <= 2) {
+                                if (this.state.customizeChordModal.chord.intervals.length <= 2) {
                                     alert("Number of intervals must be greater than 1!")
                                     return
                                 }
-                                this.state.boards[this.state.selectedBoard].cards.push({ chord: this.state.addCustomizedChordModal.chord.clone(), name: this.state.addCustomizedChordModal.name })
+                                this.state.boards[this.state.selectedBoard].cards.push({ chord: this.state.customizeChordModal.chord.clone(), name: this.state.customizeChordModal.name })
                                 saveBoard({ boards: this.state.boards, selectedBoard: this.state.selectedBoard })
-                                this.setState({ addCustomizedChordModal: { ...this.state.addCustomizedChordModal, show: false } })
+                                this.setState({ customizeChordModal: { ...this.state.customizeChordModal, show: false } })
                             }}>Create</button>
-                            <button onClick={() => { this.setState({ addCustomizedChordModal: { ...this.state.addCustomizedChordModal, show: false } }) }}>Cancel</button>
+                            <button onClick={() => { this.setState({ customizeChordModal: { ...this.state.customizeChordModal, show: false } }) }}>Cancel</button>
                         </div>
                     </div>
                 </Modal>
