@@ -1,82 +1,82 @@
 import { Key } from "./key";
 
-let initialized = false
-let context: AudioContext
-let extension: string;
+class Piano {
+    context: AudioContext;
+    extension: string;
 
-let samples = {
-    2: undefined,
-    3: undefined,
-    4: undefined,
-    5: undefined,
-    6: undefined,
-}
-
-function init() {
-    // Support prefixed AudioContext used in Safari and old Chrome versions.
-    let audioContext = window.AudioContext || (window as any).webkitAudioContext;
-    context = new audioContext();
-
-    // Polyfill for old callback-based syntax used in Safari.
-    if (context.decodeAudioData.length !== 1) {
-        const originalDecodeAudioData = context.decodeAudioData.bind(context);
-        context.decodeAudioData = buffer =>
-            new Promise((resolve, reject) =>
-                originalDecodeAudioData(buffer, resolve, reject)
-            );
+    samples = {
+        2: undefined,
+        3: undefined,
+        4: undefined,
+        5: undefined,
+        6: undefined,
     }
 
-    // determine supported extension
-    let audioElm = document.createElement("audio");
-    if (audioElm.canPlayType('audio/ogg')) {
-        extension = 'ogg';
-    } else if (audioElm.canPlayType('audio/mp3')) {
-        extension = 'mp3';
-    } else if (audioElm.canPlayType('audio/wav')) {
-        extension = 'wav';
-    } else {
-        extension = 'wav';
+    constructor() {
+        // Support prefixed AudioContext used in Safari and old Chrome versions.
+        let audioContext = window.AudioContext || (window as any).webkitAudioContext;
+        this.context = new audioContext();
+        // Polyfill for old callback-based syntax used in Safari.
+        if (this.context.decodeAudioData.length !== 1) {
+            const originalDecodeAudioData = this.context.decodeAudioData.bind(this.context);
+            this.context.decodeAudioData = buffer =>
+                new Promise((resolve, reject) =>
+                    originalDecodeAudioData(buffer, resolve, reject)
+                );
+        }
+        // determine supported extension
+        let audioElm = document.createElement("audio");
+        if (audioElm.canPlayType('audio/ogg')) {
+            this.extension = 'ogg';
+        } else if (audioElm.canPlayType('audio/mp3')) {
+            this.extension = 'mp3';
+        } else if (audioElm.canPlayType('audio/wav')) {
+            this.extension = 'wav';
+        } else {
+            this.extension = 'wav';
+        }
+        // load samples in all octaves
+        Promise.allSettled([
+            this.loadSample(2),
+            this.loadSample(3),
+            this.loadSample(4),
+            this.loadSample(5),
+            this.loadSample(6),
+        ])
     }
 
-    initialized = true
-}
+    async loadSample(octave: number) {
+        if (this.samples[octave] === undefined) {
+            this.samples[octave] = 'loading'
+            const response = await fetch(`/samples_piano_F${octave}.${this.extension}`);
+            const buffer = await response.arrayBuffer();
+            const data = await this.context.decodeAudioData(buffer);
+            this.samples[octave] = data;
+            return data;
+        } else if (this.samples[octave] === 'loading') {
+            throw new Error("Duplicate playing action when sample is still loading.")
+        } else {
+            return this.samples[octave]
+        }
+    }
 
-function loadSample(octave: number) {
-    if (samples[octave] === undefined) {
-        samples[octave] = 'loading'
-        return fetch(`/samples_piano_F${octave}.${extension}`)
-            .then(response => response.arrayBuffer())
-            .then(buffer => context.decodeAudioData(buffer))
-            .then(data => {
-                samples[octave] = data
-                return data
-            })
-    } else if (samples[octave] === 'loading') {
-        throw Promise.reject(new Error("Duplicate playing action when sample is still loading."))
-    } else {
-        return Promise.resolve(samples[octave])
+    playSample(sample: AudioBuffer, key: Key) {
+        const source = this.context.createBufferSource();
+        source.buffer = sample;
+        source.playbackRate.value = 2 ** ((key - Key['F']) / 12);
+        source.connect(this.context.destination);
+        source.start(0, 0, 2);
+    }
+
+    async play(key: Key, octave: number) {
+        try {
+            const sample = await this.loadSample(octave);
+            this.playSample(sample, key);
+        } catch (e) {
+            console.error(e);
+        }
     }
 }
 
-function playSample(sample: AudioBuffer, key: Key) {
-    const source = context.createBufferSource();
-    source.buffer = sample;
-    source.playbackRate.value = 2 ** ((key - Key['F']) / 12);
-    source.connect(context.destination);
-    source.start(0, 0, 2);
-}
-
-let piano = {
-    play: (key: Key, octave: number) => {
-        if (!initialized) init()
-        return loadSample(octave)
-            .then(sample => {
-                playSample(sample, key)
-            })
-            .catch(e => {
-                console.error(e)
-            })
-    }
-}
-
+const piano = new Piano()
 export default piano
