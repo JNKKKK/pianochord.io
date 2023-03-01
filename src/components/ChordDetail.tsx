@@ -60,9 +60,9 @@ export default class ChordDetail extends Component<ChordDetailProps, ChordDetail
     return (
       <Fragment>
         <div className='chordDetail-container'>
-          <div className='action-container'>
+          {/* <div className='action-container'>
             <button onClick={this.addToWhiteboard}><Plus size={15} />Add to whiteboard</button>
-          </div>
+          </div> */}
           <div className='information-container'>
             <h1>
               {this.props.inversion === 0 ? chord.name : chord.inversions[this.props.inversion - 1].alias[0]}
