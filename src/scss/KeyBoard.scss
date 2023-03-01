@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "colors";
 
 $key-border-px: 0.07rem;
@@ -41,7 +42,7 @@ $key-black-height: 6rem;
     }
     &.black {
       z-index: 1;
-      margin-left: -$key-black-width/2;
+      margin-left: math.div(-$key-black-width, 2);
       width: $key-black-width;
       height: $key-black-height;
       background-color: rgb(51, 51, 51);
@@ -53,7 +54,7 @@ $key-black-height: 6rem;
       }
     }
     &.black + .white {
-      margin-left: -$key-black-width/2;
+      margin-left: math.div(-$key-black-width, 2);
     }
     @for $i from 1 through 17 {
       &.active.color-#{$i} {

@@ -7,7 +7,6 @@ import Page404 from './pages/404Page'
 import Footer from './components/Footer'
 import WhiteBoardPage from './pages/WhiteBoardPage'
 import Nav from './components/Nav';
-import { polyfill } from 'mobile-drag-drop';
 
 import './scss/App.scss'
 
@@ -35,12 +34,12 @@ class App extends Component<AppProps, AppState> {
         return (
             <Fragment>
                 <div className='wrapper'>
-                    <Match path="/">
+                    {/* <Match path="/">
                         {({ url }: { url: string }) => {
                             if (url.startsWith("/chord") || url.startsWith("/whiteboard"))
                                 return <Nav chordUrl={this.state.chordUri} />
                         }}
-                    </Match>
+                    </Match> */}
                     <Router onChange={this.handleRoute}>
                         <IndexPage path='/' />
                         <ChordPage path='/chord/:selectedKey/:selectedChord?/:inversion?' />
