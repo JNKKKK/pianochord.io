@@ -35,22 +35,22 @@ function findChordByName(key: string, chordName: string) {
 // C-flat.. -> Cb
 function urlDecodeKey(key: string | undefined): string | undefined {
     if (key) {
-        return key.replace('-flat', 'b').replace('-sharp', '#')
+        return key.replace('-flat', '♭').replace('-sharp', '♯')
     } else {
         return undefined
     }
 }
-// C# -> C-sharp
+// C♯ -> C-sharp
 function urlEncodeKey(key: string): string {
-    return key.replace('#', '-sharp').replace('b', '-flat')
+    return key.replace('♯', '-sharp').replace('♭', '-flat')
 }
-// #->sharp  /->_  ' '->-
+// ♯->sharp  /->_  ' '->-
 function urlEncodeChord(chordName: string): string {
-    return chordName.replace(/#/g, 'sharp').replace(/\//g, '_').replace(/ /g, '-')
+    return chordName.replace(/♯/g, 'sharp').replace(/♭/g, 'b').replace(/\//g, '_').replace(/ /g, '-')
 }
 function urlDecodeChord(chordName: string | undefined): string | undefined {
     if (chordName) {
-        return chordName.replace(/sharp/g, '#').replace(/_/g, '/').replace(/-/g, ' ')
+        return chordName.replace(/sharp/g, '♯').replace(/(.)b/g, '$1♭').replace(/_/g, '/').replace(/-/g, ' ')
     } else {
         return undefined
     }

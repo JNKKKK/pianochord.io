@@ -1,35 +1,35 @@
 enum Key {
     'C' = 0,
-    'C#' = 1,
-    'Db' = 1,
+    'C♯' = 1,
+    'D♭' = 1,
     'D' = 2,
-    'D#' = 3,
-    'Eb' = 3,
+    'D♯' = 3,
+    'E♭' = 3,
     'E' = 4,
     'F' = 5,
-    'F#' = 6,
-    'Gb' = 6,
+    'F♯' = 6,
+    'G♭' = 6,
     'G' = 7,
-    'G#' = 8,
-    'Ab' = 8,
+    'G♯' = 8,
+    'A♭' = 8,
     'A' = 9,
-    'A#' = 10,
-    'Bb' = 10,
+    'A♯' = 10,
+    'B♭' = 10,
     'B' = 11,
-    'Abb' = 7,
-    'Bbb' = 9,
-    'Cbb' = 10,
-    'Dbb' = 0,
-    'Ebb' = 2,
-    'Fbb' = 3,
-    'Gbb' = 5,
-    'A##' = 11,
-    'B##' = 1,
-    'C##' = 2,
-    'D##' = 4,
-    'E##' = 6,
-    'F##' = 7,
-    'G##' = 9
+    'A♭♭' = 7,
+    'B♭♭' = 9,
+    'C♭♭' = 10,
+    'D♭♭' = 0,
+    'E♭♭' = 2,
+    'F♭♭' = 3,
+    'G♭♭' = 5,
+    'A♯♯' = 11,
+    'B♯♯' = 1,
+    'C♯♯' = 2,
+    'D♯♯' = 4,
+    'E♯♯' = 6,
+    'F♯♯' = 7,
+    'G♯♯' = 9
 }
 
 enum bw {
@@ -39,9 +39,9 @@ enum bw {
 
 const bwMap = [bw.white, bw.black, bw.white, bw.black, bw.white, bw.white, bw.black, bw.white, bw.black, bw.white, bw.black, bw.white,]
 
-let keySimpleList: string[] = ['C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B']
+let keySimpleList: string[] = ['C', 'C♯', 'D♭', 'D', 'D♯', 'E♭', 'E', 'F', 'F♯', 'G♭', 'G', 'G♯', 'A♭', 'A', 'A♯', 'B♭', 'B']
 
-let chromaticName: string[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B']
+let chromaticName: string[] = ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'F♯', 'G', 'A♭', 'A', 'B♭', 'B']
 
 const OctaveKeyCount = 12
 
