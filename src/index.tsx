@@ -34,12 +34,12 @@ class App extends Component<AppProps, AppState> {
         return (
             <Fragment>
                 <div className='wrapper'>
-                    {/* <Match path="/">
+                    <Match path="/">
                         {({ url }: { url: string }) => {
                             if (url.startsWith("/chord") || url.startsWith("/whiteboard"))
                                 return <Nav chordUrl={this.state.chordUri} />
                         }}
-                    </Match> */}
+                    </Match>
                     <Router onChange={this.handleRoute}>
                         <IndexPage path='/' />
                         <ChordPage path='/chord/:selectedKey/:selectedChord?/:inversion?' />
