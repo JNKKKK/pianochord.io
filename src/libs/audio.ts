@@ -1,10 +1,12 @@
-import { Key } from "./key";
+import { Keys, Octave } from "./key";
+
+type AudioSample = undefined | "loading" | AudioBuffer
 
 class Piano {
     context: AudioContext;
     extension: string;
 
-    samples = {
+    samples: Record<Octave, AudioSample> = {
         2: undefined,
         3: undefined,
         4: undefined,
@@ -45,30 +47,31 @@ class Piano {
         ])
     }
 
-    async loadSample(octave: number) {
-        if (this.samples[octave] === undefined) {
+    async loadSample(octave: Octave): Promise<AudioBuffer> {
+        let sample = this.samples[octave]
+        if (sample === undefined) {
             this.samples[octave] = 'loading'
             const response = await fetch(`/samples_piano_F${octave}.${this.extension}`);
             const buffer = await response.arrayBuffer();
             const data = await this.context.decodeAudioData(buffer);
             this.samples[octave] = data;
             return data;
-        } else if (this.samples[octave] === 'loading') {
+        } else if (sample === 'loading') {
             throw new Error("Duplicate playing action when sample is still loading.")
         } else {
-            return this.samples[octave]
+            return sample
         }
     }
 
-    playSample(sample: AudioBuffer, key: Key) {
+    playSample(sample: AudioBuffer, key: number) {
         const source = this.context.createBufferSource();
         source.buffer = sample;
-        source.playbackRate.value = 2 ** ((key - Key['F']) / 12);
+        source.playbackRate.value = 2 ** ((key - Keys['F']) / 12);
         source.connect(this.context.destination);
         source.start(0, 0, 2);
     }
 
-    async play(key: Key, octave: number) {
+    async play(key: number, octave: Octave) {
         try {
             const sample = await this.loadSample(octave);
             this.playSample(sample, key);

@@ -1,10 +1,10 @@
 import { sum } from './helper'
-import { chromaticName, Key } from './key'
+import { chromaticName, Keys, KeyName } from './key'
 
 type SerializeFeature = { key: number, intervals: number[] }
 
 class Chord {
-    key: Key
+    key: number
     intervals: number[]
     alias: string[]
     fullName: string
@@ -12,7 +12,7 @@ class Chord {
     tonic: string
     inversions: Chord[]
 
-    constructor(key: Key, intervals: number[]) {
+    constructor(key: number, intervals: number[]) {
         this.key = key
         this.intervals = intervals
         this.alias = []
@@ -53,7 +53,7 @@ class Chord {
             this.inversions = []
             for (let i = 0; i < this.intervals.length - 1; i++) {
                 // (i+1)th inversion
-                let key = this.key + sum(this.intervals.slice(0, i + 2))
+                let key: number = this.key + sum(this.intervals.slice(0, i + 2))
                 key %= 12
                 let intervalAboveRoot = this.intervals.slice(i + 1)
                 intervalAboveRoot[0] = 0

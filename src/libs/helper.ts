@@ -50,7 +50,7 @@ function urlEncodeChord(chordName: string): string {
 }
 function urlDecodeChord(chordName: string | undefined): string | undefined {
     if (chordName) {
-        return chordName.replace(/sharp/g, '♯').replace(/(.)b/g, '$1♭').replace(/_/g, '/').replace(/-/g, ' ')
+        return chordName.replace(/sharp/g, '♯').replace(/b/g, '♭').replace(/_/g, '/').replace(/-/g, ' ')
     } else {
         return undefined
     }

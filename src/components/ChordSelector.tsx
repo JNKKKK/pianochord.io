@@ -1,11 +1,11 @@
 import { h, Component } from 'preact'
 import ChordThumbnail from './ChordThumbnail'
-import { keySimpleList } from '../libs/key'
+import { KeyName, keySimpleList } from '../libs/key'
 import { urlEncodeKey, urlEncodeChord, chordFilterByKeyword } from '../libs/helper'
 import { chords } from '../libs/db'
 
 type ChordSelectorProps = {
-  selectedKey: string
+  selectedKey: KeyName
 }
 
 type ChordSelectorState = {

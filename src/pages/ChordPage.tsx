@@ -1,7 +1,7 @@
 import { Fragment, h, Component } from 'preact'
 import Keyboard from '../components/Keyboard'
 import KeySelector from '../components/KeySelector'
-import { Key, keySimpleList } from '../libs/key'
+import { Keys, KeyName, keySimpleList } from '../libs/key'
 import ChordSelector from '../components/ChordSelector'
 import ChordDetail from '../components/ChordDetail'
 import Playbox from '../components/Playbox'
@@ -48,7 +48,7 @@ export default class ChordPage extends Component<ChordPageProps, ChordPageState>
   }
 
   urlDecode() {
-    let selectedKey = urlDecodeKey(this.props.selectedKey)
+    let selectedKey = urlDecodeKey(this.props.selectedKey) as KeyName
     let selectedChord = urlDecodeChord(this.props.selectedChord)
     let inversion
     if (!this.props.inversion) {
@@ -103,7 +103,7 @@ export default class ChordPage extends Component<ChordPageProps, ChordPageState>
           return
         }
         highlightTable = chordAlignMid(getHighlightTable(chord.inversions[inversion - 1]))
-        colorIndex = keySimpleList.map(str => Key[str]).indexOf(chord.inversions[inversion - 1].key) + 1
+        colorIndex = keySimpleList.map(str => Keys[str]).indexOf(chord.inversions[inversion - 1].key) + 1
       }
       return (
         <Fragment>

@@ -8,7 +8,7 @@ import { Trash2 } from '../components/icon/Trash-2'
 import { RefreshCw } from '../components/icon/Refresh-cw'
 import { Share2 } from '../components/icon/Share-2'
 import ChordThumbnail from '../components/ChordThumbnail'
-import { chromaticName, Key, keySimpleList } from '../libs/key'
+import { chromaticName, Keys, KeyName, keySimpleList } from '../libs/key'
 import { Move } from '../components/icon/Move'
 import { Plus } from "../components/icon/Plus";
 import Modal from "../components/Modal";
@@ -141,7 +141,7 @@ export default class WhiteBoardPage extends Component<WhiteBoardPageProps, White
                                             this.setState({ boards: this.state.boards })
                                         }} />
                                     </div>
-                                    <ChordThumbnail chord={card.chord} highlightColor={keySimpleList.map(str => Key[str]).indexOf(card.chord.key) + 1} />
+                                    <ChordThumbnail chord={card.chord} highlightColor={keySimpleList.map(str => Keys[str]).indexOf(card.chord.key) + 1} />
                                     <div className='name'>{card.name}</div>
                                 </div>
                             ))
@@ -222,12 +222,12 @@ export default class WhiteBoardPage extends Component<WhiteBoardPageProps, White
                     <div className="customizedChord-modal">
                         <h1>Create New Chord</h1>
                         <div className="thumbnail">
-                            <ChordThumbnail chord={this.state.customizeChordModal.chord} highlightColor={keySimpleList.map(str => Key[str]).indexOf(this.state.customizeChordModal.chord.key) + 1} />
+                            <ChordThumbnail chord={this.state.customizeChordModal.chord} highlightColor={keySimpleList.map(str => Keys[str]).indexOf(this.state.customizeChordModal.chord.key) + 1} />
                         </div>
                         <h2>Root Key</h2>
                         <KeySelector link={false} selectedKey={this.state.customizeChordModal.keyStr}
                             setKey={(keyStr) => {
-                                this.state.customizeChordModal.chord.key = Key[keyStr]
+                                this.state.customizeChordModal.chord.key = Keys[keyStr]
                                 this.state.customizeChordModal.chord.cutoff(36)
                                 this.setState({ customizeChordModal: { ...this.state.customizeChordModal, keyStr } })
                             }}
@@ -239,10 +239,10 @@ export default class WhiteBoardPage extends Component<WhiteBoardPageProps, White
                                     let chord = this.state.customizeChordModal.chord
                                     let startKey = chord.key + sum(chord.intervals.slice(0, i + 1))
                                     startKey %= 12
-                                    let startKeyColor = keySimpleList.map(str => Key[str]).indexOf(startKey) + 1
+                                    let startKeyColor = keySimpleList.map(str => Keys[str]).indexOf(startKey) + 1
                                     let endKey = startKey + interval
                                     endKey %= 12
-                                    let endKeyColor = keySimpleList.map(str => Key[str]).indexOf(endKey) + 1
+                                    let endKeyColor = keySimpleList.map(str => Keys[str]).indexOf(endKey) + 1
                                     return (
                                         <div className="item">
                                             <span className={"key color-" + startKeyColor}>{chromaticName[startKey]}</span>
@@ -326,7 +326,7 @@ export default class WhiteBoardPage extends Component<WhiteBoardPageProps, White
                                         saveBoard({ boards: this.state.boards, selectedBoard: this.state.selectedBoard })
                                         this.setState({ addExistingChordModal: { ...this.state.addExistingChordModal, show: false } })
                                     }}>
-                                        <ChordThumbnail chord={chord} highlightColor={keySimpleList.map(str => Key[str]).indexOf(chord.key) + 1} />
+                                        <ChordThumbnail chord={chord} highlightColor={keySimpleList.map(str => Keys[str]).indexOf(chord.key) + 1} />
                                         {chord.alias[0]}
                                     </div>
                                 ))

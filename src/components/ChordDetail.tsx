@@ -1,5 +1,5 @@
 import { Chord } from 'libs/chord'
-import { chromaticName, Key, keySimpleList } from '../libs/key'
+import { chromaticName, Keys, KeyName, keySimpleList } from '../libs/key'
 import { h, Component, Fragment } from 'preact'
 import { intervalTable, inversionNames } from '../libs/db'
 import ChordThumbnail from './ChordThumbnail'
@@ -115,7 +115,7 @@ export default class ChordDetail extends Component<ChordDetailProps, ChordDetail
               {this.state.inversionOpen &&
                 <div className='inversion-content'>
                   {[chord, ...chord.inversions].map((c, i) => {
-                    let colorIndex = keySimpleList.map(str => Key[str]).indexOf(c.key) + 1
+                    let colorIndex = keySimpleList.map(str => Keys[str]).indexOf(c.key) + 1
                     let inversion = this.props.inversion
                     return (
                       <div className={'chord color-' + colorIndex + (inversion == i ? ' active' : '')} onClick={this.handleInversionClick(i)}>

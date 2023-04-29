@@ -1,11 +1,11 @@
 import { h, Component } from 'preact'
 import { urlEncodeKey } from '../libs/helper'
-import { Key, keySimpleList } from '../libs/key'
+import { KeyName, keySimpleList } from '../libs/key'
 
 type KeySelectorProps = {
   selectedKey?: string
   link: boolean
-  setKey?: (key: string) => void
+  setKey?: (key: KeyName) => void
 }
 
 export default class KeySelector extends Component<KeySelectorProps> {

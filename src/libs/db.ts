@@ -1,5 +1,5 @@
 import { Chord } from "./chord"
-import { Key, keySimpleList, OctaveKeyCount } from "./key"
+import { KeyName, Keys, keySimpleList, OctaveKeyCount } from "./key"
 import { Note } from "./note"
 
 let chordTable = [
@@ -112,7 +112,12 @@ let chordTable = [
     { "aliases": ["11♭9"], "name": null, "quality": "", "intervals": [0, 7, 3, 3, 4] }
 ]
 
-let intervalTable = {
+type Interval = {
+    abbrev: string,
+    name: string
+}
+
+let intervalTable: Record<number, Interval> = {
     0: { abbrev: 'P1', name: 'Root' },
     1: { abbrev: 'm2', name: 'Minor Second' },
     2: { abbrev: 'M2', name: 'Major Second' },
@@ -151,10 +156,10 @@ type chordsDB = {
 let chords: chordsDB = {}
 
 
-keySimpleList.forEach((k: string) => {
+keySimpleList.forEach((k: KeyName) => {
     chords[k] = []
     chordTable.forEach(row => {
-        let chord = new Chord(Key[k], row.intervals)
+        let chord = new Chord(Keys[k], row.intervals)
         chord.tonic = k
         let name = row.name ? `${k} ${row.name}` : ''
         let alias = row.aliases.map(str => `${k}${str}`)
