@@ -1,6 +1,4 @@
 import { h, Component } from 'preact'
-import { Music } from './icon/Music'
-import { Clipboard } from './icon/Clipboard'
 
 type NavProps = {
     chordUrl?: string
@@ -11,6 +9,20 @@ type NavState = {}
 export default class Nav extends Component<NavProps, NavState> {
     constructor(props: NavProps) {
         super(props)
+        this.handleHamburgerClick = this.handleHamburgerClick.bind(this)
+    }
+
+    componentDidUpdate() {
+        document.body.classList.remove("disable-scrolling")
+    }
+
+    handleHamburgerClick(e: MouseEvent) {
+        let checkbox = (e.target as HTMLLabelElement).control as HTMLInputElement
+        if (checkbox.checked) {
+            document.body.classList.remove("disable-scrolling")
+        } else {
+            document.body.classList.add("disable-scrolling")
+        }
     }
 
     render() {
@@ -21,8 +33,8 @@ export default class Nav extends Component<NavProps, NavState> {
 
                 <ul class="nav-links">
 
-                    <input type="checkbox" id="checkbox_toggle" />
-                    <label for="checkbox_toggle" class="hamburger">&#9776;</label>
+                    <input type="checkbox" id="checkbox_toggle" checked={false} />
+                    <label for="checkbox_toggle" class="hamburger" onClick={this.handleHamburgerClick}>&#9776;</label>
 
 
                     <div class="menu">
