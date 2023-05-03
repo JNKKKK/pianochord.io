@@ -42,7 +42,7 @@ export default class Playbox extends Component<PlayboxProps> {
     let highlightedNotes = notes.filter((_, i) => this.props.highlightTable[i])
 
     return (
-      <div class='playbox-container'>
+      <div class={'playbox-container color-' + this.props.color}>
         <button type='button' className={'color-' + this.props.color} onClick={() => this.playChord(highlightedNotes)}><Play size={16} />Play</button>
         <button type='button' className={'color-' + this.props.color} onClick={() => this.playEachNote(highlightedNotes)}><Play size={16} />Play each note</button>
         <button type='button' className={'color-' + this.props.color} disabled={this.props.lowerDisabled} onClick={this.props.lowerOctave}><ArrowDown size={16} />Octave Down</button>

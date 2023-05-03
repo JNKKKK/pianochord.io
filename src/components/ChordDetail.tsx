@@ -13,7 +13,8 @@ import { Card } from 'pages/WhiteBoardPage'
 type ChordDetailProps = {
   chord: Chord,
   inversion: number,
-  addNotification: (text: string, duration: number) => void
+  color: number,
+  addNotification: (text: string, duration: number) => void,
 }
 
 type ChordDetailState = {
@@ -59,7 +60,7 @@ export default class ChordDetail extends Component<ChordDetailProps, ChordDetail
     let chord = this.props.chord
     return (
       <Fragment>
-        <div className='chordDetail-container'>
+        <div className={'chordDetail-container color-' + this.props.color}>
           {/* <div className='action-container'>
             <button onClick={this.addToWhiteboard}><Plus size={15} />Add to whiteboard</button>
           </div> */}

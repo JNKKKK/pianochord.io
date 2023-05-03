@@ -4,9 +4,10 @@
 .playbox-container {
   max-width: 63rem;
   margin: 1rem auto;
+  margin-bottom: 0.5rem;
   padding: 0.75rem 1rem;
   border-radius: 5px;
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(251, 251, 251);
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -19,13 +20,23 @@
     @include button;
     margin-right: 0.5rem;
     width: 10rem;
+    box-shadow: 0px 0px 5px 0 rgb(218, 218, 218);
     @for $i from 1 through 17 {
-      &.color-#{$i}:focus:not(:active) {
-        box-shadow: 0 0 0 0.125em adjust-color(nth($rainbow-17, $i), $alpha: -0.85);
+      &.color-#{$i}:hover:not(:disabled) {
+        background: linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 1) 0%,
+          adjust-color(nth($rainbow-17, $i), $alpha: -0.9) 100%
+        );
       }
-      &.color-#{$i}:focus {
-        border-color: nth($rainbow-17, $i);
-        outline: 0;
+      &.color-#{$i}:active:not(:disabled) {
+        background: linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 1) 0%,
+          adjust-color(nth($rainbow-17, $i), $alpha: 0) 100%
+        );
+        box-shadow: none;
+        color: white;
       }
     }
   }

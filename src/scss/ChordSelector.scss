@@ -3,8 +3,8 @@
 
 .chordSelector-container {
   max-width: 63rem;
-  margin: 1rem auto;
-  background-color: rgb(240, 240, 240);
+  margin: 0.5rem auto;
+  background-color: rgb(251, 251, 251);
   box-sizing: border-box;
   padding: 1rem;
   border-radius: 5px;
@@ -15,7 +15,7 @@
     @for $i from 1 through 17 {
       &.color-#{$i}:focus {
         border-color: nth($rainbow-17, $i);
-        box-shadow: 0 0 0 0.125em adjust-color(nth($rainbow-17, $i), $alpha: -0.9);
+        box-shadow: 0 0 0 0.2em adjust-color(nth($rainbow-17, $i), $alpha: -0.8);
       }
     }
   }
@@ -28,14 +28,29 @@
       flex-grow: 1;
       padding: 2rem 0.5rem;
       box-sizing: border-box;
-      margin: 1px;
+      margin: 3px;
       background-color: white;
       text-decoration: none;
       color: black;
       text-align: center;
+      border-radius: 5px;
+      box-shadow: 0px 0px 5px 0 rgb(233, 233, 233);
       &:hover {
-        background-color: rgb(226, 226, 226);
+        .name {
+          background: -webkit-repeating-linear-gradient(45deg, #000, #999 20px, #999 20px, #000 30px);
+          background-clip: border-box;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          font-weight: 600;
+        }
+        @for $i from 1 through 17 {
+          &.color-#{$i} {
+            background: linear-gradient(45deg, rgba(255, 255, 255, 1) 0%, adjust-color(nth($rainbow-17, $i), $alpha: -0.9) 100%);
+            box-shadow: 0px 0px 5px 0 rgb(220, 220, 220);
+          }
+        }
       }
+      
       .name {
         font-size: 1rem;
         margin-top: 0.75rem;

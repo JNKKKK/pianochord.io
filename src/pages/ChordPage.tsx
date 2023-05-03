@@ -105,6 +105,7 @@ export default class ChordPage extends Component<ChordPageProps, ChordPageState>
         highlightTable = chordAlignMid(getHighlightTable(chord.inversions[inversion - 1]))
         colorIndex = keySimpleList.map(str => Keys[str]).indexOf(chord.inversions[inversion - 1].key) + 1
       }
+      let color= keySimpleList.indexOf(selectedKey) + 1
       return (
         <Fragment>
           <Keyboard offset={this.state.octaveAdj} highlightTable={highlightTable} highlightColor={colorIndex} />
@@ -112,8 +113,8 @@ export default class ChordPage extends Component<ChordPageProps, ChordPageState>
           <Playbox offset={this.state.octaveAdj} highlightTable={highlightTable}
             raiseOctave={this.raiseOctave} lowerOctave={this.lowerOctave}
             risingDisabled={this.state.octaveAdj === MAXoctaveAdj} lowerDisabled={this.state.octaveAdj === MINoctaveAdj}
-            color={keySimpleList.indexOf(selectedKey) + 1} />
-          <ChordDetail chord={chord} inversion={inversion} addNotification={this.addNotification} />
+            color={color} />
+          <ChordDetail chord={chord} inversion={inversion} addNotification={this.addNotification} color={color} />
           <ChordSelector selectedKey={selectedKey} />
           <Notification list={this.state.notifications} setList={(notifications) => this.setState({ notifications })} />
         </Fragment>
