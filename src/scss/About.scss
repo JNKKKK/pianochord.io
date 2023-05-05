@@ -1,0 +1,75 @@
+@import "colors";
+@import "UI";
+
+.about-container {
+    max-width: 63rem;
+    margin: 1rem auto;
+    .decor-container {
+        height: 14rem;
+        position: relative;
+        overflow: hidden;
+        &:before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: linear-gradient(transparent 80%, white);
+            z-index: 1;
+        }
+        span {
+            position: absolute;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            @for $i from 1 through 17 {
+                &.color-#{$i} {
+                    background: -webkit-linear-gradient(
+                        45deg,
+                        adjust-color(nth($rainbow-17, $i), $lightness: +50%),
+                        adjust-color(nth($rainbow-17, $i), $lightness: +0%)
+                    );
+                    background-clip: border-box;
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    font-weight: bold;
+                }
+            }
+            @media (max-width: 768px) {
+                &.mobile-hide {
+                    display: none;
+                }
+            }
+        }
+    }
+    .content-container {
+        // margin: 2rem auto;
+        margin-bottom: 2rem;
+        padding: 0 1rem;
+        h1 {
+            font-size: 2rem;
+            font-weight: 400;
+            margin: 1rem auto;
+            color: rgb(32, 32, 32);
+        }
+        div {
+            line-height: 1.3rem;
+            color: rgb(77, 77, 77);
+            a,
+            a:link,
+            a:active,
+            a:visited,
+            a:hover {
+                color: rgb(124, 124, 124);
+            }
+            a.no-decoration {
+                text-decoration: none;
+            }
+            b {
+                font-weight: bold;
+            }
+        }
+    }
+}

@@ -1,4 +1,4 @@
-@import 'colors';
+@import "colors";
 
 .keySelector-container {
   max-width: 63rem;
@@ -6,7 +6,8 @@
   padding: 0 0.5rem;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
+  gap: 0.4rem;
   flex-wrap: wrap;
   .keySelector-button {
     cursor: pointer;

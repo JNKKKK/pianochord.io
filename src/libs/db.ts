@@ -1,5 +1,5 @@
 import { Chord } from "./chord"
-import { KeyName, Keys, keySimpleList, OctaveKeyCount } from "./key"
+import { chromaticName, KeyName, Keys, keySimpleList, Octave, OctaveKeyCount } from "./key"
 import { Note } from "./note"
 
 let chordTable = [
@@ -145,8 +145,8 @@ let notes: Note[] = []
 
 // generate notes from oct 2 to oct 6 (inclusive)
 for (let oct = 2; oct <= 6; oct++) {
-    for (let k = 0; k < OctaveKeyCount; k++) {
-        notes.push(new Note(k, oct))
+    for (let k of chromaticName) {
+        notes.push(new Note(k, oct as Octave))
     }
 }
 

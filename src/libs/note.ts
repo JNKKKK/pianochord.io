@@ -1,22 +1,21 @@
-import { bwMap, chromaticName, Key, OctaveKeyCount } from './key'
+import { bwMap, chromaticName, KeyName, Keys, Octave, OctaveKeyCount } from './key'
 import piano from '../libs/audio'
 
 class Note {
-    key: Key
-    octave: number
+    key: KeyName
+    octave: Octave
 
-    constructor(key: Key, octave: number) {
-        if (typeof key === 'undefined') throw ('undefined key')
+    constructor(key: KeyName, octave: Octave) {
         this.key = key
         this.octave = octave
     }
 
     play() {
-        return piano.play(this.key, this.octave)
+        return piano.play(Keys[this.key], this.octave)
     }
 
     toString() {
-        return chromaticName[this.key] + this.octave
+        return chromaticName[Keys[this.key]] + this.octave
     }
 
     valueOf() {
@@ -24,7 +23,7 @@ class Note {
     }
 
     get bw() {
-        return bwMap[this.key]
+        return bwMap[Keys[this.key]]
     }
 }
 

@@ -7,6 +7,7 @@ import Page404 from './pages/404Page'
 import Footer from './components/Footer'
 import WhiteBoardPage from './pages/WhiteBoardPage'
 import Nav from './components/Nav';
+import AboutPage from './pages/AboutPage';
 
 import './scss/App.scss'
 
@@ -36,7 +37,7 @@ class App extends Component<AppProps, AppState> {
                 <div className='wrapper'>
                     <Match path="/">
                         {({ url }: { url: string }) => {
-                            if (url.startsWith("/chord") || url.startsWith("/whiteboard"))
+                            if (url.startsWith("/chord") || url.startsWith("/whiteboard") || url.startsWith("/about"))
                                 return <Nav chordUrl={this.state.chordUri} />
                         }}
                     </Match>
@@ -44,6 +45,7 @@ class App extends Component<AppProps, AppState> {
                         <IndexPage path='/' />
                         <ChordPage path='/chord/:selectedKey/:selectedChord?/:inversion?' />
                         <WhiteBoardPage path='/whiteboard' />
+                        <AboutPage path='/about' />
                         <Page404 default />
                     </Router>
                 </div>
