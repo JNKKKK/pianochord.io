@@ -3,11 +3,9 @@
 
 .chordDetail-container {
   margin: 0.5rem auto;
-  // margin-top: 0.5rem;
   padding: 1rem 1rem;
   border-radius: 5px;
   max-width: 63rem;
-  // background-color: rgb(240, 240, 240);
   @for $i from 1 through 17 {
     &.color-#{$i} {
       background: linear-gradient(
