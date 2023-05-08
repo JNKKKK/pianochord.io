@@ -50,11 +50,27 @@
           }
         }
       }
-      
       .name {
         font-size: 1rem;
         margin-top: 0.75rem;
       }
     }
+    .missing-chord {
+      line-height: 1.3rem;
+      color: rgb(77, 77, 77);
+      a,
+      a:link,
+      a:active,
+      a:visited,
+      a:hover {
+          color: rgb(124, 124, 124);
+      }
+      a.no-decoration {
+          text-decoration: none;
+      }
+      b {
+          font-weight: bold;
+      }
+  }
   }
 }

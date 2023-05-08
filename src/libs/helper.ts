@@ -58,8 +58,8 @@ function urlDecodeChord(chordName: string | undefined): string | undefined {
 
 function chordFilterByKeyword(kw: string) {
     return (chord: Chord) => {
-        kw = kw.toLowerCase().replace(' ', '')
-        let allNames = chord.possibleNames.map((str: string) => str.toLowerCase().replace(' ', ''))
+        kw = kw.toLowerCase().replace(' ', '').replace('♯', '#').replace('♭', 'b')
+        let allNames = chord.possibleNames.map((str: string) => str.toLowerCase().replace(' ', '').replace('♯', '#').replace('♭', 'b'))
         return allNames.some(name => name.indexOf(kw) !== -1)
     }
 }

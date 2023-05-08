@@ -2,7 +2,7 @@ import { h, Component } from 'preact'
 import ChordThumbnail from './ChordThumbnail'
 import { KeyName, keySimpleList } from '../libs/key'
 import { urlEncodeKey, urlEncodeChord, chordFilterByKeyword } from '../libs/helper'
-import { chords } from '../libs/db'
+import { chords as Chords } from '../libs/db'
 
 type ChordSelectorProps = {
   selectedKey: KeyName
@@ -32,20 +32,25 @@ export default class ChordSelector extends Component<ChordSelectorProps, ChordSe
 
   render() {
     let selectedKey = this.props.selectedKey
-    let chordDataList = chords[selectedKey]
+    let chords = Chords[selectedKey].filter(chordFilterByKeyword(this.state.search))
 
     return (
       <div className='chordSelector-container'>
         <input type='text' placeholder='Search by keywords' value={this.state.search} onKeyUp={this.handleChange}
           className={'color-' + (keySimpleList.indexOf(selectedKey) + 1)} />
         <div className='chord-container'>
-          {chordDataList.filter(chordFilterByKeyword(this.state.search)).map(c => (
+          {chords.map(c => (
             <a className={'chord color-' + (keySimpleList.indexOf(selectedKey) + 1)} onClick={this.handleClick} draggable={false}
               href={'/chord/' + urlEncodeKey(selectedKey) + '/' + urlEncodeChord(c.name)}>
               <ChordThumbnail chord={c} highlightColor={keySimpleList.indexOf(selectedKey) + 1} />
               <div className='name'>{c.name}</div>
             </a>
           ))}
+          {chords.length == 0 &&
+            <div className='missing-chord'>
+              No matching chords found! To report missing chord definition, open an issue <a href="https://github.com/JNKKKK/pianochord.io/issues">here</a>. 
+            </div>
+          }
         </div>
       </div>
     )
