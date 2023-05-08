@@ -28,8 +28,8 @@
                 &.color-#{$i} {
                     background: -webkit-linear-gradient(
                         45deg,
-                        adjust-color(nth($rainbow-17, $i), $lightness: +50%),
-                        adjust-color(nth($rainbow-17, $i), $lightness: +0%)
+                        adjust-color(nth($rainbow-17, $i), $lightness: +80%, $saturation: +30%),
+                        adjust-color(nth($rainbow-17, $i), $lightness: +0%, $saturation: +30%)
                     );
                     background-clip: border-box;
                     -webkit-background-clip: text;
