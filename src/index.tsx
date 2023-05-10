@@ -61,5 +61,6 @@ if (mountNode) {
     (window as any).netlifyIdentity = netlifyIdentity
     netlifyIdentity.init({ logo: false })
     netlifyIdentity.on('logout', () => window.location.reload());
+    netlifyIdentity.on('login', () => window.location.reload());
     render(<App />, mountNode)
 }
