@@ -1,4 +1,4 @@
-import { h, Component } from 'preact'
+import { h, Component, Fragment } from 'preact'
 import netlifyIdentity from 'netlify-identity-widget';
 
 type NavProps = {
@@ -43,7 +43,10 @@ export default class Nav extends Component<NavProps, NavState> {
                         <li>
                             {netlifyIdentity.currentUser() == null ? <a onClick={() => { netlifyIdentity.open(); }}>Log in</a>
                                 :
-                                <a onClick={() => { netlifyIdentity.logout(); }}><img src={avatarUrl} />Log out</a>
+                                <Fragment>
+                                    <img src={avatarUrl} />
+                                    <a onClick={() => { netlifyIdentity.logout(); }}>Log out</a>
+                                </Fragment>
                             }
                         </li>
 
