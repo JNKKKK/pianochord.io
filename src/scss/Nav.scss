@@ -52,6 +52,9 @@
             font-size: 1rem;
             li {
                 list-style: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 a,
                 a:link,
                 a:active,
@@ -59,6 +62,7 @@
                 a:hover {
                     color: rgb(72, 72, 72);
                     text-decoration: none;
+                    cursor: pointer;
                 }
                 a.active {
                     background: -webkit-linear-gradient(
@@ -80,6 +84,12 @@
                 }
                 &:hover {
                     font-weight: 600;
+                }
+                img {
+                    width: 1.3rem;
+                    height: 1.3rem;
+                    border-radius: 2rem;
+                    margin-right: 0.3rem;
                 }
             }
         }

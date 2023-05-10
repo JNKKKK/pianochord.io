@@ -1,4 +1,5 @@
-import { h, Component } from 'preact'
+import { h, Component, Fragment } from 'preact'
+import netlifyIdentity from 'netlify-identity-widget';
 
 type NavProps = {
     chordUrl?: string
@@ -26,6 +27,9 @@ export default class Nav extends Component<NavProps, NavState> {
     }
 
     render() {
+        let avatarUrl = netlifyIdentity.currentUser()?.user_metadata?.avatar_url ? netlifyIdentity.currentUser()?.user_metadata?.avatar_url :
+            "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+
         return (
             <nav class="navbar">
                 <div class="logo"><a href="/">PianoChord.io</a></div>
@@ -36,6 +40,16 @@ export default class Nav extends Component<NavProps, NavState> {
                         <li><a className={window.location.pathname.startsWith("/chord") ? "active" : ''} href={this.props.chordUrl ? this.props.chordUrl : '/'}>Chords</a></li>
                         {/* <li><a className={window.location.pathname.startsWith("/whiteboard") ? "active" : ''} href="/whiteboard">Whiteboard</a></li> */}
                         <li><a className={window.location.pathname.startsWith("/about") ? "active" : ''} href="/about">About</a></li>
+                        <li>
+                            {netlifyIdentity.currentUser() == null ? <a onClick={() => { netlifyIdentity.open(); }}>Log in</a>
+                                :
+                                <Fragment>
+                                    <img src={avatarUrl} />
+                                    <a onClick={() => { netlifyIdentity.logout(); }}>Log out</a>
+                                </Fragment>
+                            }
+                        </li>
+
                     </div>
                 </ul>
             </nav>
