@@ -27,6 +27,9 @@ export default class Nav extends Component<NavProps, NavState> {
     }
 
     render() {
+        let avatarUrl = netlifyIdentity.currentUser()?.user_metadata?.avatar_url ? netlifyIdentity.currentUser()?.user_metadata?.avatar_url :
+            "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+
         return (
             <nav class="navbar">
                 <div class="logo"><a href="/">PianoChord.io</a></div>
@@ -40,7 +43,7 @@ export default class Nav extends Component<NavProps, NavState> {
                         <li>
                             {netlifyIdentity.currentUser() == null ? <a onClick={() => { netlifyIdentity.open(); }}>Log in</a>
                                 :
-                                <a onClick={() => { netlifyIdentity.logout(); }}><img src={netlifyIdentity.currentUser()?.user_metadata?.avatar_url} />Log out</a>
+                                <a onClick={() => { netlifyIdentity.logout(); }}><img src={avatarUrl} />Log out</a>
                             }
                         </li>
 

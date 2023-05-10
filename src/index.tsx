@@ -59,7 +59,7 @@ class App extends Component<AppProps, AppState> {
 const mountNode = document.getElementById('app')
 if (mountNode) {
     (window as any).netlifyIdentity = netlifyIdentity
-    netlifyIdentity.init()
+    netlifyIdentity.init({ logo: false })
     netlifyIdentity.on('logout', () => window.location.reload());
     render(<App />, mountNode)
 }
