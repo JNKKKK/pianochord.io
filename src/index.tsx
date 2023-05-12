@@ -5,7 +5,7 @@ import IndexPage from './pages/IndexPage'
 import ChordPage from './pages/ChordPage'
 import Page404 from './pages/404Page'
 import Footer from './components/Footer'
-import WhiteBoardPage from './pages/WhiteBoardPage'
+import WhiteBoardPage from './pages/WhiteBoardPage2'
 import Nav from './components/Nav';
 import AboutPage from './pages/AboutPage';
 import netlifyIdentity from 'netlify-identity-widget';

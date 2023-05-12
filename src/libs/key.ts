@@ -1,6 +1,5 @@
 type KeyName =
-    'C' | 'C♯' | 'D♭' | 'D' | 'D♯' | 'E♭' | 'E' | 'F' | 'F♯' | 'G♭' | 'G' | 'G♯' | 'A♭' | 'A' | 'A♯' | 'B♭' | 'B' |
-    'A♭♭' | 'B♭♭' | 'C♭♭' | 'D♭♭' | 'E♭♭' | 'F♭♭' | 'G♭♭' | 'A♯♯' | 'B♯♯' | 'C♯♯' | 'D♯♯' | 'E♯♯' | 'F♯♯' | 'G♯♯'
+    'C' | 'C♯' | 'D♭' | 'D' | 'D♯' | 'E♭' | 'E' | 'F' | 'F♯' | 'G♭' | 'G' | 'G♯' | 'A♭' | 'A' | 'A♯' | 'B♭' | 'B'
 
 const Keys: Record<KeyName, number> = {
     'C': 0,
@@ -20,20 +19,6 @@ const Keys: Record<KeyName, number> = {
     'A♯': 10,
     'B♭': 10,
     'B': 11,
-    'A♭♭': 7,
-    'B♭♭': 9,
-    'C♭♭': 10,
-    'D♭♭': 0,
-    'E♭♭': 2,
-    'F♭♭': 3,
-    'G♭♭': 5,
-    'A♯♯': 11,
-    'B♯♯': 1,
-    'C♯♯': 2,
-    'D♯♯': 4,
-    'E♯♯': 6,
-    'F♯♯': 7,
-    'G♯♯': 9
 }
 
 enum bw {
@@ -47,8 +32,10 @@ let keySimpleList: KeyName[] = ['C', 'C♯', 'D♭', 'D', 'D♯', 'E♭', 'E', '
 
 let chromaticName: KeyName[] = ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'F♯', 'G', 'A♭', 'A', 'B♭', 'B']
 
+let keyPossibleName: KeyName[][] = [['C'], ['C♯', 'D♭'], ['D'], ['D♯', 'E♭'], ['E'], ['F'], ['F♯', 'G♭'], ['G'], ['G♯', 'A♭'], ['A'], ['A♯', 'B♭'], ['B']]
+
 const OctaveKeyCount = 12
 
 type Octave = 2 | 3 | 4 | 5 | 6
 
-export { KeyName, Keys, keySimpleList, OctaveKeyCount, bw, bwMap, chromaticName, Octave }
+export { KeyName, Keys, keySimpleList, OctaveKeyCount, bw, bwMap, chromaticName, Octave, keyPossibleName }

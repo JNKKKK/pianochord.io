@@ -1,5 +1,5 @@
 import { sum } from './helper'
-import { chromaticName, Keys, KeyName } from './key'
+import { chromaticName, Keys, KeyName, keyPossibleName } from './key'
 
 type SerializeFeature = { key: number, intervals: number[] }
 
@@ -81,7 +81,7 @@ class Chord {
                     }
                 }
                 let invChord = new Chord(key, interval)
-                invChord.alias = this.alias.map(str => `${str}/${chromaticName[invChord.key]}`)
+                invChord.alias = this.alias.map(str => keyPossibleName[invChord.key].map(root => `${str}/${root}`)).flat()
                 this.inversions.push(invChord)
             }
         }

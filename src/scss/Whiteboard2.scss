@@ -1,0 +1,63 @@
+@import "colors";
+@import "UI";
+
+.whiteboard-container {
+    max-width: 63rem;
+    margin: 0 auto;
+    margin-top: 0.5rem;
+    .sheet-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        row-gap: 1rem;
+        .bar {
+            border-left: 3px solid black;
+            &:last-of-type {
+                border-right: 3px solid black;
+            }
+            display: flex;
+            flex-direction: row;
+            // flex-wrap: wrap;
+            align-items: center;
+            .beat {
+                &.b-1 {
+                    flex-grow: 1;
+                }
+                &.b-2 {
+                    flex-grow: 2;
+                }
+                &.b-3 {
+                    flex-grow: 3;
+                }
+                &.b-4 {
+                    flex-grow: 4;
+                }
+                &.edit {
+                    &:hover {
+                        background-color: rgb(200, 200, 200);
+                    }
+                }
+
+                .chordAbbrev {
+                    height: 1.3rem;
+                    font-weight: 700;
+                    margin: 0.1rem 0.2rem;
+                    &.invalid {
+                        color: red;
+                    }
+                }
+                .lyrics {
+                    margin: 0.1rem 0.2rem;
+                }
+            }
+        }
+        svg {
+            color: rgb(107, 107, 107);
+            cursor: pointer;
+            &:hover {
+                color: black;
+            }
+        }
+    }
+}

@@ -69,11 +69,11 @@ function searchForChord(kw: string): Chord[] {
         chord: Chord,
         score: number,
     };
-    kw = kw.toLowerCase().replace(' ', '');
+    kw = kw.toLowerCase().replace(' ', '').replace('♯', '#').replace('♭', 'b');
     if (!kw) return []
     let chordsWithScores: ChordScore[] = allChords.map(chord => {
         let score = 0
-        let allNames = chord.possibleNames.map((str: string) => str.toLowerCase().replace(' ', ''))
+        let allNames = chord.possibleNames.map((str: string) => str.toLowerCase().replace(' ', '').replace('♯', '#').replace('♭', 'b'))
         allNames.forEach(name => {
             if (name === kw) {
                 score += 1
@@ -87,6 +87,55 @@ function searchForChord(kw: string): Chord[] {
     let result = chordsWithScores.sort((a, b) => (b.score - a.score)).filter(cs => cs.score > 0).map(cs => cs.chord).slice(0, 20)
     return result
 }
+
+function inferChord(kw: string): { chord: Chord | string | null, chordDisplay: string } {
+    function convertToLowerCaseExceptM(str: string) {
+        let result = '';
+        for (let i = 0; i < str.length; i++) {
+            let char = str.charAt(i);
+            if (char !== 'M') {
+                result += char.toLowerCase();
+            } else {
+                result += char;
+            }
+        }
+        return result;
+    }
+    let originalKw = kw
+    kw = kw.trim().replace(' ', '').replace('♯', '#').replace('♭', 'b');
+    let kwM = convertToLowerCaseExceptM(kw)
+    let kwm = kw.toLowerCase()
+    if (!kw) return { chord: null, chordDisplay: "" }
+    // search for result without lowercase M to m
+    for (let chord of allChords) {
+        let allNames = chord.possibleNames.map((str: string) => convertToLowerCaseExceptM(str).replace(' ', '').replace('♯', '#').replace('♭', 'b'))
+        for (let [i, name] of allNames.entries()) {
+            if (name === kwM) {
+                return {
+                    chord,
+                    chordDisplay: chord.possibleNames[i]
+                }
+            }
+        }
+    }
+    // if cannot find a match, lowercase M to m
+    for (let chord of allChords) {
+        let allNames = chord.possibleNames.map((str: string) => str.toLowerCase().replace(' ', '').replace('♯', '#').replace('♭', 'b'))
+        for (let [i, name] of allNames.entries()) {
+            if (name === kwm) {
+                return {
+                    chord,
+                    chordDisplay: chord.possibleNames[i]
+                }
+            }
+        }
+    }
+    return {
+        chord: originalKw,
+        chordDisplay: originalKw
+    }
+}
+
 
 const delay = (t: number) => new Promise(resolve => setTimeout(resolve, t));
 
@@ -141,5 +190,5 @@ function forceDescriptives(list: number[], mean: number, sd: number) {
 export {
     getHighlightTable, chordAlignMid, findChordByName, sum, searchForChord,
     urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord, delay, chordFilterByKeyword,
-    randomList, descriptives, forceDescriptives
+    randomList, descriptives, forceDescriptives, inferChord
 }
