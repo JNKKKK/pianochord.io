@@ -1,4 +1,5 @@
 @import "colors";
+@import "UI";
 
 .navbar {
     max-width: 63rem;
@@ -42,9 +43,9 @@
             display: none;
         }
         label.hamburger {
+            @include no-select;
             display: none;
             font-size: 1.5rem;
-            user-select: none;
         }
         .menu {
             display: flex;

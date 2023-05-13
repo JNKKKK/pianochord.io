@@ -43,7 +43,7 @@ export default class ChordSelector extends Component<ChordSelectorProps, ChordSe
             <a className={'chord color-' + (keySimpleList.indexOf(selectedKey) + 1)} onClick={this.handleClick} draggable={false}
               href={'/chord/' + urlEncodeKey(selectedKey) + '/' + urlEncodeChord(c.name)}>
               <ChordThumbnail chord={c} highlightColor={keySimpleList.indexOf(selectedKey) + 1} />
-              <div className='name'>{c.name}</div>
+              <div className='name'>{c.shortName}</div>
             </a>
           ))}
           {chords.length == 0 &&

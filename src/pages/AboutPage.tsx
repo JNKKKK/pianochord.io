@@ -4,10 +4,8 @@ import { h, Component } from 'preact'
 
 const total = keySimpleList.length * 2
 
-let top = randomList(total, 1, 50);
-top = forceDescriptives(top, 50, 20);
-let left = randomList(total, 1, 99);
-left = forceDescriptives(left, 50, 30);
+let top = forceDescriptives(randomList(total, 1, 50), 50, 20);
+let left = forceDescriptives(randomList(total, 1, 99), 50, 30);
 let size = randomList(total, 2, 7);
 
 export default class AboutPage extends Component {

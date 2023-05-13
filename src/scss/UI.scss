@@ -1,28 +1,21 @@
 @mixin button {
+    @include no-select;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.375em 0.75em;
     background-color: #fff;
     color: #363636;
     cursor: pointer;
-    justify-content: center;
-    padding: 0.375em 0.75em;
     white-space: nowrap;
-    align-items: center;
     border-radius: 4px;
-    box-shadow: none;
-    display: flex;
+    box-shadow: 0px 0px 5px 0 rgb(218, 218, 218);
     font-size: 0.9rem;
     font-family: inherit;
     height: 2.25em;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    appearance: none;
     border: none;
-    &:active {
-        outline: 0;
-    }
+    -webkit-touch-callout: none;
     &[disabled] {
         box-shadow: none;
         opacity: 0.5;
@@ -32,23 +25,22 @@
 
 @mixin text-input {
     // box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
+    position: relative;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.375em 0.625em;
     max-width: 100%;
     background-color: #fff;
     border: 1.5px solid #aeaeae;
     border-radius: 5px;
     color: #363636;
-    display: inline-flex;
     font-size: 1rem;
     font-family: inherit;
     height: 2.25em;
-    justify-content: flex-start;
     line-height: 1.5;
-    padding: 0.375em 0.625em;
-    position: relative;
     vertical-align: top;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    align-items: center;
+    appearance: none;
     box-sizing: border-box;
     &:hover {
         border-color: #858585;
@@ -59,4 +51,11 @@
         box-shadow: 0 0 0 0.2rem rgba(50, 115, 220, 0.25);
         outline: 0;
     }
+}
+
+@mixin no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

@@ -64,6 +64,7 @@
     border-radius: 0.4rem;
     background-color: rgb(255, 255, 255);
     .inversion-header {
+      @include no-select;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -73,10 +74,6 @@
       padding: 0 1rem;
       color: #3f3f3f;
       cursor: pointer;
-      user-select: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -o-user-select: none;
       // &.open {
       // }
     }

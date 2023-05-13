@@ -1,5 +1,6 @@
 @use "sass:math";
 @import "colors";
+@import "UI";
 
 $key-border-px: 0.07rem;
 $key-white-width: 3rem;
@@ -14,6 +15,7 @@ $key-black-height: 6rem;
   overflow-x: auto;
   padding-bottom: 0.3rem;
   .keyboard-key {
+    @include no-select;
     display: inline-block;
     position: relative;
     box-sizing: border-box;
@@ -21,10 +23,6 @@ $key-black-height: 6rem;
     border-radius: 0px 0px 5px 5px;
     box-shadow: 0px 5px 1px rgba(32, 32, 32, 0.2);
     vertical-align: top;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
     &.clicked {
       top: 5px;
       box-shadow: none;

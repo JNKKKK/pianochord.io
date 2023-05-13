@@ -19,11 +19,8 @@
             z-index: 1;
         }
         span {
+            @include no-select;
             position: absolute;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -o-user-select: none;
             @for $i from 1 through 17 {
                 &.color-#{$i} {
                     background: -webkit-linear-gradient(

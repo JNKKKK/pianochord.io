@@ -30,14 +30,14 @@ type ChordThumbnailProps = {
 export default class ChordThumbnail extends Component<ChordThumbnailProps> {
   render() {
     let highlightTable = getHighlightTable(this.props.chord)
-
+    let octaves = highlightTable.length / 12
     return (
-      <svg className='ChordThumbnail-svg' width={whiteWidth * 7 * 3} height={whiteHeight}>
-        {[...Array(7 * 3).keys()].map(i => (
+      <svg className='ChordThumbnail-svg' width={whiteWidth * 7 * octaves} height={whiteHeight}>
+        {[...Array(7 * octaves).keys()].map(i => (
           <rect className={'white' + (whiteIfActive(i, highlightTable) ? ' active color-' + this.props.highlightColor : '')}
             width={whiteWidth} height={whiteHeight} x={whiteWidth * i} />
         ))}
-        {[...Array(5 * 3).keys()].map(i => (
+        {[...Array(5 * octaves).keys()].map(i => (
           <rect className={'black' + (blackIfActive(i, highlightTable) ? ' active color-' + this.props.highlightColor : '')}
             width={blackWidth} height={blackHeight}
             x={whiteWidth * (bwMap3x.slice(0, blackOccurIndex[i]).filter(x => x === bw.white).length) - blackWidth / 2} />

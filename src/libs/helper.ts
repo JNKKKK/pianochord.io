@@ -3,14 +3,20 @@ import { allChords, chords } from "./db"
 
 
 function getHighlightTable(chord: Chord) {
-    let highlightTable: boolean[] = Array(12 * 3).fill(false)
+    const maxLength = 12 * 3
+    let highlightTable: boolean[] = Array(maxLength).fill(false)
     let startIndex = chord.key
     highlightTable[startIndex] = true
     chord.intervals.reduce((previousValue, currentValue) => {
         let accumulate = previousValue + currentValue
-        highlightTable[accumulate] = true
+        if (accumulate < maxLength)
+            highlightTable[accumulate] = true
+        else
+            console.log("chord cannot fit in 3 octaves", chord)
         return accumulate
     }, startIndex)
+    // remove the last octave if empty
+    if (highlightTable.slice(-12).every(v => !v)) highlightTable = highlightTable.slice(0, 24)
     return highlightTable
 }
 
