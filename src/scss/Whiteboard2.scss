@@ -5,6 +5,13 @@
     max-width: 63rem;
     margin: 0 auto;
     margin-top: 0.5rem;
+    .tool-container {
+        margin-bottom: 1rem;
+        .key-container {
+        }
+        .mode-container {
+        }
+    }
     .sheet-container {
         display: flex;
         flex-direction: row;
@@ -53,11 +60,14 @@
             }
         }
         svg {
-            color: rgb(107, 107, 107);
+            color: rgb(166, 166, 166);
             cursor: pointer;
             &:hover {
                 color: black;
             }
         }
     }
+}
+
+.addBeat-modal {
 }

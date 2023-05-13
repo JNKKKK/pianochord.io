@@ -24,6 +24,7 @@
     "preact/jsx-dev-runtime": "preact/jsx-runtime"
   },
   "dependencies": {
+    "@preact/signals": "^1.1.3",
     "@types/dompurify": "^3.0.2",
     "dompurify": "^3.0.3",
     "mobile-drag-drop": "2.3.0-rc.2",

@@ -2,6 +2,8 @@ import { Sheet } from "../pages/WhiteBoardPage2"
 import { inferChord } from "./helper"
 
 const jingoBellSheet: Sheet = {
+    key: "G",
+    mode: 0,
     bars: [
         {
             totalBeats: 4,

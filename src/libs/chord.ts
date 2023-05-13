@@ -27,6 +27,10 @@ class Chord {
         return this.alias[0]
     }
 
+    get shortName(): string {
+        return this.alias[0]
+    }
+
     get possibleNames(): string[] {
         if (this.fullName) return [this.fullName, ...this.alias]
         return this.alias
