@@ -1,5 +1,5 @@
 import { h, Component, Fragment } from 'preact'
-import netlifyIdentity from 'netlify-identity-widget';
+// import netlifyIdentity from 'netlify-identity-widget';
 
 type NavProps = {
     chordUrl?: string
@@ -27,8 +27,8 @@ export default class Nav extends Component<NavProps, NavState> {
     }
 
     render() {
-        let avatarUrl = netlifyIdentity.currentUser()?.user_metadata?.avatar_url ? netlifyIdentity.currentUser()?.user_metadata?.avatar_url :
-            "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+        // let avatarUrl = netlifyIdentity.currentUser()?.user_metadata?.avatar_url ? netlifyIdentity.currentUser()?.user_metadata?.avatar_url :
+        //     "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
 
         return (
             <nav class="navbar">
@@ -38,9 +38,9 @@ export default class Nav extends Component<NavProps, NavState> {
                     <label for="checkbox_toggle" class="hamburger" onClick={this.handleHamburgerClick}>&#9776;</label>
                     <div class="menu">
                         <li><a className={window.location.pathname.startsWith("/chord") ? "active" : ''} href={this.props.chordUrl ? this.props.chordUrl : '/'}>Chords</a></li>
-                        <li><a className={window.location.pathname.startsWith("/whiteboard") ? "active" : ''} href="/whiteboard">Whiteboard</a></li>
+                        {/* <li><a className={window.location.pathname.startsWith("/whiteboard") ? "active" : ''} href="/whiteboard">Whiteboard</a></li> */}
                         <li><a className={window.location.pathname.startsWith("/about") ? "active" : ''} href="/about">About</a></li>
-                        <li>
+                        {/* <li>
                             {netlifyIdentity.currentUser() == null ? <a onClick={() => { netlifyIdentity.open(); }}>Log in</a>
                                 :
                                 <Fragment>
@@ -48,7 +48,7 @@ export default class Nav extends Component<NavProps, NavState> {
                                     <a onClick={() => { netlifyIdentity.logout(); }}>Log out</a>
                                 </Fragment>
                             }
-                        </li>
+                        </li> */}
 
                     </div>
                 </ul>

@@ -8,7 +8,7 @@ import Footer from './components/Footer'
 import WhiteBoardPage from './pages/WhiteBoardPage2'
 import Nav from './components/Nav';
 import AboutPage from './pages/AboutPage';
-import netlifyIdentity from 'netlify-identity-widget';
+// import netlifyIdentity from 'netlify-identity-widget';
 
 import './scss/App.scss'
 
@@ -58,9 +58,9 @@ class App extends Component<AppProps, AppState> {
 
 const mountNode = document.getElementById('app')
 if (mountNode) {
-    (window as any).netlifyIdentity = netlifyIdentity
-    netlifyIdentity.init({ logo: false })
-    netlifyIdentity.on('logout', () => window.location.reload());
-    netlifyIdentity.on('login', () => window.location.reload());
+    // (window as any).netlifyIdentity = netlifyIdentity
+    // netlifyIdentity.init({ logo: false })
+    // netlifyIdentity.on('logout', () => window.location.reload());
+    // netlifyIdentity.on('login', () => window.location.reload());
     render(<App />, mountNode)
 }
