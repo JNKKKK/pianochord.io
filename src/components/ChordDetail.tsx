@@ -24,7 +24,7 @@ type ChordDetailState = {
 export default class ChordDetail extends Component<ChordDetailProps, ChordDetailState> {
   constructor(props: ChordDetailProps) {
     super(props)
-    this.state = { inversionOpen: false }
+    this.state = { inversionOpen: (props.inversion == 0 ? false : true) }
     this.handleInversionClick = this.handleInversionClick.bind(this)
     this.addToWhiteboard = this.addToWhiteboard.bind(this)
   }
@@ -96,7 +96,7 @@ export default class ChordDetail extends Component<ChordDetailProps, ChordDetail
                 <div className='information'>
 
                   <div><b>Inversion</b> {inversionNames[this.props.inversion]}</div>
-                  <div><b>Root Position Chord Name</b> {(chord.fullName) ? chord.fullName : chord.alias[0]}</div>
+                  <div><b>Root Position Chord</b> {(chord.fullName) ? chord.fullName : chord.alias[0]}</div>
                   {chord.alias.length > 1 &&
                     <div>
                       <b>Alias</b>
