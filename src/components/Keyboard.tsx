@@ -11,11 +11,16 @@ type KeyboardProps = {
 export default class Keyboard extends Component<KeyboardProps> {
   ref = createRef();
 
-  componentDidMount() {
-    // scroll the keyboard to the middle if needed
-    let div = this.ref.current as HTMLElement
-    if (div.scrollWidth > div.clientWidth)
-      div.scrollLeft = (div.scrollWidth - window.innerWidth) / 2
+  componentDidUpdate() {
+    // scroll the first highlighted key into view
+    if (this.props.highlightTable) {
+      let div = this.ref.current as HTMLElement
+      const firstIndex = this.props.highlightTable.findIndex(item => item === true);
+      const lastIndex = this.props.highlightTable.lastIndexOf(true);
+      (div.childNodes[lastIndex] as HTMLElement).scrollIntoView();
+      (div.childNodes[firstIndex] as HTMLElement).scrollIntoView();
+      window.scrollTo(0,0)
+    }
   }
   render() {
     let offset = 12 * (1 + this.props.offset)

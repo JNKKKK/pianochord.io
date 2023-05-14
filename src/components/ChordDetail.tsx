@@ -39,7 +39,6 @@ export default class ChordDetail extends Component<ChordDetailProps, ChordDetail
       }
       if (i == 0) path = path.slice(0, 4)
       route(path.join('/'), false);
-      window.scrollTo(0, 0)
     }
   }
 

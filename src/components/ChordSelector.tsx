@@ -27,7 +27,6 @@ export default class ChordSelector extends Component<ChordSelectorProps, ChordSe
   }
 
   handleClick() {
-    window.scrollTo(0, 0)
   }
 
   render() {
