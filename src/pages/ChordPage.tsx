@@ -7,6 +7,7 @@ import ChordDetail from '../components/ChordDetail'
 import Playbox from '../components/Playbox'
 import { getHighlightTable, chordAlignMid, urlDecodeKey, urlDecodeChord, findChordByName } from '../libs/helper'
 import Notification, { NotificationItem } from '../components/Notification'
+import { titlePrefix } from '../libs/constant'
 
 const MAXoctaveAdj = 1
 const MINoctaveAdj = -1
@@ -76,6 +77,15 @@ export default class ChordPage extends Component<ChordPageProps, ChordPageState>
     }
   }
 
+  componentDidUpdate() {
+    const { selectedKey, selectedChord, inversion } = this.urlDecode()
+    if (selectedChord) {
+      document.title = titlePrefix + " - " + selectedChord
+    } else if (selectedKey) {
+      document.title = titlePrefix + " - Key " + selectedKey
+    }
+  }
+
   render() {
     let { selectedKey, selectedChord, inversion } = this.urlDecode()
     if (!selectedKey) {
@@ -105,7 +115,7 @@ export default class ChordPage extends Component<ChordPageProps, ChordPageState>
         highlightTable = chordAlignMid(getHighlightTable(chord.inversions[inversion - 1]))
         colorIndex = keySimpleList.map(str => Keys[str]).indexOf(chord.inversions[inversion - 1].key) + 1
       }
-      let color= keySimpleList.indexOf(selectedKey) + 1
+      let color = keySimpleList.indexOf(selectedKey) + 1
       return (
         <Fragment>
           <Keyboard offset={this.state.octaveAdj} highlightTable={highlightTable} highlightColor={colorIndex} />

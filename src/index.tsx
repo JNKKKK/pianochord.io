@@ -8,6 +8,7 @@ import Footer from './components/Footer'
 import WhiteBoardPage from './pages/WhiteBoardPage2'
 import Nav from './components/Nav';
 import AboutPage from './pages/AboutPage';
+import { aboutTitle, homeTitle, whiteboardTitle } from './libs/constant';
 // import netlifyIdentity from 'netlify-identity-widget';
 
 import './scss/App.scss'
@@ -30,6 +31,9 @@ class App extends Component<AppProps, AppState> {
     handleRoute(e: RouterOnChangeArgs) {
         let url = e.url
         if (e.url.startsWith("/chord")) this.setState({ chordUri: url })
+        if (e.url.startsWith("/whiteboard")) document.title = whiteboardTitle
+        if (e.url.startsWith("/about")) document.title = aboutTitle
+        if (e.url === "/") document.title = homeTitle
     }
 
     render() {
