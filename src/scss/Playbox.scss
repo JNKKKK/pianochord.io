@@ -20,24 +20,6 @@
     @include button;
     margin-right: 0.5rem;
     width: 10rem;
-    @for $i from 1 through 17 {
-      &.color-#{$i}:hover:not(:disabled) {
-        background: linear-gradient(
-          45deg,
-          rgba(255, 255, 255, 1) 0%,
-          adjust-color(nth($rainbow-17, $i), $alpha: -0.9) 100%
-        );
-      }
-      &.color-#{$i}:active:not(:disabled) {
-        background: linear-gradient(
-          45deg,
-          rgba(255, 255, 255, 1) 0%,
-          adjust-color(nth($rainbow-17, $i), $alpha: 0) 100%
-        );
-        box-shadow: none;
-        color: white;
-      }
-    }
   }
 
   svg {

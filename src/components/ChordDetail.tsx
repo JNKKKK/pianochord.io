@@ -14,7 +14,6 @@ type ChordDetailProps = {
   chord: Chord,
   inversion: number,
   color: number,
-  addNotification: (text: string, duration: number) => void,
 }
 
 type ChordDetailState = {
@@ -52,7 +51,6 @@ export default class ChordDetail extends Component<ChordDetailProps, ChordDetail
     }
     boardSaving.boards[boardSaving.selectedBoard].cards.push(card)
     saveBoard(boardSaving)
-    this.props.addNotification(`Added ${card.name} to ${boardSaving.boards[boardSaving.selectedBoard].name}`, 2000)
   }
 
   render() {

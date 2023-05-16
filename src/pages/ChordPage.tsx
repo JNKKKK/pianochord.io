@@ -6,7 +6,6 @@ import ChordSelector from '../components/ChordSelector'
 import ChordDetail from '../components/ChordDetail'
 import Playbox from '../components/Playbox'
 import { getHighlightTable, chordAlignMid, urlDecodeKey, urlDecodeChord, findChordByName } from '../libs/helper'
-import Notification, { NotificationItem } from '../components/Notification'
 import { titlePrefix } from '../libs/constant'
 
 const MAXoctaveAdj = 1
@@ -21,7 +20,6 @@ type ChordPageProps = {
 
 type ChordPageState = {
   octaveAdj: number,
-  notifications: NotificationItem[],
 }
 
 export default class ChordPage extends Component<ChordPageProps, ChordPageState> {
@@ -30,8 +28,7 @@ export default class ChordPage extends Component<ChordPageProps, ChordPageState>
     this.raiseOctave = this.raiseOctave.bind(this)
     this.lowerOctave = this.lowerOctave.bind(this)
     this.urlDecode = this.urlDecode.bind(this)
-    this.addNotification = this.addNotification.bind(this)
-    this.state = { octaveAdj: 0, notifications: [] }
+    this.state = { octaveAdj: 0, }
   }
 
   raiseOctave() {
@@ -59,22 +56,6 @@ export default class ChordPage extends Component<ChordPageProps, ChordPageState>
       if (isNaN(inversion)) inversion = 0
     }
     return { selectedKey, selectedChord, inversion }
-  }
-
-  addNotification(text: string, duration: number) {
-    let id = Math.floor(Math.random() * 1000000)
-    this.setState(prevState => ({
-      ...prevState,
-      notifications: [...prevState.notifications, { text, id }],
-    }))
-    if (duration > 0) {
-      setTimeout(() => {
-        this.setState(prevState => ({
-          ...prevState,
-          notifications: prevState.notifications.filter(noti => noti.id != id),
-        }))
-      }, duration)
-    }
   }
 
   componentDidUpdate() {
@@ -124,9 +105,8 @@ export default class ChordPage extends Component<ChordPageProps, ChordPageState>
             raiseOctave={this.raiseOctave} lowerOctave={this.lowerOctave}
             risingDisabled={this.state.octaveAdj === MAXoctaveAdj} lowerDisabled={this.state.octaveAdj === MINoctaveAdj}
             color={color} />
-          <ChordDetail chord={chord} inversion={inversion} addNotification={this.addNotification} color={color} />
+          <ChordDetail chord={chord} inversion={inversion} color={color} />
           <ChordSelector selectedKey={selectedKey} />
-          <Notification list={this.state.notifications} setList={(notifications) => this.setState({ notifications })} />
         </Fragment>
       )
     } else {

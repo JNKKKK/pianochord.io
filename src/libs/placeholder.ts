@@ -2,6 +2,7 @@ import { Sheet } from "../pages/WhiteBoardPage2"
 import { inferChord } from "./helper"
 
 const jingoBellSheet: Sheet = {
+    title: "Jingo Bell",
     key: "G",
     mode: 0,
     bars: [

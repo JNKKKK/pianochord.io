@@ -38,7 +38,7 @@ export default class Nav extends Component<NavProps, NavState> {
                     <label for="checkbox_toggle" class="hamburger" onClick={this.handleHamburgerClick}>&#9776;</label>
                     <div class="menu">
                         <li><a className={window.location.pathname.startsWith("/chord") ? "active" : ''} href={this.props.chordUrl ? this.props.chordUrl : '/'}>Chords</a></li>
-                        {/* <li><a className={window.location.pathname.startsWith("/whiteboard") ? "active" : ''} href="/whiteboard">Whiteboard</a></li> */}
+                        <li><a className={window.location.pathname.startsWith("/whiteboard") ? "active" : ''} href="/whiteboard">Whiteboard</a></li>
                         <li><a className={window.location.pathname.startsWith("/about") ? "active" : ''} href="/about">About</a></li>
                         {/* <li>
                             {netlifyIdentity.currentUser() == null ? <a onClick={() => { netlifyIdentity.open(); }}>Log in</a>

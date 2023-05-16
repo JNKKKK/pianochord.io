@@ -145,7 +145,7 @@ enum chordIndex {
     m7b5 = locateChordIndex("half diminished seventh"),
 }
 
-let churchMode = {
+const churchMode = {
     intervals: [2, 2, 1, 2, 2, 2, 1],
     names: ["Ionian", "Dorian", "Phrygian", "Lydian", "Mixolydian", "Aeolian", "Locrian",],
     chordProgression: [
