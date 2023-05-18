@@ -2,27 +2,27 @@
 @import "UI";
 
 .playbox-container {
-  max-width: 63rem;
-  margin: 1rem auto;
-  margin-bottom: 0.5rem;
-  padding: 0.75rem 1rem;
-  border-radius: 5px;
-  background-color: rgb(251, 251, 251);
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  row-gap: 0.5rem;
+    max-width: 63rem;
+    margin: 1rem auto;
+    margin-bottom: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 5px;
+    background-color: rgb(251, 251, 251);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
 
-  button {
-    @include button;
-    margin-right: 0.5rem;
-    width: 10rem;
-  }
+    button {
+        @include button;
+        margin-right: 0.5rem;
+        width: 10rem;
+    }
 
-  svg {
-    margin-right: 0.5rem;
-  }
+    svg {
+        margin-right: 0.5rem;
+    }
 }

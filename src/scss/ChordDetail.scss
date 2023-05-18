@@ -2,100 +2,100 @@
 @import "UI";
 
 .chordDetail-container {
-  margin: 0.5rem auto;
-  padding: 1rem 1rem;
-  border-radius: 5px;
-  max-width: 63rem;
-  @for $i from 1 through 17 {
-    &.color-#{$i} {
-      background: linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 1) 0%,
-        adjust-color(nth($rainbow-17, $i), $alpha: -0.9) 100%
-      );
-    }
-  }
-  box-sizing: border-box;
-  .information-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    row-gap: 1rem;
-    h1 {
-      flex-grow: 3;
-      font-size: 3rem;
-      font-weight: 100;
-      text-align: center;
-      margin-right: 0.5rem;
-    }
-    .information {
-      font-size: 1.2rem;
-      flex-grow: 1;
-      div {
-        margin-bottom: 0.4rem;
-        line-height: 1.6rem;
-      }
-      b {
-        font-weight: bold;
-        margin-right: 0.7rem;
-      }
-    }
-  }
-
-  .inversion-container {
-    margin-top: 1rem;
-    box-shadow: 0px 0px 5px 0 rgb(218, 218, 218);
-    border-radius: 0.4rem;
-    background-color: rgb(255, 255, 255);
-    .inversion-header {
-      @include no-select;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 1.1rem;
-      height: 2.5rem;
-      padding: 0 1rem;
-      color: #3f3f3f;
-      cursor: pointer;
-      // &.open {
-      // }
-    }
-    .inversion-content {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      padding: 1rem;
-      .chord {
-        border-radius: 0.4rem;
-        cursor: pointer;
-        text-align: center;
-        background-color: #fff;
-        flex-grow: 1;
-        margin: 1px;
-        padding: 2rem 0.5rem;
-        @for $i from 1 through 17 {
-          &.active.color-#{$i} {
+    margin: 0.5rem auto;
+    padding: 1rem 1rem;
+    border-radius: 5px;
+    max-width: 63rem;
+    @for $i from 1 through 17 {
+        &.color-#{$i} {
             background: linear-gradient(
-              45deg,
-              rgba(255, 255, 255, 1) 0%,
-              adjust-color(nth($rainbow-17, $i), $alpha: -0.9) 100%
+                45deg,
+                rgba(255, 255, 255, 1) 0%,
+                adjust-color(nth($rainbow-17, $i), $alpha: -0.9) 100%
             );
-            box-shadow: 0px 0px 5px 0 rgb(225, 225, 225);
-          }
         }
-        .chord-title {
-          margin-bottom: 0.75rem;
-          font-weight: lighter;
-          font-size: 1.3rem;
-        }
-        .chord-name {
-          margin-top: 0.75rem;
-          font-size: 1rem;
-        }
-      }
     }
-  }
+    box-sizing: border-box;
+    .information-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        row-gap: 1rem;
+        h1 {
+            flex-grow: 3;
+            font-size: 3rem;
+            font-weight: 100;
+            text-align: center;
+            margin-right: 0.5rem;
+        }
+        .information {
+            font-size: 1.2rem;
+            flex-grow: 1;
+            div {
+                margin-bottom: 0.4rem;
+                line-height: 1.6rem;
+            }
+            b {
+                font-weight: bold;
+                margin-right: 0.7rem;
+            }
+        }
+    }
+
+    .inversion-container {
+        margin-top: 1rem;
+        box-shadow: 0px 0px 5px 0 rgb(218, 218, 218);
+        border-radius: 0.4rem;
+        background-color: rgb(255, 255, 255);
+        .inversion-header {
+            @include no-select;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            height: 2.5rem;
+            padding: 0 1rem;
+            color: #3f3f3f;
+            cursor: pointer;
+            // &.open {
+            // }
+        }
+        .inversion-content {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            padding: 1rem;
+            .chord {
+                border-radius: 0.4rem;
+                cursor: pointer;
+                text-align: center;
+                background-color: #fff;
+                flex-grow: 1;
+                margin: 1px;
+                padding: 2rem 0.5rem;
+                @for $i from 1 through 17 {
+                    &.active.color-#{$i} {
+                        background: linear-gradient(
+                            45deg,
+                            rgba(255, 255, 255, 1) 0%,
+                            adjust-color(nth($rainbow-17, $i), $alpha: -0.9) 100%
+                        );
+                        box-shadow: 0px 0px 5px 0 rgb(225, 225, 225);
+                    }
+                }
+                .chord-title {
+                    margin-bottom: 0.75rem;
+                    font-weight: lighter;
+                    font-size: 1.3rem;
+                }
+                .chord-name {
+                    margin-top: 0.75rem;
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
 }

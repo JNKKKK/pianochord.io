@@ -2,31 +2,31 @@
 @import "UI";
 
 .keySelector-container {
-  max-width: 63rem;
-  margin: 1rem auto;
-  padding: 0 0.5rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  gap: 0.35rem;
-  flex-wrap: wrap;
-  .keySelector-button {
-    @include no-select;
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    font-size: 1.2rem;
-    padding: 0.3rem 0.5rem;
-    text-decoration: none;
-    border-radius: 5px;
-    @for $i from 1 through 17 {
-      &.color-#{$i} {
-        color: nth($rainbow-17, $i);
-      }
-      &.color-#{$i}.active {
-        color: white;
-        background-color: nth($rainbow-17, $i);
-      }
+    max-width: 63rem;
+    margin: 1rem auto;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+    .keySelector-button {
+        @include no-select;
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        font-size: 1.2rem;
+        padding: 0.3rem 0.5rem;
+        text-decoration: none;
+        border-radius: 5px;
+        @for $i from 1 through 17 {
+            &.color-#{$i} {
+                color: nth($rainbow-17, $i);
+            }
+            &.color-#{$i}.active {
+                color: white;
+                background-color: nth($rainbow-17, $i);
+            }
+        }
     }
-  }
 }

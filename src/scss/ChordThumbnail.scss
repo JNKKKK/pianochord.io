@@ -1,18 +1,18 @@
-@import 'colors';
+@import "colors";
 
 .ChordThumbnail-svg {
-  rect.white {
-    fill: rgb(255, 255, 255);
-    stroke-width: 1;
-    stroke: rgb(190, 190, 190);
-  }
-  rect.black {
-    fill: #3f3f3f;
-  }
-  @for $i from 1 through 17 {
-    rect.active.color-#{$i} {
-      fill: nth($rainbow-light-17, $i);
-      // stroke: nth($rainbow-light-17, $i);
+    rect.white {
+        fill: rgb(255, 255, 255);
+        stroke-width: 1;
+        stroke: rgb(190, 190, 190);
     }
-  }
+    rect.black {
+        fill: #3f3f3f;
+    }
+    @for $i from 1 through 17 {
+        rect.active.color-#{$i} {
+            fill: nth($rainbow-light-17, $i);
+            // stroke: nth($rainbow-light-17, $i);
+        }
+    }
 }

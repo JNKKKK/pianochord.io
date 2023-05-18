@@ -20,72 +20,72 @@ $footer-height: 70px;
 
 html,
 body {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 body {
-  background: white;
-  font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  &.disable-scrolling {
-    overflow: hidden;
-  }
-  #app {
-    min-height: 100%;
-    box-sizing: border-box;
-
-    .wrapper {
-      min-height: calc(100vh - #{$footer-height});
-
-      .Container404 {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: calc(100vh - #{$footer-height});
-        flex-direction: column;
-        h1 {
-          margin: 1rem 0;
-          font-size: 3rem;
-          color: rgb(78, 78, 78);
-        }
-        a,
-        a:link,
-        a:active,
-        a:visited,
-        a:hover {
-          color: rgb(95, 95, 95);
-        }
-      }
+    background: white;
+    font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    &.disable-scrolling {
+        overflow: hidden;
     }
+    #app {
+        min-height: 100%;
+        box-sizing: border-box;
 
-    footer {
-      height: $footer-height;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      color: rgb(95, 95, 95);
-      font-size: 0.9rem;
-      margin: 0 1rem;
-      pre:first-child {
-        margin-right: 0.3rem;
-      }
-      a,
-      a:link,
-      a:active,
-      a:visited,
-      a:hover {
-        color: rgb(95, 95, 95);
-      }
-      a.no-decoration {
-        text-decoration: none;
-      }
-      b {
-        font-weight: bold;
-      }
+        .wrapper {
+            min-height: calc(100vh - #{$footer-height});
+
+            .Container404 {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: calc(100vh - #{$footer-height});
+                flex-direction: column;
+                h1 {
+                    margin: 1rem 0;
+                    font-size: 3rem;
+                    color: rgb(78, 78, 78);
+                }
+                a,
+                a:link,
+                a:active,
+                a:visited,
+                a:hover {
+                    color: rgb(95, 95, 95);
+                }
+            }
+        }
+
+        footer {
+            height: $footer-height;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            color: rgb(95, 95, 95);
+            font-size: 0.9rem;
+            margin: 0 1rem;
+            pre:first-child {
+                margin-right: 0.3rem;
+            }
+            a,
+            a:link,
+            a:active,
+            a:visited,
+            a:hover {
+                color: rgb(95, 95, 95);
+            }
+            a.no-decoration {
+                text-decoration: none;
+            }
+            b {
+                font-weight: bold;
+            }
+        }
     }
-  }
 }
