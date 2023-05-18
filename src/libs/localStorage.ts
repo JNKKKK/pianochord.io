@@ -1,58 +1,59 @@
-import { Board, Card } from "pages/WhiteBoardPage"
-import { Chord } from "./chord";
+import { Bar, Beat, Sheet } from "pages/WhiteBoardPage2";
+import { jingoBellSheet } from "./placeholder";
+import { inferChord } from "./helper";
 
 const ls = window.localStorage
-const savingKey = 'saving'
+const SheetsSavingKey = 'whiteboardSave'
 
 type Override<T1, T2> = Omit<T1, keyof T2> & T2;
 
-type BoardSavingUnserialized = {
-    boards: Board[],
-    selectedBoard: number,
-}
-type CardSerialized = Override<Card, { chord: string }>
-type BoardSerialized = Override<Board, { cards: CardSerialized[] }>
-type BoardSavingSerialized = Override<BoardSavingUnserialized, { boards: BoardSerialized[] }>
+type BeatSaving = Override<Beat, Partial<Pick<Beat, "chord">>>
+type BarSaving = Override<Bar, { beats: BeatSaving[] }>
+type SheetSaving = Override<Sheet, { bars: BarSaving[] }>
 
-type SavingUnserialized = BoardSavingUnserialized
-type SavingSerialized = BoardSavingSerialized
 
-function serializeBoardSaving(data: BoardSavingUnserialized): BoardSavingSerialized {
-    let boards = data.boards.map(board => {
-        let cardsStr = board.cards.map(card => ({ ...card, chord: card.chord.toString() }))
-        return {
-            cards: cardsStr,
-            name: board.name,
-        }
-    })
-    return {
-        boards,
-        selectedBoard: data.selectedBoard
-    }
+function serializeSheets(sheets: Sheet[]): SheetSaving[] {
+    return sheets.map(sheet => ({
+        ...sheet,
+        bars: sheet.bars.map(bar => ({
+            ...bar,
+            beats: bar.beats.map(beat => ({
+                duration: beat.duration,
+                lyrics: beat.lyrics,
+                chordDisplay: beat.chordDisplay,
+            }))
+        }))
+    }))
 }
 
-function saveBoard(data: BoardSavingUnserialized) {
-    let serializeData = serializeBoardSaving(data)
-    ls.setItem(savingKey, JSON.stringify(serializeData))
+function saveSheets(sheets: Sheet[]) {
+    const serializedSheets = JSON.stringify(serializeSheets(sheets))
+    // console.log(serializedSheets)
+    ls.setItem(SheetsSavingKey, serializedSheets)
 }
 
-function loadBoard(): BoardSavingUnserialized {
-    const newSaving = { boards: [{ cards: [], name: 'Untitled 1' }], selectedBoard: 0 }
-    let dataStr = ls.getItem(savingKey)
-    if (!dataStr) {
-        return newSaving
+function loadSheets(): Sheet[] {
+    const defaultSheets = [jingoBellSheet]
+    const savingStr = ls.getItem(SheetsSavingKey)
+    if (!savingStr) {
+        return defaultSheets
     } else {
-        let data: BoardSavingSerialized = JSON.parse(dataStr)
-        return {
-            boards: data.boards.map(board => {
-                return {
-                    cards: board.cards.map(card => ({ ...card, chord: Chord.deserialize(card.chord) })),
-                    name: board.name,
-                }
-            }),
-            selectedBoard: data.selectedBoard
+        try {
+            let data: SheetSaving[] = JSON.parse(savingStr)
+            data.forEach(sheet => {
+                sheet.bars.forEach(bar => {
+                    bar.beats.forEach(beat => {
+                        beat.chord = inferChord(beat.chordDisplay).chord
+                    })
+                })
+            })
+            return data
+        } catch (err) {
+            console.error(err)
+            return defaultSheets
         }
     }
 }
 
-export { saveBoard, loadBoard }
+
+export { saveSheets, loadSheets }

@@ -94,7 +94,7 @@ function searchForChord(kw: string): Chord[] {
     return result
 }
 
-function inferChord(kw: string): { chord: Chord | string | null, chordDisplay: string } {
+function inferChord(kw: string): { chord?: Chord | string, chordDisplay: string } {
     function convertToLowerCaseExceptM(str: string) {
         let result = '';
         for (let i = 0; i < str.length; i++) {
@@ -111,7 +111,7 @@ function inferChord(kw: string): { chord: Chord | string | null, chordDisplay: s
     kw = kw.trim().replace(' ', '').replace('♯', '#').replace('♭', 'b');
     let kwM = convertToLowerCaseExceptM(kw)
     let kwm = kw.toLowerCase()
-    if (!kw) return { chord: null, chordDisplay: "" }
+    if (!kw) return { chordDisplay: "" }
     // search for result without lowercase M to m
     for (let chord of allChords) {
         let allNames = chord.possibleNames.map((str: string) => convertToLowerCaseExceptM(str).replace(' ', '').replace('♯', '#').replace('♭', 'b'))

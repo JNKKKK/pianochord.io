@@ -11,35 +11,50 @@
             font-size: 1.5rem;
         }
     }
-    .info-container {
-        margin-bottom: 1rem;
+    .control-bar {
         display: flex;
         flex-direction: row;
-        flex-wrap: wrap;
+        row-gap: 1rem;
         column-gap: 2rem;
-        .key-container {
-            display: inline-block;
-            font-size: 1.2rem;
-            cursor: pointer;
-            .key {
-                font-weight: 600;
-                @for $i from 1 through 17 {
-                    &.color-#{$i} {
-                        color: nth($rainbow-17, $i);
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+
+        .info-container {
+            display: flex;
+            flex-direction: row;
+            // flex-wrap: wrap;
+            column-gap: 2rem;
+            div {
+                display: inline-block;
+                font-size: 1.2rem;
+                cursor: pointer;
+                .key,
+                .mode {
+                    font-weight: 600;
+                    @for $i from 1 through 17 {
+                        &.color-#{$i} {
+                            color: nth($rainbow-17, $i);
+                        }
                     }
                 }
             }
         }
-        .mode-container {
-            display: inline-block;
-            font-size: 1.2rem;
-            cursor: pointer;
-            .mode {
-                font-weight: 600;
-                @for $i from 1 through 17 {
-                    &.color-#{$i} {
-                        color: nth($rainbow-17, $i);
-                    }
+        .toggle-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            column-gap: 2rem;
+            row-gap: 1rem;
+            .toggle {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                span {
+                    font-size: 1rem;
+                    margin-right: 0.5rem;
+                }
+                .mt-io-garden {
+                    font-size: 0.45rem;
                 }
             }
         }
@@ -60,6 +75,15 @@
             // flex-wrap: wrap;
             align-items: center;
             height: 3.1rem;
+            padding: 0 0.5rem;
+            &.edit {
+                padding: 0 0.2rem;
+                .beat {
+                    &:hover {
+                        background-color: rgb(221, 221, 221);
+                    }
+                }
+            }
             .beat {
                 display: flex;
                 justify-content: space-between;
@@ -76,19 +100,11 @@
                 [contenteditable] {
                     outline: 0px solid transparent;
                 }
-                &.edit {
-                    &:hover {
-                        background-color: rgb(221, 221, 221);
-                    }
-                }
                 .chordAbbrev {
                     font-weight: 700;
                     &.invalid {
-                        color: rgb(255, 87, 87);
-                        text-decoration: underline;
+                        text-decoration: underline dotted red;
                     }
-                }
-                .lyrics {
                 }
             }
         }
