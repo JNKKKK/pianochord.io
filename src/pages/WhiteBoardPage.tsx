@@ -1,342 +1,269 @@
-import { polyfill } from "mobile-drag-drop";
 import { Chord } from '../libs/chord'
-import { h, Component, Fragment, createRef, RefObject } from 'preact'
-import { loadBoard, saveBoard } from '../libs/localStorage'
-import { Edit3 } from '../components/icon/Edit-3'
-import { FilePlus } from '../components/icon/FilePlus'
-import { Trash2 } from '../components/icon/Trash-2'
-import { RefreshCw } from '../components/icon/Refresh-cw'
-import { Share2 } from '../components/icon/Share-2'
-import ChordThumbnail from '../components/ChordThumbnail'
-import { chromaticName, Keys, KeyName, keySimpleList } from '../libs/key'
-import { Move } from '../components/icon/Move'
-import { Plus } from "../components/icon/Plus";
-import Modal from "../components/Modal";
-import { Clipboard } from "../components/icon/Clipboard";
-import KeySelector from "../components/KeySelector";
-import { searchForChord, sum } from "../libs/helper";
-import { intervalTable } from "../libs/db";
-import { ArrowRightLong } from "../components/icon/ArrowRightLong";
-import { MinusCircle } from "../components/icon/MinusCircle";
-import { PlusCircle } from "../components/icon/PlusCircle";
+import { chords as Chords, modesTable } from '../libs/db'
+import { inferChord, sum } from '../libs/helper'
+import { KeyName, Keys, keyPossibleName, keySimpleList } from '../libs/key'
+import { Component, Fragment } from 'preact'
+import { PlusCircle } from '../components/icon/PlusCircle'
+import DOMPurify from 'dompurify';
+import Modal from '../components/Modal'
+import { signal } from "@preact/signals";
+import KeySelector from '../components/KeySelector'
+import { Plus } from '../components/icon/Plus'
+import { addNotification } from '../libs/notification'
+import { loadSheets, saveSheets } from '../libs/localStorage'
 
-type Card = {
-    chord: Chord,
-    name: string
+type Beat = {
+    chord?: Chord | String,
+    duration: number,
+    lyrics: string,
+    chordDisplay: string
 }
-
-type Board = {
-    cards: Card[],
-    name: string
+type Bar = {
+    totalBeats: number,
+    beats: Beat[]
 }
-
+type Sheet = {
+    title: string
+    key: KeyName,
+    mode: number,
+    bars: Bar[]
+}
 type WhiteBoardPageProps = {
 }
 type WhiteBoardPageState = {
-    boards: Board[],
-    selectedBoard: number,
-    draggingId: number,
-    renameModal: {
-        show: boolean,
-        text: string,
-    },
-    newBoardModal: {
-        show: boolean,
-        text: string,
-    }
-    switchBoardModal: {
-        show: boolean,
-    }
-    customizeChordModal: {
-        show: boolean,
-        chord: Chord,
-        keyStr: string,
-        name: string,
-        isEdit: boolean,
-    }
-    addExistingChordModal: {
-        show: boolean,
-        query: string,
-    }
+    edit: boolean,
+    learning: boolean,
+    sheets: Sheet[],
+    activeSheet: number,
 }
 
 
+const rootKeyModal = signal({
+    show: false
+});
+const modeModal = signal({
+    show: false
+})
+const addBeatModal = signal({
+    show: false,
+    barIndex: 0,
+    beatIndex: 0,
+    activeRome: 0,
+})
+
 export default class WhiteBoardPage extends Component<WhiteBoardPageProps, WhiteBoardPageState> {
-    chordSearchItemList = createRef()
 
     constructor(props: WhiteBoardPageProps) {
         super(props)
+        this.addBeatOnClick = this.addBeatOnClick.bind(this)
+        this.addBeat = this.addBeat.bind(this)
+        this.shouldDeleteBeat = this.shouldDeleteBeat.bind(this)
+
         this.state = {
-            ...loadBoard(),
-            draggingId: -1,
-            renameModal: { show: false, text: "" },
-            newBoardModal: { show: false, text: "" },
-            switchBoardModal: { show: false },
-            customizeChordModal: { show: false, chord: new Chord(0, [0, 4, 3]), keyStr: 'C', name: "", isEdit: false },
-            addExistingChordModal: { show: false, query: "" },
+            edit: true,
+            learning: false,
+            sheets: loadSheets(),
+            activeSheet: 0,
+
+        }
+
+    }
+
+    addBeatOnClick(barIndex: number, beatIndex: number) {
+        return () => {
+            if (this.state.sheets[this.state.activeSheet].bars[barIndex].beats.length < 6) {
+                addBeatModal.value = { ...addBeatModal.value, show: true, barIndex, beatIndex }
+            } else {
+                addNotification("You reached max number of chords in one bar.", 5000)
+            }
         }
     }
 
-    componentDidMount() {
-        polyfill({ forceApply: true })
-        window.addEventListener('touchmove', function () { }, { passive: false });
+    addBeat(chord: Chord | String | undefined, chordDisplay: string, lyrics: string) {
+        addBeatModal.value = { ...addBeatModal.value, show: false }
+        let beats = this.state.sheets[this.state.activeSheet].bars[addBeatModal.value.barIndex].beats
+        beats.splice(addBeatModal.value.beatIndex, 0, { chord, duration: 0, lyrics, chordDisplay })
+        saveSheets(this.state.sheets)
+        this.forceUpdate()
+    }
+
+    addBar() {
+        if (this.state.sheets[this.state.activeSheet].bars.length > 60) {
+            addNotification("You reached max number of bars.", 5000)
+        } else {
+            this.state.sheets[this.state.activeSheet].bars.push({ totalBeats: 4, beats: [] })
+            saveSheets(this.state.sheets)
+            this.forceUpdate()
+        }
+    }
+
+    shouldDeleteBeat(barIndex: number, beatIndex: number) {
+        let beat = this.state.sheets[this.state.activeSheet].bars[barIndex].beats[beatIndex]
+        if (beat.lyrics === "" && beat.chordDisplay === "") {
+            this.state.sheets[this.state.activeSheet].bars[barIndex].beats.splice(beatIndex, 1)
+            if (this.state.sheets[this.state.activeSheet].bars[barIndex].beats.length == 0) {
+                this.state.sheets[this.state.activeSheet].bars.splice(barIndex, 1)
+            }
+        }
     }
 
     render() {
-        return (
-            <Fragment>
-                <div className='whiteboard-container'>
-                    <div className='title-container'>
-                        <h1>{this.state.boards[this.state.selectedBoard].name}</h1>
-                        <div className="menu-container">
-                            <button onClick={() => { this.setState({ renameModal: { ...this.state.renameModal, show: true } }) }}><Edit3 size={15} />Rename</button>
-                            <button onClick={() => { this.setState({ newBoardModal: { ...this.state.newBoardModal, show: true } }) }}><FilePlus size={15} />New</button>
-                            <button
-                                disabled={this.state.boards.length > 1 ? false : true}
-                                onClick={() => {
-                                    if (this.state.boards.length > 1 && confirm(`Do you want to delete board ${this.state.boards[this.state.selectedBoard].name} ?`)) {
-                                        this.state.boards.splice(this.state.selectedBoard, 1)
-                                        this.setState({ selectedBoard: 0 })
-                                    }
-                                }}
-                            >
-                                <Trash2 size={15} />Delete
-                            </button>
-                            <button onClick={() => { this.setState({ switchBoardModal: { ...this.state.switchBoardModal, show: true } }) }}><RefreshCw size={15} />Switch</button>
-                            <button><Share2 size={15} />Share</button>
+        return <Fragment>
+            <div className={"whiteboard-container"}>
+                <div className={"title-container"}>
+                    <h1>{this.state.sheets[this.state.activeSheet].title}</h1>
+                </div>
+                <div className={"control-bar"}>
+                    <div className={"info-container"}>
+                        <div className={"key-container"} onClick={() => { rootKeyModal.value = { show: true } }}>
+                            <span className={"label"}>Key: </span>
+                            <span className={["key", "color-" + (keySimpleList.indexOf(this.state.sheets[this.state.activeSheet].key) + 1)].join(" ")}>{this.state.sheets[this.state.activeSheet].key}</span>
+                        </div>
+                        <div className={"mode-container"} onClick={() => { modeModal.value = { show: true } }}>
+                            <span className={"label"}>Mode: </span>
+                            <span className={["mode", "color-" + (this.state.sheets[this.state.activeSheet].mode + 1)].join(" ")}>{modesTable[this.state.sheets[this.state.activeSheet].mode].name}</span>
                         </div>
                     </div>
-                    <div className='cards-container'>
-                        {
-                            this.state.boards[this.state.selectedBoard].cards.map((card, i) => (
-                                <div className='card'
-                                    onDragEnd={(e) => {
-                                        e.currentTarget.setAttribute("draggable", "false")
-                                    }}
-                                    onDragStart={(e) => { this.setState({ draggingId: i }) }}
-                                    onDragEnter={(e) => {
-                                        if (this.state.draggingId != i && this.state.draggingId != -1) {
-                                            let cards = this.state.boards[this.state.selectedBoard].cards
-                                            let deletedCard = cards.splice(this.state.draggingId, 1)
-                                            cards.splice(i, 0, deletedCard[0])
-                                            saveBoard({ boards: this.state.boards, selectedBoard: this.state.selectedBoard })
-                                            this.setState({ boards: this.state.boards, draggingId: i })
-                                        }
-                                        e.preventDefault();
-                                    }}
-                                    onDragOver={(e) => { e.preventDefault(); }}
-                                    onDragLeave={(e) => { e.preventDefault(); }}
-                                >
-                                    <div className='actions-container'>
-                                        <Move className='drag' size={20}
-                                            onMouseDown={(e) => { e.currentTarget.parentElement?.parentElement?.setAttribute("draggable", "true") }}
-                                            onMouseUp={(e) => { e.currentTarget.parentElement?.parentElement?.setAttribute("draggable", "false") }}
-                                            onTouchStart={(e) => { e.currentTarget.parentElement?.parentElement?.setAttribute("draggable", "true") }}
-                                            onTouchEnd={(e) => { e.currentTarget.parentElement?.parentElement?.setAttribute("draggable", "false") }}
-                                        />
-                                        <Trash2 className="delete" size={20} onClick={(e) => {
-                                            let cards = this.state.boards[this.state.selectedBoard].cards
-                                            cards.splice(i, 1)
-                                            saveBoard({ boards: this.state.boards, selectedBoard: this.state.selectedBoard })
-                                            this.setState({ boards: this.state.boards })
-                                        }} />
-                                    </div>
-                                    <ChordThumbnail chord={card.chord} highlightColor={keySimpleList.map(str => Keys[str]).indexOf(card.chord.key) + 1} />
-                                    <div className='name'>{card.name}</div>
-                                </div>
-                            ))
-                        }
-                        <div className='card add-card'>
-                            <div className="option" onClick={() => { this.setState({ addExistingChordModal: { ...this.state.addExistingChordModal, show: true } }) }}>
-                                <Plus size={30} />
-                                Existing Chord
+                    <div className={"toggle-container"}>
+                        <div className={"toggle"}>
+                            <span>Edit Mode</span>
+                            <div class="mt-io-garden">
+                                <input id="edit-mode-checkbox" type="checkbox" checked={this.state.edit}
+                                    onChange={(e) => {
+                                        const div = e.target as HTMLInputElement
+                                        this.setState({ edit: div.checked })
+                                    }} />
+                                <label for="edit-mode-checkbox"></label>
                             </div>
-                            <div className="option" onClick={() => { this.setState({ customizeChordModal: { ...this.state.customizeChordModal, show: true } }) }}>
-                                <Plus size={30} />
-                                Customized Chord
+                        </div>
+                        <div className={"toggle"}>
+                            <span>Learning Mode</span>
+                            <div class="mt-io-garden">
+                                <input id="learning-mode-checkbox" type="checkbox" checked={this.state.learning}
+                                    onChange={(e) => {
+                                        const div = e.target as HTMLInputElement
+                                        this.setState({ learning: div.checked })
+                                    }} />
+                                <label for="learning-mode-checkbox"></label>
                             </div>
                         </div>
                     </div>
                 </div>
-                <Modal show={this.state.renameModal.show} setShow={(show) => this.setState({ renameModal: { ...this.state.renameModal, show } })}>
-                    <div className="rename-modal">
-                        <h1>{`Rename board "${this.state.boards[this.state.selectedBoard].name}" to`}</h1>
-                        <input maxLength={20} onInput={(e) => { this.setState({ renameModal: { ...this.state.renameModal, text: e.currentTarget.value } }) }}></input>
-                        <div className="actions-container">
-                            <button className="highlighted" onClick={() => {
-                                if (!this.state.renameModal.text) {
-                                    alert("Name cannot be empty!")
-                                    return
-                                }
-                                this.state.boards[this.state.selectedBoard].name = this.state.renameModal.text
-                                saveBoard({ boards: this.state.boards, selectedBoard: this.state.selectedBoard })
-                                this.setState({ renameModal: { ...this.state.renameModal, show: false } })
-                            }}>Save</button>
-                            <button onClick={() => { this.setState({ renameModal: { ...this.state.renameModal, show: false } }) }}>Cancel</button>
+                <div className={"sheet-container"}> {
+                    this.state.sheets[this.state.activeSheet].bars.map((bar, barIndex) =>
+                        <div className={["bar", this.state.edit ? "edit" : ""].join(" ")}>
+                            {this.state.edit && <PlusCircle size={18} onClick={this.addBeatOnClick(barIndex, 0)} />}
+                            {bar.beats.map((beat, beatIndex) =>
+                                <Fragment>
+                                    <div className={["beat", this.state.edit ? "edit" : "", "b-" + beat.duration].join(" ")}>
+                                        <div className={["chordAbbrev", (beat.chordDisplay && (beat.chordDisplay === beat.chord)) ? "invalid" : ""].join(" ")} contentEditable={this.state.edit}
+                                            onKeyDown={(e) => {
+                                                if (e.keyCode == 13) {
+                                                    (e.target as HTMLDivElement).blur()
+                                                    e.preventDefault()
+                                                    return false
+                                                }
+                                            }}
+                                            onBlur={(e) => {
+                                                const div = e.target as HTMLDivElement
+                                                // fill the div with previous value
+                                                // looks like we are discarding the edit
+                                                let original = beat.chordDisplay
+                                                beat.chordDisplay = DOMPurify.sanitize(div.innerHTML)
+                                                div.innerHTML = original
+                                                // infer the chord from the edited value 
+                                                let inferred = inferChord(beat.chordDisplay)
+                                                beat.chord = inferred.chord
+                                                beat.chordDisplay = inferred.chordDisplay
+                                                this.shouldDeleteBeat(barIndex, beatIndex)
+                                                saveSheets(this.state.sheets)
+                                                this.setState({ ...this.state })
+                                            }} dangerouslySetInnerHTML={{ __html: beat.chordDisplay }} />
+                                        <div className={"lyrics"} contentEditable={this.state.edit}
+                                            onKeyDown={(e) => {
+                                                if (e.keyCode == 13) {
+                                                    (e.target as HTMLDivElement).blur()
+                                                    e.preventDefault()
+                                                    return false
+                                                }
+                                            }}
+                                            onBlur={(e) => {
+                                                const div = e.target as HTMLDivElement
+                                                beat.lyrics = DOMPurify.sanitize(div.innerHTML)
+                                                this.shouldDeleteBeat(barIndex, beatIndex)
+                                                saveSheets(this.state.sheets)
+                                                this.setState({ ...this.state })
+                                            }} dangerouslySetInnerHTML={{ __html: beat.lyrics }}>
+                                        </div>
+                                    </div>
+                                    {this.state.edit && <PlusCircle size={18} onClick={this.addBeatOnClick(barIndex, beatIndex + 1)} />}
+                                </Fragment>
+                            )
+                            } </div>)
+                }
+                    {this.state.edit && <Plus size={18} onClick={() => { this.addBar() }} />}
+                </div>
+            </div >
+            <Modal show={rootKeyModal.value.show} setShow={(show) => { rootKeyModal.value = { show } }}>
+                <div className="rootKey-modal">
+                    <KeySelector link={false} selectedKey={this.state.sheets[this.state.activeSheet].key}
+                        setKey={(key) => {
+                            this.state.sheets[this.state.activeSheet].key = key
+                            saveSheets(this.state.sheets)
+                            rootKeyModal.value = { show: false }
+                            this.forceUpdate()
+                        }}
+                    />
+                </div>
+            </Modal>
+            <Modal show={modeModal.value.show} setShow={(show) => { modeModal.value = { show } }}>
+                <div className="mode-modal">
+                    {modesTable.map((mode, i) => (
+                        <div className={["mode-item", "color-" + (i + 1), i == this.state.sheets[this.state.activeSheet].mode ? "active" : ""].join(" ")}
+                            onClick={() => {
+                                this.state.sheets[this.state.activeSheet].mode = i
+                                saveSheets(this.state.sheets)
+                                modeModal.value = { show: false }
+                                this.forceUpdate()
+                            }}>
+                            <h1>{mode.name}</h1>
+                            <div className={"rome-container"}>
+                                {mode.rome.map(rome => (<span>{rome}</span>))}
+                            </div>
                         </div>
+                    ))
+                    }
+                </div>
+            </Modal>
+            <Modal show={addBeatModal.value.show} setShow={(show) => { addBeatModal.value = { ...addBeatModal.value, show } }}>
+                <div className="addBeat-modal">
+                    <h1>Select a tonic:</h1>
+                    <div className={"rome-container"}>
+                        {modesTable[this.state.sheets[this.state.activeSheet].mode].rome.map((rome, i) =>
+                            <span className={[i == addBeatModal.value.activeRome ? "active" : ""].join(" ")}
+                                onClick={() => { addBeatModal.value = { ...addBeatModal.value, activeRome: i } }}>{rome}</span>
+                        )}
                     </div>
-                </Modal>
-                <Modal show={this.state.newBoardModal.show} setShow={(show) => this.setState({ newBoardModal: { ...this.state.newBoardModal, show } })}>
-                    <div className="newBoard-modal">
-                        <h1>Create a new whiteboard</h1>
-                        <input maxLength={20} placeholder="Name" onInput={(e) => { this.setState({ newBoardModal: { ...this.state.newBoardModal, text: e.currentTarget.value } }) }}></input>
-                        <div className="actions-container">
-                            <button className="highlighted" onClick={() => {
-                                if (!this.state.newBoardModal.text) {
-                                    alert("Name cannot be empty!")
-                                    return
-                                }
-                                let newBoard: Board = { cards: [], name: this.state.newBoardModal.text }
-                                let i = this.state.boards.push(newBoard) - 1
-                                saveBoard({ boards: this.state.boards, selectedBoard: i })
-                                this.setState({ newBoardModal: { ...this.state.newBoardModal, show: false }, selectedBoard: i })
-                            }}>Create</button>
-                            <button onClick={() => { this.setState({ newBoardModal: { ...this.state.newBoardModal, show: false } }) }}>Cancel</button>
-                        </div>
-                    </div>
-                </Modal>
-                <Modal show={this.state.switchBoardModal.show} setShow={(show) => this.setState({ switchBoardModal: { ...this.state.switchBoardModal, show } })}>
-                    <div className="switchBoard-modal">
-                        <h1>My Whiteboards</h1>
-                        {
-                            this.state.boards.map((board, i) => (
-                                <div className="item-container" onClick={(e) => {
-                                    saveBoard({ boards: this.state.boards, selectedBoard: i })
-                                    this.setState({ selectedBoard: i, switchBoardModal: { ...this.state.switchBoardModal, show: false } })
-                                }}>
-                                    <Clipboard className="icon" size={25} />
-                                    <span>{board.name}</span>
-                                    {this.state.boards.length > 1 && <Trash2 className="delete" size={25} onClick={(e) => {
-                                        e.preventDefault()
-                                        e.stopPropagation()
-                                        this.state.boards.splice(i, 1)
-                                        saveBoard({ boards: this.state.boards, selectedBoard: 0 })
-                                        this.setState({ selectedBoard: 0 })
-                                    }} />}
-                                </div>
-                            ))
+                    <h1>Select a chord:</h1>
+                    <div className={"chord-container"}>
+                        {(() => {
+                            let interval = sum(modesTable[this.state.sheets[this.state.activeSheet].mode].intervals.slice(0, addBeatModal.value.activeRome))
+                            let keyNum = Keys[this.state.sheets[this.state.activeSheet].key] + interval
+                            while (keyNum >= keyPossibleName.length) keyNum -= keyPossibleName.length
+                            let key = keyPossibleName[keyNum][0]
+                            let chords = Chords[key].filter((_, i) => modesTable[this.state.sheets[this.state.activeSheet].mode].chordIndex[addBeatModal.value.activeRome].includes(i))
+                            return chords.map(chord =>
+                                <span className={["color-" + (keySimpleList.indexOf(key) + 1)].join(" ")} onClick={() => { this.addBeat(chord, chord.shortName, "[lyrics]") }}>{chord.shortName}</span>
+                            )
+                        })()
                         }
                     </div>
-                </Modal>
-                <Modal show={this.state.customizeChordModal.show} setShow={(show) => this.setState({ customizeChordModal: { ...this.state.customizeChordModal, show } })}>
-                    <div className="customizedChord-modal">
-                        <h1>Create New Chord</h1>
-                        <div className="thumbnail">
-                            <ChordThumbnail chord={this.state.customizeChordModal.chord} highlightColor={keySimpleList.map(str => Keys[str]).indexOf(this.state.customizeChordModal.chord.key) + 1} />
-                        </div>
-                        <h2>Root Key</h2>
-                        <KeySelector link={false} selectedKey={this.state.customizeChordModal.keyStr}
-                            setKey={(keyStr) => {
-                                this.state.customizeChordModal.chord.key = Keys[keyStr]
-                                this.state.customizeChordModal.chord.cutoff(36)
-                                this.setState({ customizeChordModal: { ...this.state.customizeChordModal, keyStr } })
-                            }}
-                        />
-                        <h2>Intervals</h2>
-                        <div className="intervals-container">
-                            {
-                                this.state.customizeChordModal.chord.intervals.slice(1).map((interval, i) => {
-                                    let chord = this.state.customizeChordModal.chord
-                                    let startKey = chord.key + sum(chord.intervals.slice(0, i + 1))
-                                    startKey %= 12
-                                    let startKeyColor = keySimpleList.map(str => Keys[str]).indexOf(startKey) + 1
-                                    let endKey = startKey + interval
-                                    endKey %= 12
-                                    let endKeyColor = keySimpleList.map(str => Keys[str]).indexOf(endKey) + 1
-                                    return (
-                                        <div className="item">
-                                            <span className={"key color-" + startKeyColor}>{chromaticName[startKey]}</span>
-                                            <div className="interval">
-                                                {`${intervalTable[interval].abbrev} - ${intervalTable[interval].name}`}
-                                                <div className="arrow-container">
-                                                    <MinusCircle className={"action color-" + startKeyColor} size={18}
-                                                        onClick={(e) => {
-                                                            if (chord.intervals[i + 1] > 1) chord.intervals[i + 1] -= 1
-                                                            this.setState({ customizeChordModal: this.state.customizeChordModal })
-                                                        }}
-                                                    />
-                                                    <ArrowRightLong className="arrow" size={20} />
-                                                    <PlusCircle className={"action color-" + endKeyColor} size={18}
-                                                        disabled={
-                                                            (chord.key + sum(chord.intervals) == 35) ? true : false
-                                                        }
-                                                        onClick={(e) => {
-                                                            if (chord.key + sum(chord.intervals) >= 35) return
-                                                            if (chord.intervals[i + 1] < 12) chord.intervals[i + 1] += 1
-                                                            this.setState({ customizeChordModal: this.state.customizeChordModal })
-                                                        }}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <span className={"key color-" + endKeyColor}>{chromaticName[endKey]}</span>
-                                            <Trash2 className="delete" size={20}
-                                                disabled={chord.intervals.length === 2}
-                                                onClick={() => {
-                                                    if (chord.intervals.length <= 2) return
-                                                    chord.intervals.splice(i + 1, 1)
-                                                    this.setState({ customizeChordModal: this.state.customizeChordModal })
-                                                }}
-                                            />
-                                        </div>
-                                    )
-                                })
-                            }
-                            <button
-                                disabled={this.state.customizeChordModal.chord.key + sum(this.state.customizeChordModal.chord.intervals) >= 35}
-                                onClick={() => {
-                                    if (this.state.customizeChordModal.chord.key + sum(this.state.customizeChordModal.chord.intervals) >= 35) return
-                                    this.state.customizeChordModal.chord.intervals.push(1)
-                                    this.setState({ customizeChordModal: this.state.customizeChordModal })
-                                }}>
-                                <Plus size={15} />Add a interval
-                            </button>
-                        </div>
-                        <h2>Name</h2>
-                        <input maxLength={20} placeholder="Chord Name" onInput={(e) => { this.setState({ customizeChordModal: { ...this.state.customizeChordModal, name: e.currentTarget.value } }) }}></input>
-                        <div className="actions-container">
-                            <button className="highlighted" onClick={() => {
-                                if (!this.state.customizeChordModal.name) {
-                                    alert("Name cannot be empty!")
-                                    return
-                                }
-                                if (this.state.customizeChordModal.chord.intervals.length <= 2) {
-                                    alert("Number of intervals must be greater than 1!")
-                                    return
-                                }
-                                this.state.boards[this.state.selectedBoard].cards.push({ chord: this.state.customizeChordModal.chord.clone(), name: this.state.customizeChordModal.name })
-                                saveBoard({ boards: this.state.boards, selectedBoard: this.state.selectedBoard })
-                                this.setState({ customizeChordModal: { ...this.state.customizeChordModal, show: false } })
-                            }}>Create</button>
-                            <button onClick={() => { this.setState({ customizeChordModal: { ...this.state.customizeChordModal, show: false } }) }}>Cancel</button>
-                        </div>
-                    </div>
-                </Modal>
-                <Modal show={this.state.addExistingChordModal.show} setShow={(show) => this.setState({ addExistingChordModal: { ...this.state.addExistingChordModal, show } })}>
-                    <div className="existingChord-modal">
-                        <h1>Search Chord</h1>
-                        <input placeholder="Search by keywords" maxLength={20} onInput={(e) => {
-                            this.setState({ addExistingChordModal: { ...this.state.addExistingChordModal, query: e.currentTarget.value } })
-                            this.chordSearchItemList.current.scrollTo(0, 0)
-                        }} />
-                        <div className="item-container" ref={this.chordSearchItemList}>
-                            {
-                                searchForChord(this.state.addExistingChordModal.query).map(chord => (
-                                    <div className="item" onClick={() => {
-                                        this.state.boards[this.state.selectedBoard].cards.push({ chord: chord.clone(), name: chord.alias[0] })
-                                        saveBoard({ boards: this.state.boards, selectedBoard: this.state.selectedBoard })
-                                        this.setState({ addExistingChordModal: { ...this.state.addExistingChordModal, show: false } })
-                                    }}>
-                                        <ChordThumbnail chord={chord} highlightColor={keySimpleList.map(str => Keys[str]).indexOf(chord.key) + 1} />
-                                        {chord.alias[0]}
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </div>
-                </Modal>
-            </Fragment >
-        )
+                    <h2>Can't find the one you want? <a onClick={() => { this.addBeat(undefined, "", "[lyrics]") }}>Insert an empty chord</a> and you and always edit it later.</h2>
+                </div>
+            </Modal>
+        </Fragment>
     }
+
 }
 
-export type { Board, Card }
+export { Bar, Beat, Sheet }

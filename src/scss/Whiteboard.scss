@@ -5,328 +5,204 @@
     max-width: 63rem;
     margin: 0 auto;
     margin-top: 0.5rem;
-    padding: 0 0.5rem;
-    display: flex;
-    flex-direction: column;
     .title-container {
+        margin: 1rem 0;
         h1 {
-            font-size: 3rem;
-            font-weight: lighter;
-            margin-bottom: 1rem;
+            font-size: 1.5rem;
         }
-        .menu-container {
+    }
+    .control-bar {
+        display: flex;
+        flex-direction: row;
+        row-gap: 1rem;
+        column-gap: 2rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+
+        .info-container {
             display: flex;
+            flex-direction: row;
+            // flex-wrap: wrap;
+            column-gap: 2rem;
+            div {
+                display: inline-block;
+                font-size: 1.2rem;
+                cursor: pointer;
+                .key,
+                .mode {
+                    font-weight: 600;
+                    @for $i from 1 through 17 {
+                        &.color-#{$i} {
+                            color: nth($rainbow-17, $i);
+                        }
+                    }
+                }
+            }
+        }
+        .toggle-container {
+            display: flex;
+            flex-direction: row;
             flex-wrap: wrap;
-            row-gap: 0.5rem;
-            button {
-                @include button;
-                margin-right: 0.5rem;
-                svg {
-                    margin-right: 0.3rem;
+            column-gap: 2rem;
+            row-gap: 1rem;
+            .toggle {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                span {
+                    font-size: 1rem;
+                    margin-right: 0.5rem;
+                }
+                .mt-io-garden {
+                    font-size: 0.45rem;
                 }
             }
         }
     }
-    .cards-container {
+    .sheet-container {
         display: flex;
+        flex-direction: row;
         flex-wrap: wrap;
-        justify-content: center;
-        margin: 1rem 0;
-        background-image: radial-gradient(#efefef 20%, transparent 20%);
-        background-color: white;
-        background-position: 0 0;
-        background-size: 18px 18px;
-        .card {
-            flex-grow: 0;
-            flex-shrink: 0;
-            padding: 1rem 0.5rem;
-            padding-bottom: 1rem;
-            padding-top: 0.5rem;
-            background-color: #f5f5f5;
-            margin: 1rem 1rem;
-            border-radius: 0.3rem;
-            box-shadow: 0px 5px 5px 2px rgba(32, 32, 32, 0.1);
-            .actions-container {
+        align-items: center;
+        row-gap: 1rem;
+        .bar {
+            border-left: 3px solid black;
+            &:last-of-type {
+                border-right: 3px solid black;
+            }
+            display: flex;
+            flex-direction: row;
+            // flex-wrap: wrap;
+            align-items: center;
+            height: 3.1rem;
+            padding: 0 0.5rem;
+            &.edit {
+                padding: 0 0.2rem;
+                .beat {
+                    &:hover {
+                        background-color: rgb(221, 221, 221);
+                    }
+                }
+            }
+            .beat {
                 display: flex;
                 justify-content: space-between;
-                margin-bottom: 1rem;
-                svg {
-                    color: #7d7d7d;
-                }
-                svg.drag {
-                    cursor: grab;
-                }
-                svg.delete {
-                    cursor: pointer;
-                }
-            }
-            .name {
-                margin-top: 0.3rem;
-                overflow-wrap: anywhere;
-                text-align: center;
-            }
-            &.add-card {
-                width: 189px;
-                background-color: #f5f5f5;
-                box-shadow: none;
-                display: flex;
                 flex-direction: column;
-                justify-content: space-around;
-                align-items: flex-start;
-                padding: 1rem 0.5rem;
-                .option {
-                    cursor: pointer;
-                    font-size: 1rem;
-                    display: flex;
-                    justify-content: flex-start;
-                    align-items: center;
-                    color: #a9a9a9;
-                    width: 100%;
-                    padding: 0.3rem 0;
-                    border-radius: 0.5rem;
-                    &:hover {
-                        background-color: #e3e3e3;
+                box-sizing: border-box;
+                height: 100%;
+                padding: 0.2rem 0.2rem;
+                border-radius: 3px;
+                @for $i from 1 through 4 {
+                    &.b-#{$i} {
+                        flex-grow: #{$i};
                     }
-                    svg {
-                        color: #a9a9a9;
-                        margin-left: 0.3rem;
+                }
+                [contenteditable] {
+                    outline: 0px solid transparent;
+                }
+                .chordAbbrev {
+                    font-weight: 700;
+                    &.invalid {
+                        text-decoration: underline dotted red;
                     }
                 }
             }
         }
-    }
-}
-
-.rename-modal {
-    h1 {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
-    }
-    input {
-        @include text-input;
-        width: 100%;
-        margin-bottom: 1rem;
-        &:focus {
-            border-color: nth($rainbow-17, 5);
-            box-shadow: 0 0 0 0.125em adjust-color(nth($rainbow-17, 5), $alpha: -0.9);
-        }
-    }
-    .actions-container {
-        display: flex;
-        justify-content: flex-end;
-        button {
-            @include button;
-            margin-right: 0.5rem;
-            &.highlighted {
-                color: white;
-                background-color: nth($rainbow-17, 5);
-            }
-        }
-    }
-}
-
-.newBoard-modal {
-    h1 {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
-    }
-    input {
-        @include text-input;
-        width: 100%;
-        margin-bottom: 1rem;
-        &:focus {
-            border-color: nth($rainbow-17, 5);
-            box-shadow: 0 0 0 0.125em adjust-color(nth($rainbow-17, 5), $alpha: -0.9);
-        }
-    }
-    .actions-container {
-        display: flex;
-        justify-content: flex-end;
-        button {
-            @include button;
-            margin-right: 0.5rem;
-            &.highlighted {
-                color: white;
-                background-color: nth($rainbow-17, 5);
-            }
-        }
-    }
-}
-
-.switchBoard-modal {
-    h1 {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
-    }
-    .item-container {
-        padding: 0.8rem 0.5rem;
-        background-color: #f3f3f3;
-        border-radius: 0.5rem;
-        margin-bottom: 0.5rem;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        svg.icon {
-            color: #484848;
-            margin-right: 0.5rem;
-        }
-        span {
-            flex-grow: 1;
-        }
-        svg.delete {
-            color: #7d7d7d;
-            &:hover {
-                color: #484848;
-            }
-        }
-        &:hover {
-            background-color: #d4d4d4;
-        }
-    }
-}
-
-.customizedChord-modal {
-    h1 {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
-    }
-    .thumbnail {
-        text-align: center;
-    }
-    .intervals-container {
-        margin: 1rem 0;
-        .item {
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            span.key {
-                width: 2.2rem;
-                height: 2.2rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                border-radius: 2rem;
-                user-select: none;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -o-user-select: none;
-                @for $i from 1 through 17 {
-                    &.color-#{$i} {
-                        color: white;
-                        background-color: nth($rainbow-17, $i);
-                    }
-                }
-            }
-            div.interval {
-                margin: 0 0.3rem;
-                display: flex;
-                flex-direction: column;
-                div.arrow-container {
-                    margin-top: 0.3rem;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    flex-direction: row;
-                    user-select: none;
-                    -webkit-user-select: none;
-                    -moz-user-select: none;
-                    -o-user-select: none;
-                    svg.action {
-                        cursor: pointer;
-                        @for $i from 1 through 17 {
-                            &.color-#{$i} {
-                                color: nth($rainbow-17, $i);
-                            }
-                        }
-                        &[disabled="true"] {
-                            cursor: not-allowed;
-                            color: #7c7c7c;
-                        }
-                    }
-                    svg.arrow {
-                        color: #7c7c7c;
-                    }
-                }
-            }
-            svg.delete {
-                color: #484848;
-                margin-left: 1rem;
-                cursor: pointer;
-                user-select: none;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -o-user-select: none;
-                &[disabled="true"] {
-                    cursor: not-allowed;
-                    color: #7c7c7c;
-                }
-            }
-        }
-        button {
-            @include button;
-            margin-right: 0.5rem;
-            width: 10rem;
-            svg {
-                margin-right: 0.3rem;
-            }
-        }
-    }
-    input {
-        @include text-input;
-        width: 100%;
-        margin: 1rem 0;
-        &:focus {
-            border-color: nth($rainbow-17, 5);
-            box-shadow: 0 0 0 0.125em adjust-color(nth($rainbow-17, 5), $alpha: -0.9);
-        }
-    }
-    .actions-container {
-        display: flex;
-        justify-content: flex-end;
-        button {
-            @include button;
-            margin-right: 0.5rem;
-            &.highlighted {
-                color: white;
-                background-color: nth($rainbow-17, 5);
-            }
-        }
-    }
-}
-
-.existingChord-modal {
-    h1 {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
-    }
-    input {
-        @include text-input;
-        width: 100%;
-        margin-bottom: 1rem;
-        &:focus {
-            border-color: nth($rainbow-17, 5);
-            box-shadow: 0 0 0 0.125em adjust-color(nth($rainbow-17, 5), $alpha: -0.9);
-        }
-    }
-    .item-container {
-        max-height: 50vh;
-        overflow-y: auto;
-        .item{
+        svg {
+            color: rgb(166, 166, 166);
             cursor: pointer;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            flex-wrap: wrap;
-            padding: 0.6rem;
-            margin-bottom: 0.3rem;
-            border-radius: 0.2rem;
             &:hover {
-                background-color: #e3e3e3;
+                color: black;
             }
-            svg {
-                margin-right: 0.7rem;
+        }
+    }
+}
+
+.mode-modal {
+    .mode-item {
+        margin-bottom: 0.3rem;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        padding: 0.7rem;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        @for $i from 1 through 17 {
+            &.color-#{$i} {
+                &:hover,
+                &.active {
+                    background: linear-gradient(
+                        45deg,
+                        rgba(255, 255, 255, 1) 0%,
+                        adjust-color(nth($rainbow-17, $i), $alpha: -0.9) 100%
+                    );
+                    box-shadow: 0px 0px 5px 0 rgb(220, 220, 220);
+                }
+                h1 {
+                    color: nth($rainbow-17, $i);
+                }
             }
+        }
+        h1 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+        .rome-container {
+            span {
+                margin-right: 0.4rem;
+                color: rgb(74, 74, 74);
+            }
+        }
+    }
+}
+
+.addBeat-modal {
+    h1 {
+        margin-bottom: 1rem;
+        color: rgb(53, 53, 53);
+    }
+    .rome-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+        span {
+            font-size: 1.2rem;
+            padding: 0.3rem 0.5rem;
+            background-color: rgb(150, 150, 150);
+            color: white;
+            border-radius: 0.2rem;
+            cursor: pointer;
+            &.active {
+                background-color: rgb(63, 63, 63);
+            }
+        }
+    }
+    .chord-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-bottom: 2rem;
+        span {
+            font-size: 1.2rem;
+            cursor: pointer;
+            @for $i from 1 through 17 {
+                &.color-#{$i} {
+                    color: nth($rainbow-17, $i);
+                }
+            }
+        }
+    }
+    h2 {
+        font-size: 0.8rem;
+        color: rgb(85, 85, 85);
+        a {
+            color: black;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
         }
     }
 }

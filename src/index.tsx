@@ -5,7 +5,7 @@ import IndexPage from './pages/IndexPage'
 import ChordPage from './pages/ChordPage'
 import Page404 from './pages/404Page'
 import Footer from './components/Footer'
-import WhiteBoardPage from './pages/WhiteBoardPage2'
+import WhiteBoardPage from './pages/WhiteBoardPage'
 import Nav from './components/Nav';
 import AboutPage from './pages/AboutPage';
 import { aboutTitle, homeTitle, whiteboardTitle } from './libs/constant';

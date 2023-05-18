@@ -16,20 +16,6 @@
     }
   }
   box-sizing: border-box;
-
-  .action-container {
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 0.5rem;
-    button {
-      @include button;
-      margin-right: 0.5rem;
-      svg {
-        margin-right: 0.3rem;
-      }
-    }
-  }
-
   .information-container {
     display: flex;
     flex-direction: row;
