@@ -21,7 +21,7 @@ const jingoBellSheet: Sheet = {
             totalBeats: 4,
             beats: [
                 {
-                    chord: null,
+                    chord: undefined,
                     chordDisplay: inferChord("").chordDisplay,
                     duration: 3,
                     lyrics: "snow,",
@@ -67,7 +67,7 @@ const jingoBellSheet: Sheet = {
                     lyrics: "sleigh,",
                 },
                 {
-                    chord: null,
+                    chord: undefined,
                     chordDisplay: inferChord("").chordDisplay,
                     duration: 1,
                     lyrics: "and",
@@ -139,7 +139,7 @@ const jingoBellSheet: Sheet = {
             totalBeats: 4,
             beats: [
                 {
-                    chord: null,
+                    chord: undefined,
                     chordDisplay: inferChord("").chordDisplay,
                     duration: 3,
                     lyrics: "ring,",
@@ -184,7 +184,7 @@ const jingoBellSheet: Sheet = {
                     lyrics: "bright,",
                 },
                 {
-                    chord: null,
+                    chord: undefined,
                     chordDisplay: inferChord("").chordDisplay,
                     duration: 1,
                     lyrics: "What",

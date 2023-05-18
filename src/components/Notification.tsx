@@ -1,4 +1,4 @@
-import { h, Component } from 'preact'
+import { Component } from 'preact'
 import { X } from './icon/X'
 import { NotificationItem, notifications, removeNotification } from '../libs/notification'
 

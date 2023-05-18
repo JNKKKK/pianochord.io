@@ -1,4 +1,4 @@
-import { h, Component, Fragment } from 'preact'
+import { Component } from 'preact'
 // import netlifyIdentity from 'netlify-identity-widget';
 
 type NavProps = {

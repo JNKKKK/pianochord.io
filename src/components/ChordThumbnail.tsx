@@ -1,5 +1,5 @@
 import { Chord } from 'libs/chord'
-import { h, Component } from 'preact'
+import { Component } from 'preact'
 import { getHighlightTable } from '../libs/helper'
 import { bw, bwMap } from '../libs/key'
 
@@ -15,34 +15,34 @@ whiteOccurIndex = [...whiteOccurIndex, ...whiteOccurIndex.map(i => i + bwMap.len
 let bwMap3x = [...bwMap, ...bwMap, ...bwMap]
 
 function whiteIfActive(i: number, highlightTable: boolean[]) {
-  return highlightTable[whiteOccurIndex[i]]
+    return highlightTable[whiteOccurIndex[i]]
 }
 
 function blackIfActive(i: number, highlightTable: boolean[]) {
-  return highlightTable[blackOccurIndex[i]]
+    return highlightTable[blackOccurIndex[i]]
 }
 
 type ChordThumbnailProps = {
-  chord: Chord,
-  highlightColor: number
+    chord: Chord,
+    highlightColor: number
 }
 
 export default class ChordThumbnail extends Component<ChordThumbnailProps> {
-  render() {
-    let highlightTable = getHighlightTable(this.props.chord)
-    let octaves = highlightTable.length / 12
-    return (
-      <svg className='ChordThumbnail-svg' width={whiteWidth * 7 * octaves} height={whiteHeight}>
-        {[...Array(7 * octaves).keys()].map(i => (
-          <rect className={'white' + (whiteIfActive(i, highlightTable) ? ' active color-' + this.props.highlightColor : '')}
-            width={whiteWidth} height={whiteHeight} x={whiteWidth * i} />
-        ))}
-        {[...Array(5 * octaves).keys()].map(i => (
-          <rect className={'black' + (blackIfActive(i, highlightTable) ? ' active color-' + this.props.highlightColor : '')}
-            width={blackWidth} height={blackHeight}
-            x={whiteWidth * (bwMap3x.slice(0, blackOccurIndex[i]).filter(x => x === bw.white).length) - blackWidth / 2} />
-        ))}
-      </svg>
-    )
-  }
+    render() {
+        let highlightTable = getHighlightTable(this.props.chord)
+        let octaves = highlightTable.length / 12
+        return (
+            <svg className='ChordThumbnail-svg' width={whiteWidth * 7 * octaves} height={whiteHeight}>
+                {[...Array(7 * octaves).keys()].map(i => (
+                    <rect className={'white' + (whiteIfActive(i, highlightTable) ? ' active color-' + this.props.highlightColor : '')}
+                        width={whiteWidth} height={whiteHeight} x={whiteWidth * i} />
+                ))}
+                {[...Array(5 * octaves).keys()].map(i => (
+                    <rect className={'black' + (blackIfActive(i, highlightTable) ? ' active color-' + this.props.highlightColor : '')}
+                        width={blackWidth} height={blackHeight}
+                        x={whiteWidth * (bwMap3x.slice(0, blackOccurIndex[i]).filter(x => x === bw.white).length) - blackWidth / 2} />
+                ))}
+            </svg>
+        )
+    }
 }

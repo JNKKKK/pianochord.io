@@ -1,5 +1,5 @@
 import { sum } from './helper'
-import { chromaticName, Keys, KeyName, keyPossibleName } from './key'
+import { keyPossibleName } from './key'
 
 type SerializeFeature = { key: number, intervals: number[] }
 
