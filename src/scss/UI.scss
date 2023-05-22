@@ -37,7 +37,27 @@
             );
             box-shadow: none;
             color: white;
+        } 
+        &.color-#{$i}.active {
+            background: linear-gradient(
+                45deg,
+                adjust-color(nth($rainbow-17, $i), $lightness: +15) 0%,
+                adjust-color(nth($rainbow-17, $i), $lightness: -5) 100%
+            );
+            color: white;
+            &:hover {
+                background: linear-gradient(
+                    45deg,
+                    adjust-color(nth($rainbow-17, $i), $lightness: +25) 0%,
+                    adjust-color(nth($rainbow-17, $i), $lightness: -5) 100%
+                );
+            }
+            &:active:not(:disabled) {
+                background:   adjust-color(nth($rainbow-17, $i),  $lightness: -10);
+                box-shadow: none;
+            }
         }
+       
     }
 }
 

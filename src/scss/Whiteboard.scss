@@ -4,9 +4,39 @@
 .whiteboard-container {
     max-width: 63rem;
     margin: 0 auto;
-    margin-top: 0.5rem;
+    @media (max-width: 63rem) {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    .menu-container {
+        display: flex;
+        flex-direction: row;
+        color: rgb(165, 165, 165);
+        margin: 0.5rem 0;
+        padding-bottom: 0.5rem;
+        font-size: 0.9rem;
+        border-bottom: rgb(213, 213, 213) solid 1px;
+        div {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-bottom: transparent solid 2px;
+            margin-right: 0.4rem;
+            cursor: pointer;
+            span {
+                margin-right: 0.2rem;
+            }
+            &:hover {
+                color: rgb(45, 45, 45);
+                border-bottom: rgb(45, 45, 45) solid 2px;
+            }
+            &:not(:first-child) {
+                margin-left: 0.4rem;
+            }
+        }
+    }
     .title-container {
-        margin: 1rem 0;
+        margin-bottom: 1rem;
         h1 {
             font-size: 1.5rem;
         }
@@ -65,6 +95,7 @@
         flex-wrap: wrap;
         align-items: center;
         row-gap: 1rem;
+        margin-bottom: 1rem;
         .bar {
             border-left: 3px solid black;
             &:last-of-type {
@@ -81,6 +112,11 @@
                 .beat {
                     &:hover {
                         background-color: rgb(221, 221, 221);
+                    }
+                }
+                .chordAbbrev {
+                    &.invalid {
+                        text-decoration: underline dotted red;
                     }
                 }
             }
@@ -102,9 +138,6 @@
                 }
                 .chordAbbrev {
                     font-weight: 700;
-                    &.invalid {
-                        text-decoration: underline dotted red;
-                    }
                 }
             }
         }
@@ -203,6 +236,96 @@
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
+        }
+    }
+}
+
+.newSheet-modal,
+.renameSheet-modal {
+    h1 {
+        font-size: 1.6rem;
+        margin-top: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+    input {
+        @include text-input;
+        width: 100%;
+        margin-bottom: 1rem;
+        border-color: nth($rainbow-17, 5);
+        box-shadow: 0 0 0 0.2em adjust-color(nth($rainbow-17, 5), $alpha: -0.8);
+    }
+    button {
+        @include button;
+        float: inline-end;
+        margin-left: 0.5rem;
+    }
+}
+
+.openSheet-modal {
+    .sheet-item {
+        margin-bottom: 0.3rem;
+        padding: 0.7rem;
+        border-radius: 0.3rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        cursor: pointer;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        @for $i from 1 through 17 {
+            &.color-#{$i} {
+                &:hover,
+                &.active {
+                    background: linear-gradient(
+                        45deg,
+                        rgba(255, 255, 255, 1) 0%,
+                        adjust-color(nth($rainbow-17, $i), $alpha: -0.9) 100%
+                    );
+                    box-shadow: 0px 0px 5px 0 rgb(220, 220, 220);
+                }
+                h1 {
+                    color: nth($rainbow-17, $i);
+                }
+            }
+        }
+        .info-container {
+            h1 {
+                font-size: 1.2rem;
+                margin-bottom: 0.3rem;
+            }
+            h2 {
+                font-size: 0.8rem;
+                margin-bottom: 0.5rem;
+                b {
+                    font-weight: 600;
+                }
+            }
+            .key-container {
+                font-size: 0.9rem;
+                .label {
+                    margin-right: 0.2rem;
+                }
+                .key {
+                    font-weight: 600;
+                    @for $i from 1 through 17 {
+                        &.color-#{$i} {
+                            color: nth($rainbow-17, $i);
+                        }
+                    }
+                }
+            }
+        }
+        .action-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            svg {
+                color:rgb(174, 174, 174);
+                &:hover {
+                    color:rgb(87, 87, 87);
+                }
+            }
         }
     }
 }

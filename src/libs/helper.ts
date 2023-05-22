@@ -1,3 +1,4 @@
+import DOMPurify from "dompurify"
 import { Chord } from "./chord"
 import { allChords, chords } from "./db"
 
@@ -193,8 +194,14 @@ function forceDescriptives(list: number[], mean: number, sd: number) {
     return newList;
 }
 
+function sanitize(str: string): string {
+    str = DOMPurify.sanitize(str)
+    str = str.replace(/(\r\n|\n|\r)/gm, "").replace(/<.*?>/gm, "")
+    return str
+}
+
 export {
     getHighlightTable, chordAlignMid, findChordByName, sum, searchForChord,
     urlDecodeKey, urlEncodeKey, urlEncodeChord, urlDecodeChord, delay, chordFilterByKeyword,
-    randomList, descriptives, forceDescriptives, inferChord
+    randomList, descriptives, forceDescriptives, inferChord, sanitize
 }

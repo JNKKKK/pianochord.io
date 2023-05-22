@@ -4,6 +4,7 @@ import { inferChord } from "./helper";
 
 const ls = window.localStorage
 const SheetsSavingKey = 'whiteboardSave'
+const activeSheetSavingKey = 'activeSheet'
 
 type Override<T1, T2> = Omit<T1, keyof T2> & T2;
 
@@ -17,6 +18,7 @@ function serializeSheets(sheets: Sheet[]): SheetSaving[] {
         ...sheet,
         bars: sheet.bars.map(bar => ({
             ...bar,
+            // delete chord field in each beat
             beats: bar.beats.map(beat => ({
                 duration: beat.duration,
                 lyrics: beat.lyrics,
@@ -55,5 +57,15 @@ function loadSheets(): Sheet[] {
     }
 }
 
+function loadActiveSheet(): number {
+    const savingStr = ls.getItem(activeSheetSavingKey)
+    if (savingStr === null) return 0
+    return isNaN(parseInt(savingStr)) ? 0 : parseInt(savingStr)
+}
 
-export { saveSheets, loadSheets }
+function saveActiveSheet(activeSheet: number) {
+    ls.setItem(activeSheetSavingKey, activeSheet.toString())
+
+}
+
+export { saveSheets, loadSheets, loadActiveSheet, saveActiveSheet }
